@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Gestione Produzione Agrumi - Reparto 3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .header {
+            background-color: #198754;
+            color: white;
+            padding: 15px 0;
+            margin-bottom: 30px;
+        }
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #e7f5ee;
+            font-weight: bold;
+        }
+        .stats-card {
+            text-align: center;
+            padding: 15px;
+        }
+        .stats-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #198754;
+        }
+        .process-card {
+            height: 100%;
+            transition: all 0.3s;
+        }
+        .process-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .btn-custom {
+            background-color: #198754;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #146c43;
+            color: white;
+        }
+        .process-header {
+            background-color: #d1e7dd;
+            text-align: center;
+            font-weight: bold;
+        }
+        .required-field::after {
+            content: " *";
+            color: red;
+        }
+        .nav-tabs .nav-link.active {
+            background-color: #e7f5ee;
+            border-color: #198754 #198754 #e7f5ee;
+            color: #198754;
+            font-weight: bold;
+        }
+        .nav-tabs .nav-link {
+            color: #495057;
+        }
+        .sub-section {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid #198754;
+        }
+        .section-title {
+            color: #198754;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .process-status {
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .status-active {
+            background-color: #198754;
+        }
+        .status-inactive {
+            background-color: #dc3545;
+        }
+        .status-standby {
+            background-color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1><i class="bi bi-droplet-fill"></i> Reparto 3 - Lavorazione Succhi</h1>
+                </div>
+                <div class="col-md-6 text-end">
+                    <button class="btn btn-light me-2" id="btn-reparto-1">
+                        <i class="bi bi-box-seam"></i> Reparto 1: Ricezione e Scarico Frutta
+                    </button>
+                    <button class="btn btn-light" id="btn-reparto-2">
+                        <i class="bi bi-gear"></i> Reparto 2: Trasformazione
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <!-- Statistiche -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card stats-card">
+                    <div class="stats-value" id="total-processi">0</div>
+                    <div>Processi Attivi</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card">
+                    <div class="stats-value" id="total-concentrato">0 L</div>
+                    <div>Concentrato Prodotto</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card">
+                    <div class="stats-value" id="total-distillato">0 L</div>
+                    <div>Distillato Prodotto</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card">
+                    <div class="stats-value" id="total-pastorizzato">0 L</div>
+                    <div>Pastorizzato Prodotto</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs per sotto-reparti -->
+        <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="concentratori-tab" data-bs-toggle="tab" data-bs-target="#concentratori" type="button" role="tab">Concentratori</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="distillatori-tab" data-bs-toggle="tab" data-bs-target="#distillatori" type="button" role="tab">Distillatori</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pastorizzatori-tab" data-bs-toggle="tab" data-bs-target="#pastorizzatori" type="button" role="tab">Pastorizzatori</button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- CONCENTRATORI -->
+            <div class="tab-pane fade show active" id="concentratori" role="tabpanel">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="bi bi-funnel"></i> Concentratori - Gestione Processo
+                    </div>
+                    <div class="card-body">
+                        <!-- Form per concentratori -->
+                        <form id="concentratori-form">
+                            <div class="sub-section">
+                                <h5 class="section-title">Prodotto da Concentrare</h5>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="concentra-prodotto" class="form-label required-field">Tipo Prodotto</label>
+                                        <select class="form-select" id="concentra-prodotto" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="Succo">Succo</option>
+                                            <option value="Torchiato">Torchiato</option>
+                                            <option value="Estratto">Estratto</option>
+                                            <option value="Altro">Altro</option>
+                                        </select>
+                                        <div id="altro-prodotto-concentra-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altro-prodotto-concentra" placeholder="Specifica altro prodotto">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="concentra-agrume" class="form-label required-field">Tipo Agrume</label>
+                                        <select class="form-select" id="concentra-agrume" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="Arance">Arance</option>
+                                            <option value="Arance Rosse">Arance Rosse</option>
+                                            <option value="Limoni">Limoni</option>
+                                            <option value="Mandarini">Mandarini</option>
+                                            <option value="Pompelmi">Pompelmi</option>
+                                            <option value="Altro">Altro</option>
+                                        </select>
+                                        <div id="altro-agrume-concentra-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altro-agrume-concentra" placeholder="Specifica altro agrume">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="concentra-certificazione" class="form-label required-field">Certificazione</label>
+                                        <select class="form-select" id="concentra-certificazione" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="BIO EU">BIO EU</option>
+                                            <option value="BIO DEMETER">BIO DEMETER</option>
+                                            <option value="CONVENZIONALE">CONVENZIONALE</option>
+                                            <option value="IGP">IGP</option>
+                                            <option value="ALTRO">ALTRO</option>
+                                        </select>
+                                        <div id="altra-certificazione-concentra-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altra-certificazione-concentra" placeholder="Specifica altra certificazione">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="concentra-linea" class="form-label required-field">Linea di Trasformazione</label>
+                                        <select class="form-select" id="concentra-linea" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="BOE">BOE</option>
+                                            <option value="GOE INT">GOE INT</option>
+                                            <option value="B/SF">B/SF</option>
+                                            <option value="400">400</option>
+                                            <option value="ALTRA">ALTRA</option>
+                                        </select>
+                                        <div id="altra-linea-concentra-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altra-linea-concentra" placeholder="Specifica altra linea">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="concentra-polpa" class="form-label required-field">Tenore di Polpa</label>
+                                        <select class="form-select" id="concentra-polpa" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="Limpido">Limpido</option>
+                                            <option value="Semiclear">Semiclear</option>
+                                            <option value="> 1%">> 1%</option>
+                                            <option value="Standard">Standard</option>
+                                            <option value="Altro">Altro</option>
+                                        </select>
+                                        <div id="altra-polpa-concentra-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altra-polpa-concentra" placeholder="Specifica altro tenore di polpa">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="concentra-quantita" class="form-label required-field">Quantità (L)</label>
+                                        <input type="number" class="form-control" id="concentra-quantita" required min="1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sub-section">
+                                <h5 class="section-title">Seleziona Concentratore</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" name="concentratore" id="concentra-apv1" value="APV1" required>
+                                            <label class="form-check-label" for="concentra-apv1">
+                                                APV1
+                                                <span class="badge bg-success">Disponibile</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" name="concentratore" id="concentra-apv2" value="APV2">
+                                            <label class="form-check-label" for="concentra-apv2">
+                                                APV2
+                                                <span class="badge bg-success">Disponibile</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sub-section">
+                                <h5 class="section-title">Parametri Processo</h5>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="concentra-brix-entrata" class="form-label required-field">Brix Entrata</label>
+                                        <input type="number" class="form-control" id="concentra-brix-entrata" required min="0" step="0.1">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="concentra-brix-uscita" class="form-label required-field">Brix Uscita Target</label>
+                                        <input type="number" class="form-control" id="concentra-brix-uscita" required min="0" step="0.1">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="concentra-temperatura" class="form-label required-field">Temperatura (°C)</label>
+                                        <input type="number" class="form-control" id="concentra-temperatura" required min="0" step="0.1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <label for="concentra-note" class="form-label">Note</label>
+                                    <textarea class="form-control" id="concentra-note" rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="text-end mt-4">
+                                <button type="button" class="btn btn-secondary me-2" id="concentra-reset">
+                                    <i class="bi bi-x-circle"></i> Annulla
+                                </button>
+                                <button type="submit" class="btn btn-custom">
+                                    <i class="bi bi-play-circle"></i> Avvia Processo
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Lista processi concentrazione attivi -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="bi bi-list-check"></i> Processi di Concentrazione Attivi
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="concentra-processi-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID Processo</th>
+                                        <th>Concentratore</th>
+                                        <th>Prodotto</th>
+                                        <th>Agrume</th>
+                                        <th>Brix Entrata</th>
+                                        <th>Brix Uscita</th>
+                                        <th>Stato</th>
+                                        <th>Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="8" class="text-center">Nessun processo attivo</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DISTILLATORI -->
+            <div class="tab-pane fade" id="distillatori" role="tabpanel">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="bi bi-water"></i> Distillatori - Gestione Processo
+                    </div>
+                    <div class="card-body">
+                        <!-- Form per distillatori -->
+                        <form id="distillatori-form">
+                            <div class="sub-section">
+                                <h5 class="section-title">Prodotto da Distillare</h5>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="distilla-prodotto" class="form-label required-field">Tipo Prodotto</label>
+                                        <select class="form-select" id="distilla-prodotto" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="Succo">Succo</option>
+                                            <option value="Torchiato">Torchiato</option>
+                                            <option value="Estratto">Estratto</option>
+                                            <option value="Altro">Altro</option>
+                                        </select>
+                                        <div id="altro-prodotto-distilla-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altro-prodotto-distilla" placeholder="Specifica altro prodotto">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="distilla-agrume" class="form-label required-field">Tipo Agrume</label>
+                                        <select class="form-select" id="distilla-agrume" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="Arance">Arance</option>
+                                            <option value="Arance Rosse">Arance Rosse</option>
+                                            <option value="Limoni">Limoni</option>
+                                            <option value="Mandarini">Mandarini</option>
+                                            <option value="Pompelmi">Pompelmi</option>
+                                            <option value="Altro">Altro</option>
+                                        </select>
+                                        <div id="altro-agrume-distilla-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altro-agrume-distilla" placeholder="Specifica altro agrume">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="distilla-certificazione" class="form-label required-field">Certificazione</label>
+                                        <select class="form-select" id="distilla-certificazione" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="BIO EU">BIO EU</option>
+                                            <option value="BIO DEMETER">BIO DEMETER</option>
+                                            <option value="CONVENZIONALE">CONVENZIONALE</option>
+                                            <option value="IGP">IGP</option>
+                                            <option value="ALTRO">ALTRO</option>
+                                        </select>
+                                        <div id="altra-certificazione-distilla-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altra-certificazione-distilla" placeholder="Specifica altra certificazione">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="distilla-linea" class="form-label required-field">Linea di Trasformazione</label>
+                                        <select class="form-select" id="distilla-linea" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="BOE">BOE</option>
+                                            <option value="GOE INT">GOE INT</option>
+                                            <option value="B/SF">B/SF</option>
+                                            <option value="400">400</option>
+                                            <option value="ALTRA">ALTRA</option>
+                                        </select>
+                                        <div id="altra-linea-distilla-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altra-linea-distilla" placeholder="Specifica altra linea">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="distilla-polpa" class="form-label required-field">Tenore di Polpa</label>
+                                        <select class="form-select" id="distilla-polpa" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="Limpido">Limpido</option>
+                                            <option value="Semiclear">Semiclear</option>
+                                            <option value="> 1%">> 1%</option>
+                                            <option value="Standard">Standard</option>
+                                            <option value="Altro">Altro</option>
+                                        </select>
+                                        <div id="altra-polpa-distilla-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altra-polpa-distilla" placeholder="Specifica altro tenore di polpa">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="distilla-quantita" class="form-label required-field">Quantità (L)</label>
+                                        <input type="number" class="form-control" id="distilla-quantita" required min="1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sub-section">
+                                <h5 class="section-title">Seleziona Distillatore</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="distillatore" id="distilla-santoro" value="Santoro" required>
+                                            <label class="form-check-label" for="distilla-santoro">
+                                                Santoro
+                                                <span class="badge bg-success">Disponibile</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="distillatore" id="distilla-padovan" value="Padovan">
+                                            <label class="form-check-label" for="distilla-padovan">
+                                                Padovan
+                                                <span class="badge bg-success">Disponibile</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="distillatore" id="distilla-pilato1" value="Pilato 1">
+                                            <label class="form-check-label" for="distilla-pilato1">
+                                                Pilato 1
+                                                <span class="badge bg-success">Disponibile</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="distillatore" id="distilla-pilato2" value="Pilato 2">
+                                            <label class="form-check-label" for="distilla-pilato2">
+                                                Pilato 2
+                                                <span class="badge bg-success">Disponibile</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="distillatore" id="distilla-joe" value="Joe">
+                                            <label class="form-check-label" for="distilla-joe">
+                                                Joe
+                                                <span class="badge bg-success">Disponibile</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sub-section">
+                                <h5 class="section-title">Parametri Processo</h5>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="distilla-pressione" class="form-label required-field">Pressione (bar)</label>
+                                        <input type="number" class="form-control" id="distilla-pressione" required min="0" step="0.1">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="distilla-temperatura" class="form-label required-field">Temperatura (°C)</label>
+                                        <input type="number" class="form-control" id="distilla-temperatura" required min="0" step="0.1">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="distilla-tempo" class="form-label required-field">Tempo Stimato (min)</label>
+                                        <input type="number" class="form-control" id="distilla-tempo" required min="1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <label for="distilla-note" class="form-label">Note</label>
+                                    <textarea class="form-control" id="distilla-note" rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="text-end mt-4">
+                                <button type="button" class="btn btn-secondary me-2" id="distilla-reset">
+                                    <i class="bi bi-x-circle"></i> Annulla
+                                </button>
+                                <button type="submit" class="btn btn-custom">
+                                    <i class="bi bi-play-circle"></i> Avvia Processo
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Lista processi distillazione attivi -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="bi bi-list-check"></i> Processi di Distillazione Attivi
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="distilla-processi-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID Processo</th>
+                                        <th>Distillatore</th>
+                                        <th>Prodotto</th>
+                                        <th>Agrume</th>
+                                        <th>Pressione</th>
+                                        <th>Temperatura</th>
+                                        <th>Stato</th>
+                                        <th>Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="8" class="text-center">Nessun processo attivo</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASTORIZZATORI -->
+            <div class="tab-pane fade" id="pastorizzatori" role="tabpanel">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="bi bi-thermometer-high"></i> Pastorizzatori - Gestione Processo
+                    </div>
+                    <div class="card-body">
+                        <!-- Form per pastorizzatori -->
+                        <form id="pastorizzatori-form">
+                            <div class="sub-section">
+                                <h5 class="section-title">Prodotto da Pastorizzare</h5>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="pastorizza-prodotto" class="form-label required-field">Tipo Prodotto</label>
+                                        <select class="form-select" id="pastorizza-prodotto" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="Succo">Succo</option>
+                                            <option value="Torchiato">Torchiato</option>
+                                            <option value="Estratto">Estratto</option>
+                                            <option value="Altro">Altro</option>
+                                        </select>
+                                        <div id="altro-prodotto-pastorizza-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altro-prodotto-pastorizza" placeholder="Specifica altro prodotto">
+                                        </div>
+                                    </div>
+                                    <div
+                                      <div class="col-md-4">
+                                        <label for="pastorizza-agrume" class="form-label required-field">Tipo Agrume</label>
+                                        <select class="form-select" id="pastorizza-agrume" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="Arance">Arance</option>
+                                            <option value="Arance Rosse">Arance Rosse</option>
+                                            <option value="Limoni">Limoni</option>
+                                            <option value="Mandarini">Mandarini</option>
+                                            <option value="Pompelmi">Pompelmi</option>
+                                            <option value="Altro">Altro</option>
+                                        </select>
+                                        <div id="altro-agrume-pastorizza-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altro-agrume-pastorizza" placeholder="Specifica altro agrume">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="pastorizza-certificazione" class="form-label required-field">Certificazione</label>
+                                        <select class="form-select" id="pastorizza-certificazione" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="BIO EU">BIO EU</option>
+                                            <option value="BIO DEMETER">BIO DEMETER</option>
+                                            <option value="CONVENZIONALE">CONVENZIONALE</option>
+                                            <option value="IGP">IGP</option>
+                                            <option value="ALTRO">ALTRO</option>
+                                        </select>
+                                        <div id="altra-certificazione-pastorizza-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altra-certificazione-pastorizza" placeholder="Specifica altra certificazione">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="pastorizza-linea" class="form-label required-field">Linea di Trasformazione</label>
+                                        <select class="form-select" id="pastorizza-linea" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="BOE">BOE</option>
+                                            <option value="GOE INT">GOE INT</option>
+                                            <option value="B/SF">B/SF</option>
+                                            <option value="400">400</option>
+                                            <option value="ALTRA">ALTRA</option>
+                                        </select>
+                                        <div id="altra-linea-pastorizza-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altra-linea-pastorizza" placeholder="Specifica altra linea">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="pastorizza-polpa" class="form-label required-field">Tenore di Polpa</label>
+                                        <select class="form-select" id="pastorizza-polpa" required>
+                                            <option value="" selected disabled>Seleziona...</option>
+                                            <option value="Limpido">Limpido</option>
+                                            <option value="Semiclear">Semiclear</option>
+                                            <option value="> 1%">> 1%</option>
+                                            <option value="Standard">Standard</option>
+                                            <option value="Altro">Altro</option>
+                                        </select>
+                                        <div id="altra-polpa-pastorizza-container" style="display: none;" class="mt-2">
+                                            <input type="text" class="form-control" id="altra-polpa-pastorizza" placeholder="Specifica altro tenore di polpa">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="pastorizza-quantita" class="form-label required-field">Quantità (L)</label>
+                                        <input type="number" class="form-control" id="pastorizza-quantita" required min="1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sub-section">
+                                <h5 class="section-title">Seleziona Pastorizzatore</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="pastorizzatore" id="pastorizza-arancia" value="Pastorizzatore Arancia" required>
+                                            <label class="form-check-label" for="pastorizza-arancia">
+                                                Pastorizzatore Arancia
+                                                <span class="badge bg-success">Disponibile</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="pastorizzatore" id="pastorizza-profea" value="Pastorizzatore Profea">
+                                            <label class="form-check-label" for="pastorizza-profea">
+                                                Pastorizzatore Profea
+                                                <span class="badge bg-success">Disponibile</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sub-section">
+                                <h5 class="section-title">Parametri Processo</h5>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="pastorizza-temperatura" class="form-label required-field">Temperatura (°C)</label>
+                                        <input type="number" class="form-control" id="pastorizza-temperatura" required min="0" step="0.1">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="pastorizza-tempo" class="form-label required-field">Tempo di Ritenzione (sec)</label>
+                                        <input type="number" class="form-control" id="pastorizza-tempo" required min="1">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="pastorizza-flusso" class="form-label required-field">Flusso (L/h)</label>
+                                        <input type="number" class="form-control" id="pastorizza-flusso" required min="0">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <label for="pastorizza-note" class="form-label">Note</label>
+                                    <textarea class="form-control" id="pastorizza-note" rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="text-end mt-4">
+                                <button type="button" class="btn btn-secondary me-2" id="pastorizza-reset">
+                                    <i class="bi bi-x-circle"></i> Annulla
+                                </button>
+                                <button type="submit" class="btn btn-custom">
+                                    <i class="bi bi-play-circle"></i> Avvia Processo
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Lista processi pastorizzazione attivi -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="bi bi-list-check"></i> Processi di Pastorizzazione Attivi
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="pastorizza-processi-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID Processo</th>
+                                        <th>Pastorizzatore</th>
+                                        <th>Prodotto</th>
+                                        <th>Agrume</th>
+                                        <th>Temperatura</th>
+                                        <th>Tempo</th>
+                                        <th>Stato</th>
+                                        <th>Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="8" class="text-center">Nessun processo attivo</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Dettagli Processo -->
+    <div class="modal fade" id="processoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title"><i class="bi bi-info-circle"></i> Dettagli Processo <span id="modal-processo-id"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6>Informazioni Generali</h6>
+                            <p><strong>Tipo Processo:</strong> <span id="modal-tipo-processo"></span></p>
+                            <p><strong>Macchina:</strong> <span id="modal-macchina"></span></p>
+                            <p><strong>Prodotto:</strong> <span id="modal-prodotto"></span></p>
+                            <p><strong>Tipo Agrume:</strong> <span id="modal-agrume"></span></p>
+                            <p><strong>Certificazione:</strong> <span id="modal-certificazione"></span></p>
+                            <p><strong>Tenore di Polpa:</strong> <span id="modal-polpa"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Parametri Processo</h6>
+                            <div id="parametri-concentrazione" style="display: none;">
+                                <p><strong>Brix Entrata:</strong> <span id="modal-brix-entrata"></span></p>
+                                <p><strong>Brix Uscita Target:</strong> <span id="modal-brix-uscita"></span></p>
+                                <p><strong>Temperatura:</strong> <span id="modal-temperatura-concentra"></span> °C</p>
+                            </div>
+                            <div id="parametri-distillazione" style="display: none;">
+                                <p><strong>Pressione:</strong> <span id="modal-pressione"></span> bar</p>
+                                <p><strong>Temperatura:</strong> <span id="modal-temperatura-distilla"></span> °C</p>
+                                <p><strong>Tempo Stimato:</strong> <span id="modal-tempo-distilla"></span> min</p>
+                            </div>
+                            <div id="parametri-pastorizzazione" style="display: none;">
+                                <p><strong>Temperatura:</strong> <span id="modal-temperatura-pastorizza"></span> °C</p>
+                                <p><strong>Tempo di Ritenzione:</strong> <span id="modal-tempo-pastorizza"></span> sec</p>
+                                <p><strong>Flusso:</strong> <span id="modal-flusso"></span> L/h</p>
+                            </div>
+                            <h6 class="mt-3">Note</h6>
+                            <p id="modal-note">-</p>
+                        </div>
+                    </div>
+                    
+                    <div class="border-top pt-3">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="modal-stato" class="form-label">Aggiorna Stato</label>
+                                <select class="form-select" id="modal-stato">
+                                    <option value="In corso">In corso</option>
+                                    <option value="Completato">Completato</option>
+                                    <option value="In pausa">In pausa</option>
+                                    <option value="Interrotto">Interrotto</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modal-completamento" class="form-label">Completamento (%)</label>
+                                <input type="range" class="form-range" id="modal-completamento" min="0" max="100" step="5">
+                                <div class="text-center" id="completamento-value">50%</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="modal-note-aggiuntive" class="form-label">Note Aggiuntive</label>
+                                <textarea class="form-control" id="modal-note-aggiuntive" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                    <button type="button" class="btn btn-custom" id="btn-save-modal">Salva Modifiche</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Dati di stato
+            let processiCount = 0;
+            let concentratoProdotto = 0;
+            let distillatoProdotto = 0;
+            let pastorizzatoProdotto = 0;
+            
+            // Gestione dati dei processi
+            let processi = {};
+            
+            // Stato macchine
+            let macchine = {
+                "APV1": "Disponibile",
+                "APV2": "Disponibile",
+                "Santoro": "Disponibile",
+                "Padovan": "Disponibile",
+                "Pilato 1": "Disponibile",
+                "Pilato 2": "Disponibile",
+                "Joe": "Disponibile",
+                "Pastorizzatore Arancia": "Disponibile",
+                "Pastorizzatore Profea": "Disponibile"
+            };
+            
+            // Gestione altro prodotto - Concentratori
+            $("#concentra-prodotto").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altro-prodotto-concentra-container").show();
+                } else {
+                    $("#altro-prodotto-concentra-container").hide();
+                    $("#altro-prodotto-concentra").val("");
+                }
+            });
+            
+            // Gestione altro agrume - Concentratori
+            $("#concentra-agrume").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altro-agrume-concentra-container").show();
+                } else {
+                    $("#altro-agrume-concentra-container").hide();
+                    $("#altro-agrume-concentra").val("");
+                }
+            });
+            
+            // Gestione altra certificazione - Concentratori
+            $("#concentra-certificazione").change(function() {
+                if ($(this).val() === "ALTRO") {
+                    $("#altra-certificazione-concentra-container").show();
+                } else {
+                    $("#altra-certificazione-concentra-container").hide();
+                    $("#altra-certificazione-concentra").val("");
+                }
+            });
+            
+            // Gestione altra linea - Concentratori
+            $("#concentra-linea").change(function() {
+                if ($(this).val() === "ALTRA") {
+                    $("#altra-linea-concentra-container").show();
+                } else {
+                    $("#altra-linea-concentra-container").hide();
+                    $("#altra-linea-concentra").val("");
+                }
+            });
+            
+            // Gestione altro tenore di polpa - Concentratori
+            $("#concentra-polpa").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altra-polpa-concentra-container").show();
+                } else {
+                    $("#altra-polpa-concentra-container").hide();
+                    $("#altra-polpa-concentra").val("");
+                }
+            });
+            
+            // Gestione altro prodotto - Distillatori
+            $("#distilla-prodotto").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altro-prodotto-distilla-container").show();
+                } else {
+                    $("#altro-prodotto-distilla-container").hide();
+                    $("#altro-prodotto-distilla").val("");
+                }
+            });
+            
+            // Gestione altro agrume - Distillatori
+            $("#distilla-agrume").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altro-agrume-distilla-container").show();
+                } else {
+                    $("#altro-agrume-distilla-container").hide();
+                    $("#altro-agrume-distilla").val("");
+                }
+            });
+            
+            // Gestione altra certificazione - Distillatori
+            $("#distilla-certificazione").change(function() {
+                if ($(this).val() === "ALTRO") {
+                    $("#altra-certificazione-distilla-container").show();
+                } else {
+                    $("#altra-certificazione-distilla-container").hide();
+                    $("#altra-certificazione-distilla").val("");
+                }
+            });
+            
+            // Gestione altra linea - Distillatori
+            $("#distilla-linea").change(function() {
+                if ($(this).val() === "ALTRA") {
+                    $("#altra-linea-distilla-container").show();
+                } else {
+                    $("#altra-linea-distilla-container").hide();
+                    $("#altra-linea-distilla").val("");
+                }
+            });
+            
+            // Gestione altro tenore di polpa - Distillatori
+            $("#distilla-polpa").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altra-polpa-distilla-container").show();
+                } else {
+                    $("#altra-polpa-distilla-container").hide();
+                    $("#altra-polpa-distilla").val("");
+                }
+            });
+            
+            // Gestione altro prodotto - Pastorizzatori
+            $("#pastorizza-prodotto").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altro-prodotto-pastorizza-container").show();
+                } else {
+                    $("#altro-prodotto-pastorizza-container").hide();
+                    $("#altro-prodotto-pastorizza").val("");
+                }
+            });
+            
+            // Gestione altro agrume - Pastorizzatori
+            $("#pastorizza-agrume").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altro-agrume-pastorizza-container").show();
+                } else {
+                    $("#altro-agrume-pastorizza-container").hide();
+                    $("#altro-agrume-pastorizza").val("");
+                }
+            });
+            
+            // Gestione altra certificazione - Pastorizzatori
+            $("#pastorizza-certificazione").change(function() {
+                if ($(this).val() === "ALTRO") {
+                    $("#altra-certificazione-pastorizza-container").show();
+                } else {
+                    $("#altra-certificazione-pastorizza-container").hide();
+                    $("#altra-certificazione-pastorizza").val("");
+                }
+            });
+            
+            // Gestione altra linea - Pastorizzatori
+            $("#pastorizza-linea").change(function() {
+                if ($(this).val() === "ALTRA") {
+                    $("#altra-linea-pastorizza-container").show();
+                } else {
+                    $("#altra-linea-pastorizza-container").hide();
+                    $("#altra-linea-pastorizza").val("");
+                }
+            });
+            
+            // Gestione altro tenore di polpa - Pastorizzatori
+            $("#pastorizza-polpa").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altra-polpa-pastorizza-container").show();
+                } else {
+                    $("#altra-polpa-pastorizza-container").hide();
+                    $("#altra-polpa-pastorizza").val("");
+                }
+            });
+            
+            // Pulsante reset form concentratori
+            $("#concentra-reset").click(function() {
+                if (confirm("Vuoi davvero annullare? I dati inseriti andranno persi.")) {
+                    $("#concentratori-form")[0].reset();
+                    $("[id$='-concentra-container']").hide();
+                }
+            });
+            
+            // Pulsante reset form distillatori
+            $("#distilla-reset").click(function() {
+                if (confirm("Vuoi davvero annullare? I dati inseriti andranno persi.")) {
+                    $("#distillatori-form")[0].reset();
+                    $("[id$='-distilla-container']").hide();
+                }
+            });
+            
+            // Pulsante reset form pastorizzatori
+            $("#pastorizza-reset").click(function() {
+                if (confirm("Vuoi davvero annullare? I dati inseriti andranno persi.")) {
+                    $("#pastorizzatori-form")[0].reset();
+                    $("[id$='-pastorizza-container']").hide();
+                }
+            });
+            
+            // Slider completamento nel modal
+            $("#modal-completamento").on("input", function() {
+                $("#completamento-value").text($(this).val() + "%");
+            });
+            
+            // Pulsanti cambio reparto
+            $("#btn-reparto-1").click(function() {
+                if (confirm("Passare al Reparto 1: Ricezione e Scarico Frutta? Le modifiche non salvate andranno perse.")) {
+                    alert("Collegamento al Reparto 1 simulato.");
+                }
+            });
+            
+            $("#btn-reparto-2").click(function() {
+                if (confirm("Passare al Reparto 2: Trasformazione? Le modifiche non salvate andranno perse.")) {
+                    alert("Collegamento al Reparto 2 simulato.");
+                }
+            });
+            
+            // Salvataggio processo concentrazione
+            $("#concentratori-form").submit(function(e) {
+                e.preventDefault();
+                
+                // Verifica macchina disponibile
+                let macchinaSelezionata = $("input[name='concentratore']:checked").val();
+                if (!macchinaSelezionata) {
+                    alert("Seleziona un concentratore!");
+                    return;
+                }
+                
+                if (macchine[macchinaSelezionata] !== "Disponibile") {
+                    alert("Il concentratore selezionato non è disponibile!");
+                    return;
+                }
+                
+                // Raccolta dati
+                let prodotto = $("#concentra-prodotto").val();
+                if (prodotto === "Altro") {
+                    prodotto = $("#altro-prodotto-concentra").val();
+                }
+                
+                let agrume = $("#concentra-agrume").val();
+                if (agrume === "Altro") {
+                    agrume = $("#altro-agrume-concentra").val();
+                }
+                
+                let certificazione = $("#concentra-certificazione").val();
+                if (certificazione === "ALTRO") {
+                    certificazione = $("#altra-certificazione-concentra").val();
+                }
+                
+                let linea = $("#concentra-linea").val();
+                if (linea === "ALTRA") {
+                    linea = $("#altra-linea-concentra").val();
+                }
+                
+                let polpa = $("#concentra-polpa").val();
+                if (polpa === "Altro") {
+                    polpa = $("#altra-polpa-concentra").val();
+                }
+                
+                let quantita = parseInt($("#concentra-quantita").val());
+                let brixEntrata = parseFloat($("#concentra-brix-entrata").val());
+                let brixUscita = parseFloat($("#concentra-brix-uscita").val());
+                let temperatura = parseFloat($("#concentra-temperatura").val());
+                let note = $("#concentra-note").val();
+                
+                // Generazione ID processo
+                const now = new Date();
+                const processoId = "C-" + 
+                               now.getFullYear() + 
+                               padZero(now.getMonth() + 1) + 
+                               padZero(now.getDate()) + "-" + 
+                               padZero(now.getHours()) + 
+                               padZero(now.getMinutes());
+                
+                // Creazione oggetto processo
+                processi[processoId] = {
+                    id: processoId,
+                    tipo: "Concentrazione",
+                    macchina: macchinaSelezionata,
+                    prodotto: prodotto,
+                    agrume: agrume,
+                    certificazione: certificazione,
+                    linea: linea,
+                    polpa: polpa,
+                    quantita: quantita,
+                    brixEntrata: brixEntrata,
+                    brixUscita: brixUscita,
+                    temperatura: temperatura,
+                    note: note,
+                    stato: "In corso",
+                    completamento: 0,
+                    dataInizio: now.toISOString(),
+                    dataAggiornamento: now.toISOString()
+                };
+                
+                // Aggiorna stato macchina
+                macchine[macchinaSelezionata] = "In uso";
+                
+                // Incremento contatori
+                processiCount++;
+                
+                // Aggiornamento UI
+                updateConcentraProcessiTable();
+                updateMacchineUI();
+                updateStats();
+                
+                // Reset form
+                $("#concentratori-form")[0].reset();
+                $("[id$='-concentra-container']").hide();
+                
+                alert("Processo di concentrazione avviato con successo!\nID: " + processoId);
+            });
+            
+            // Salvataggio processo distillazione
+            $("#distillatori-form").submit(function(e) {
+                e.preventDefault();
+                
+                // Verifica macchina disponibile
+                let macchinaSelezionata = $("input[name='distillatore']:checked").val();
+                if (!macchinaSelezionata) {
+                    alert("Seleziona un distillatore!");
+                    return;
+                }
+                
+                if (macchine[macchinaSelezionata] !== "Disponibile") {
+                    alert("Il distillatore selezionato non è disponibile!");
+                    return;
+                }
+                
+                // Raccolta dati
+                let prodotto = $("#distilla-prodotto").val();
+                if (prodotto === "Altro") {
+                    prodotto = $("#altro-prodotto-distilla").val();
+                }
+                
+                let agrume = $("#distilla-agrume").val();
+                if (agrume === "Altro") {
+                    agrume = $("#altro-agrume-distilla").val();
+                }
+                
+                let certificazione = $("#distilla-certificazione").val();
+                if (certificazione === "ALTRO") {
+                    certificazione = $("#altra-certificazione-distilla").val();
+                }
+                
+                let linea = $("#distilla-linea").val();
+                if (linea === "ALTRA") {
+                    linea = $("#altra-linea-distilla").val();
+                }
+                
+                let polpa = $("#distilla-polpa").val();
+                if (polpa === "Altro") {
+                    polpa = $("#altra-polpa-distilla").val();
+                }
+                
+                let quantita = parseInt($("#distilla-quantita").val());
+                let pressione = parseFloat($("#distilla-pressione").val());
+                let temperatura = parseFloat($("#distilla-temperatura").val());
+                let tempo = parseInt($("#distilla-tempo").val());
+                let note = $("#distilla-note").val();
+                
+                // Generazione ID processo
+                const now = new Date();
+                const processoId = "D-" + 
+                               now.getFullYear() + 
+                               padZero(now.getMonth() + 1) + 
+                               padZero(now.getDate()) + "-" + 
+                               padZero(now.getHours()) + 
+                               padZero(now.getMinutes());
+                
+                // Creazione oggetto processo
+                processi[processoId] = {
+                    id: processoId,
+                    tipo: "Distillazione",
+                    macchina: macchinaSelezionata,
+                    prodotto: prodotto,
+                    agrume: agrume,
+                    certificazione: certificazione,
+                    linea: linea,
+                    polpa: polpa,
+                    quantita: quantita,
+                    pressione: pressione,
+                    temperatura: temperatura,
+                    tempo: tempo,
+                    note: note,
+                    stato: "In corso",
+                    completamento: 0,
+                    dataInizio: now.toISOString(),
+                    dataAggiornamento: now.toISOString()
+                };
+                
+                // Aggiorna stato macchina
+                macchine[macchinaSelezionata] = "In uso";
+                
+                // Incremento contatori
+                processiCount++;
+                
+                // Aggiornamento UI
+                updateDistillaProcessiTable();
+                updateMacchineUI();
+                updateStats();
+                
+                // Reset form
+                $("#distillatori-form")[0].reset();
+                $("[id$='-distilla-container']").hide();
+                
+                alert("Processo di distillazione avviato con successo!\nID: " + processoId);
+            });
+            
+            // Salvataggio processo pastorizzazione
+            $("#pastorizzatori-form").submit(function(e) {
+                e.preventDefault();
+                
+                // Verifica macchina disponibile
+                let macchinaSelezionata = $("input[name='pastorizzatore']:checked").val();
+                if (!macchinaSelezionata) {
+                    alert("Seleziona un pastorizzatore!");
+                    return;
+                }
+                
+                if (macchine[macchinaSelezionata] !== "Disponibile") {
+                    alert("Il pastorizzatore selezionato non è disponibile!");
+                    return;
+                  }
+                
+                // Raccolta dati
+                let prodotto = $("#pastorizza-prodotto").val();
+                if (prodotto === "Altro") {
+                    prodotto = $("#altro-prodotto-pastorizza").val();
+                }
+                
+                let agrume = $("#pastorizza-agrume").val();
+                if (agrume === "Altro") {
+                    agrume = $("#altro-agrume-pastorizza").val();
+                }
+                
+                let certificazione = $("#pastorizza-certificazione").val();
+                if (certificazione === "ALTRO") {
+                    certificazione = $("#altra-certificazione-pastorizza").val();
+                }
+                
+                let linea = $("#pastorizza-linea").val();
+                if (linea === "ALTRA") {
+                    linea = $("#altra-linea-pastorizza").val();
+                }
+                
+                let polpa = $("#pastorizza-polpa").val();
+                if (polpa === "Altro") {
+                    polpa = $("#altra-polpa-pastorizza").val();
+                }
+                
+                let quantita = parseInt($("#pastorizza-quantita").val());
+                let temperatura = parseFloat($("#pastorizza-temperatura").val());
+                let tempo = parseInt($("#pastorizza-tempo").val());
+                let flusso = parseInt($("#pastorizza-flusso").val());
+                let note = $("#pastorizza-note").val();
+                
+                // Generazione ID processo
+                const now = new Date();
+                const processoId = "P-" + 
+                               now.getFullYear() + 
+                               padZero(now.getMonth() + 1) + 
+                               padZero(now.getDate()) + "-" + 
+                               padZero(now.getHours()) + 
+                               padZero(now.getMinutes());
+                
+                // Creazione oggetto processo
+                processi[processoId] = {
+                    id: processoId,
+                    tipo: "Pastorizzazione",
+                    macchina: macchinaSelezionata,
+                    prodotto: prodotto,
+                    agrume: agrume,
+                    certificazione: certificazione,
+                    linea: linea,
+                    polpa: polpa,
+                    quantita: quantita,
+                    temperatura: temperatura,
+                    tempo: tempo,
+                    flusso: flusso,
+                    note: note,
+                    stato: "In corso",
+                    completamento: 0,
+                    dataInizio: now.toISOString(),
+                    dataAggiornamento: now.toISOString()
+                };
+                
+                // Aggiorna stato macchina
+                macchine[macchinaSelezionata] = "In uso";
+                
+                // Incremento contatori
+                processiCount++;
+                
+                // Aggiornamento UI
+                updatePastorizzaProcessiTable();
+                updateMacchineUI();
+                updateStats();
+                
+                // Reset form
+                $("#pastorizzatori-form")[0].reset();
+                $("[id$='-pastorizza-container']").hide();
+                
+                alert("Processo di pastorizzazione avviato con successo!\nID: " + processoId);
+            });
+            
+            // Apertura modal dettagli processo
+            $(document).on("click", ".btn-view-process", function() {
+                let processoId = $(this).data("process");
+                let processoData = processi[processoId];
+                
+                // Reset dei pannelli parametri
+                $("#parametri-concentrazione, #parametri-distillazione, #parametri-pastorizzazione").hide();
+                
+                // Popolamento dati nel modal
+                $("#modal-processo-id").text(processoData.id);
+                $("#modal-tipo-processo").text(processoData.tipo);
+                $("#modal-macchina").text(processoData.macchina);
+                $("#modal-prodotto").text(processoData.prodotto);
+                $("#modal-agrume").text(processoData.agrume);
+                $("#modal-certificazione").text(processoData.certificazione);
+                $("#modal-polpa").text(processoData.polpa);
+                
+                // Parametri specifici per tipo di processo
+                if (processoData.tipo === "Concentrazione") {
+                    $("#parametri-concentrazione").show();
+                    $("#modal-brix-entrata").text(processoData.brixEntrata);
+                    $("#modal-brix-uscita").text(processoData.brixUscita);
+                    $("#modal-temperatura-concentra").text(processoData.temperatura);
+                } else if (processoData.tipo === "Distillazione") {
+                    $("#parametri-distillazione").show();
+                    $("#modal-pressione").text(processoData.pressione);
+                    $("#modal-temperatura-distilla").text(processoData.temperatura);
+                    $("#modal-tempo-distilla").text(processoData.tempo);
+                } else if (processoData.tipo === "Pastorizzazione") {
+                    $("#parametri-pastorizzazione").show();
+                    $("#modal-temperatura-pastorizza").text(processoData.temperatura);
+                    $("#modal-tempo-pastorizza").text(processoData.tempo);
+                    $("#modal-flusso").text(processoData.flusso);
+                }
+                
+                $("#modal-note").text(processoData.note || "Nessuna nota");
+                
+                // Impostazione stato attuale
+                $("#modal-stato").val(processoData.stato);
+                $("#modal-completamento").val(processoData.completamento);
+                $("#completamento-value").text(processoData.completamento + "%");
+                $("#modal-note-aggiuntive").val("");
+                
+                // Apertura del modal
+                new bootstrap.Modal(document.getElementById('processoModal')).show();
+                
+                // Salvataggio dell'ID del processo corrente per l'aggiornamento
+                $("#btn-save-modal").data("process-id", processoId);
+            });
+            
+            // Salvataggio modifiche dal modal
+            $("#btn-save-modal").click(function() {
+                let processoId = $(this).data("process-id");
+                let processoData = processi[processoId];
+                
+                // Aggiornamento stato e percentuale di completamento
+                const vecchioStato = processoData.stato;
+                processoData.stato = $("#modal-stato").val();
+                processoData.completamento = parseInt($("#modal-completamento").val());
+                
+                // Aggiorna contatori se lo stato è cambiato a completato
+                if (processoData.stato === "Completato" && vecchioStato !== "Completato") {
+                    if (processoData.tipo === "Concentrazione") {
+                        // Calcolo approssimativo volume concentrato (riduzione volume in base a brix)
+                        const rapportoConcentrazione = processoData.brixUscita / processoData.brixEntrata;
+                        const volumeConcentrato = Math.round(processoData.quantita / rapportoConcentrazione);
+                        concentratoProdotto += volumeConcentrato;
+                    } else if (processoData.tipo === "Distillazione") {
+                        // Assumiamo una resa del 15% per la distillazione
+                        const volumeDistillato = Math.round(processoData.quantita * 0.15);
+                        distillatoProdotto += volumeDistillato;
+                    } else if (processoData.tipo === "Pastorizzazione") {
+                        // La pastorizzazione mantiene lo stesso volume
+                        pastorizzatoProdotto += processoData.quantita;
+                    }
+                    
+                    // Aggiorna stato macchina
+                    macchine[processoData.macchina] = "Disponibile";
+                }
+                
+                // Se il processo è interrotto, liberiamo la macchina
+                if (processoData.stato === "Interrotto") {
+                    macchine[processoData.macchina] = "Disponibile";
+                }
+                
+                // Aggiungi note se presenti
+                let noteAggiuntive = $("#modal-note-aggiuntive").val();
+                if (noteAggiuntive) {
+                    if (processoData.note) {
+                        processoData.note += "\n\n" + noteAggiuntive;
+                    } else {
+                        processoData.note = noteAggiuntive;
+                    }
+                }
+                
+                // Aggiornamento data
+                processoData.dataAggiornamento = new Date().toISOString();
+                
+                // Chiusura del modal
+                bootstrap.Modal.getInstance(document.getElementById('processoModal')).hide();
+                
+                // Aggiornamento UI
+                updateConcentraProcessiTable();
+                updateDistillaProcessiTable();
+                updatePastorizzaProcessiTable();
+                updateMacchineUI();
+                updateStats();
+                
+                alert("Modifiche salvate con successo!");
+            });
+            
+            // Terminazione processo
+            $(document).on("click", ".btn-complete-process", function() {
+                let processoId = $(this).data("process");
+                let processoData = processi[processoId];
+                
+                if (confirm("Terminare il processo " + processoId + "?")) {
+                    // Aggiornamento stato
+                    processoData.stato = "Completato";
+                    processoData.completamento = 100;
+                    processoData.dataAggiornamento = new Date().toISOString();
+                    
+                    // Aggiorna contatori
+                    if (processoData.tipo === "Concentrazione") {
+                        // Calcolo approssimativo volume concentrato (riduzione volume in base a brix)
+                        const rapportoConcentrazione = processoData.brixUscita / processoData.brixEntrata;
+                        const volumeConcentrato = Math.round(processoData.quantita / rapportoConcentrazione);
+                        concentratoProdotto += volumeConcentrato;
+                    } else if (processoData.tipo === "Distillazione") {
+                        // Assumiamo una resa del 15% per la distillazione
+                        const volumeDistillato = Math.round(processoData.quantita * 0.15);
+                        distillatoProdotto += volumeDistillato;
+                    } else if (processoData.tipo === "Pastorizzazione") {
+                        // La pastorizzazione mantiene lo stesso volume
+                        pastorizzatoProdotto += processoData.quantita;
+                    }
+                    
+                    // Aggiorna stato macchina
+                    macchine[processoData.macchina] = "Disponibile";
+                    
+                    // Aggiornamento UI
+                    updateConcentraProcessiTable();
+                    updateDistillaProcessiTable();
+                    updatePastorizzaProcessiTable();
+                    updateMacchineUI();
+                    updateStats();
+                    
+                    alert("Processo " + processoId + " completato con successo!");
+                }
+            });
+            
+            // Eliminazione processo
+            $(document).on("click", ".btn-delete-process", function() {
+                let processoId = $(this).data("process");
+                let processoData = processi[processoId];
+                
+                if (confirm("Eliminare il processo " + processoId + "? Questa azione non può essere annullata.")) {
+                    // Se processo in corso, liberiamo la macchina
+                    if (processoData.stato === "In corso") {
+                        macchine[processoData.macchina] = "Disponibile";
+                    }
+                    
+                    // Rimozione processo
+                    delete processi[processoId];
+                    processiCount--;
+                    
+                    // Aggiornamento UI
+                    updateConcentraProcessiTable();
+                    updateDistillaProcessiTable();
+                    updatePastorizzaProcessiTable();
+                    updateMacchineUI();
+                    updateStats();
+                    
+                    alert("Processo " + processoId + " eliminato!");
+                }
+            });
+            
+            // FUNZIONI DI SUPPORTO
+            
+            // Aggiornamento tabella processi concentrazione
+            function updateConcentraProcessiTable() {
+                const tableBody = $("#concentra-processi-table tbody");
+                tableBody.empty();
+                
+                let processiConcentrazione = Object.values(processi).filter(p => p.tipo === "Concentrazione");
+                
+                if (processiConcentrazione.length === 0) {
+                    tableBody.append(`
+                        <tr>
+                            <td colspan="8" class="text-center">Nessun processo attivo</td>
+                        </tr>
+                    `);
+                    return;
+                }
+                
+                processiConcentrazione.forEach(processo => {
+                    let statoClass = "";
+                    let azioniBtns = "";
+                    
+                    switch(processo.stato) {
+                        case "In corso":
+                            statoClass = "bg-primary text-white";
+                            azioniBtns = `
+                                <button class="btn btn-sm btn-success btn-complete-process" data-process="${processo.id}" title="Termina Processo">
+                                    <i class="bi bi-check-circle"></i>
+                                </button>
+                                <button class="btn btn-sm btn-info btn-view-process" data-process="${processo.id}" title="Visualizza Dettagli">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            `;
+                            break;
+                        case "Completato":
+                            statoClass = "bg-success text-white";
+                            azioniBtns = `
+                                <button class="btn btn-sm btn-info btn-view-process" data-process="${processo.id}" title="Visualizza Dettagli">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-delete-process" data-process="${processo.id}" title="Elimina Processo">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            `;
+                            break;
+                        case "In pausa":
+                            statoClass = "bg-warning text-dark";
+                            azioniBtns = `
+                                <button class="btn btn-sm btn-success btn-complete-process" data-process="${processo.id}" title="Termina Processo">
+                                    <i class="bi bi-check-circle"></i>
+                                </button>
+                                <button class="btn btn-sm btn-info btn-view-process" data-process="${processo.id}" title="Visualizza Dettagli">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            `;
+                            break;
+                        case "Interrotto":
+                            statoClass = "bg-danger text-white";
+                            azioniBtns = `
+                                <button class="btn btn-sm btn-info btn-view-process" data-process="${processo.id}" title="Visualizza Dettagli">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-delete-process" data-process="${processo.id}" title="Elimina Processo">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            `;
+                            break;
+                    }
+                    
+                    tableBody.append(`
+                        <tr>
+                            <td>${processo.id}</td>
+                            <td>${processo.macchina}</td>
+                            <td>${processo.prodotto} (${processo.agrume})</td>
+                            <td>${processo.agrume}</td>
+                            <td>${processo.brixEntrata}°</td>
+                            <td>${processo.brixUscita}°</td>
+                            <td class="${statoClass}">${processo.stato} (${processo.completamento}%)</td>
+                            <td>${azioniBtns}</td>
+                        </tr>
+                    `);
+                });
+            }
+            
+            // Aggiornamento tabella processi distillazione
+            function updateDistillaProcessiTable() {
+                const tableBody = $("#distilla-processi-table tbody");
+                tableBody.empty();
+                
+                let processiDistillazione = Object.values(processi).filter(p => p.tipo === "Distillazione");
+                
+                if (processiDistillazione.length === 0) {
+                    tableBody.append(`
+                        <tr>
+                            <td colspan="8" class="text-center">Nessun processo attivo</td>
+                        </tr>
+                    `);
+                    return;
+                }
+                
+                processiDistillazione.forEach(processo => {
+                    let statoClass = "";
+                    let azioniBtns = "";
+                    
+                    switch(processo.stato) {
+                        case "In corso":
+                            statoClass = "bg-primary text-white";
+                            azioniBtns = `
+                                <button class="btn btn-sm btn-success btn-complete-process" data-process="${processo.id}" title="Termina Processo">
+                                    <i class="bi bi-check-circle"></i>
+                                </button>
+                                <button class="btn btn-sm btn-info btn-view-process" data-process="${processo.id}" title="Visualizza Dettagli">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            `;
+                            break;
+                        case "Completato":
+                            statoClass = "bg-success text-white";
+                            azioniBtns = `
+                                <button class="btn btn-sm btn-info btn-view-process" data-process="${processo.id}" title="Visualizza Dettagli">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-delete-process" data-process="${processo.id}" title="Elimina Processo">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            `;
+                            break;
+                        case "In pausa":
+                            statoClass = "bg-warning text-dark";
+                            azioniBtns = `
+                                <button class="btn btn-sm btn-success btn-complete-process" data-process="${processo.id}" title="Termina Processo">
+                                    <i class="bi bi-check-circle"></i>
+                                </button>
+                                <button class="btn btn-sm btn-info btn-view-process" data-process="${processo.id}" title="Visualizza Dettagli">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            `;
+                            break;
+                        case "Interrotto":
+                            statoClass = "bg-danger text-white";
+                            azioniBtns = `
+                                <button class="btn btn-sm btn-info btn-view-process" data-process="${processo.id}" title="Visualizza Dettagli">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-delete-process" data-process="${processo.id}" title="Elimina Processo">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            `;
+                            break;
+                    }
+                    
+                    tableBody.append(`
+                        <tr>
+                            <td>${processo.id}</td>
+                            <td>${processo.macchina}</td>
+                            <td>${processo.prodotto} (${processo.agrume})</td>
+                            <td>${processo.agrume}</td>
+                            <td>${processo.pressione} bar</td>
+                            <td>${processo.temperatura}°C</td>
+                            <td class="${statoClass}">${processo.stato} (${processo.completamento}%)</td>
+                            <td>${azioniBtns}</td>
+                        </tr>
+                    `);
+                });
+            }
+            
+            // Aggiornamento tabella processi pastorizzazione
+            function updatePastorizzaProcessiTable() {
+                const tableBody = $("#pastorizza-processi-table tbody");
+                tableBody.empty();
+                
+                let processiPastorizzazione = Object.values(processi).filter(p => p.tipo === "Pastorizzazione");
+                
+                if (processiPastorizzazione.length === 0) {
+                    tableBody.append(`
+                        <tr>
+                            <td colspan="8" class="text-center">Nessun processo attivo</td>
+                        </tr>
+                    `);
+                    return;
+                }
+                
+                processiPastorizzazione.forEach(processo => {
+                    let statoClass = "";
+                    let azioniBtns = "";
+                    
+                    switch(processo.stato) {
+                        case "In corso":
+                            statoClass = "bg-primary text-white";
+                            azioniBtns = `
+                                <button class="btn btn-sm btn-success btn-complete-process" data-process="${processo.id}" title="Termina Processo">
+                                    <i class="bi bi-check-circle"></i>
+                                </button>
+                                <button class="btn btn-sm btn-info btn-view-process" data-process="${processo.id}" title="Visualizza Dettagli">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            `;
+                            break;
+                        case "Completato":
+                            statoClass = "bg-success text-white";
+                            azioniBtns = `
+                                <button class="btn btn-sm btn-info btn-view-process" data-process="${processo.id}" title="Visualizza Dettagli">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-delete-process" data-process="${processo.id}" title="Elimina Processo">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            `;
+                            break;
+                        case "In pausa":
+                            statoClass = "bg-warning text-dark";
+                            azioniBtns = `
+                                <button class="btn btn-sm btn-success btn-complete-process" data-process="${processo.id}" title="Termina Processo">
+                                    <i class="bi bi-check-circle"></i>
+                                </button>
+                                <button class="btn btn-sm btn-info btn-view-process" data-process="${processo.id}" title="Visualizza Dettagli">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            `;
+                            break;
+                        case "Interrotto":
+                            statoClass = "bg-danger text-white";
+                            azioniBtns = `
+                                <button class="btn btn-sm btn-info btn-view-process" data-process="${processo.id}" title="Visualizza Dettagli">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-delete-process" data-process="${processo.id}" title="Elimina Processo">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            `;
+                            break;
+                    }
+                    
+                    tableBody.append(`
+                        <tr>
+                            <td>${processo.id}</td>
+                            <td>${processo.macchina}</td>
+                            <td>${processo.prodotto} (${processo.agrume})</td>
+                            <td>${processo.agrume}</td>
+                            <td>${processo.temperatura}°C</td>
+                            <td>${processo.tempo} sec</td>
+                            <td class="${statoClass}">${processo.stato} (${processo.completamento}%)</td>
+                            <td>${azioniBtns}</td>
+                        </tr>
+                    `);
+                });
+            }
+            
+            // Aggiornamento UI macchine
+            function updateMacchineUI() {
+                // Concentratori
+                for (const concentratore of ["APV1", "APV2"]) {
+                    const stato = macchine[concentratore];
+                    const label = $(`label[for='concentra-${concentratore.toLowerCase()}']`);
+                    label.find("span").removeClass("bg-success bg-danger").addClass(stato === "Disponibile" ? "bg-success" : "bg-danger").text(stato);
+                }
+                
+                // Distillatori
+                for (const distillatore of ["Santoro", "Padovan", "Pilato 1", "Pilato 2", "Joe"]) {
+                    const stato = macchine[distillatore];
+                    const idFormatted = distillatore.toLowerCase().replace(/\s+/g, "");
+                    const label = $(`label[for='distilla-${idFormatted}']`);
+                    label.find("span").removeClass("bg-success bg-danger").addClass(stato === "Disponibile" ? "bg-success" : "bg-danger").text(stato);
+                }
+                
+                // Pastorizzatori
+                for (const pastorizzatore of ["Pastorizzatore Arancia", "Pastorizzatore Profea"]) {
+                    const stato = macchine[pastorizzatore];
+                    const idFormatted = pastorizzatore.toLowerCase().replace(/\s+/g, "").replace("pastorizzatore", "");
+                    const label = $(`label[for='pastorizza-${idFormatted}']`);
+                    label.find("span").removeClass("bg-success bg-danger").addClass(stato === "Disponibile" ? "bg-success" : "bg-danger").text(stato);
+                }
+            }
+            
+            // Aggiornamento statistiche
+            function updateStats() {
+                $("#total-processi").text(processiCount);
+                $("#total-concentrato").text(concentratoProdotto + " L");
+                $("#total-distillato").text(distillatoProdotto + " L");
+                $("#total-pastorizzato").text(pastorizzatoProdotto + " L");
+            }
+            
+            // Utility per padding zeri
+            function padZero(num) {
+                return num < 10 ? "0" + num : num;
+            }
+        });
+    </script>
+</body>
+</html>
