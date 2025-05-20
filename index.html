@@ -1027,6 +1027,124 @@
             });
             
             // Avvio processo di concentrazione
+$("#concentrazione-form").submit(function(e) {
+    e.preventDefault();
+    
+    // Verifica che sia stata selezionata una macchina
+    if (!selectedMachine) {
+        alert("Seleziona una cella di concentrazione!");
+        return;
+    }
+    
+    // Raccolta dati
+    let tipoProdotto = $("#conc-tipo-prodotto").val();
+    if (tipoProdotto === "Altro") {
+        tipoProdotto = $("#conc-altro-prodotto").val();
+        if (!tipoProdotto) {
+            alert("Specifica il tipo di prodotto!");
+            return;
+        }
+    }
+    
+    let tipoAgrume = $("#conc-tipo-agrume").val();
+    if (tipoAgrume === "Altro") {
+        tipoAgrume = $("#conc-altro-agrume").val();
+        if (!tipoAgrume) {
+            alert("Specifica il tipo di agrume!");
+            return;
+        }
+    }
+    
+    let certificazione = $("#conc-certificazione").val();
+    if (certificazione === "ALTRO") {
+        certificazione = $("#conc-altra-certificazione").val();
+        if (!certificazione) {
+            alert("Specifica la certificazione!");
+            return;
+        }
+    }
+    
+    let lineaTrasformazione = $("#conc-linea-trasformazione").val();
+    if (lineaTrasformazione === "ALTRA") {
+        lineaTrasformazione = $("#conc-altra-linea").val();
+        if (!lineaTrasformazione) {
+            alert("Specifica la linea di trasformazione!");
+            return;
+        }
+    }
+    
+    let tenorePolpa = $("#conc-tenore-polpa").val();
+    if (tenorePolpa === "Altro") {
+        tenorePolpa = $("#conc-altro-tenore").val();
+        if (!tenorePolpa) {
+            alert("Specifica il tenore di polpa!");
+            return;
+        }
+    }
+    
+    const quantita = parseInt($("#conc-quantita").val());
+    const brixIniziale = parseFloat($("#conc-brix-iniziale").val());
+    const brixTarget = parseFloat($("#conc-brix-target").val());
+    const note = $("#conc-note").val();
+    
+    // Validazione 
+    if (!tipoProdotto || !tipoAgrume || !certificazione || 
+        !lineaTrasformazione || !tenorePolpa || isNaN(quantita) || 
+        isNaN(brixIniziale) || isNaN(brixTarget)) {
+        alert("Compila tutti i campi obbligatori con valori validi!");
+        return;
+    }
+    
+    // Generazione ID processo
+    const now = new Date();
+    const processId = "CONC-" + now.getFullYear() + 
+                   padZero(now.getMonth() + 1) + 
+                   padZero(now.getDate()) + "-" + 
+                   padZero(now.getHours()) + 
+                   padZero(now.getMinutes()) +
+                   padZero(now.getSeconds());
+    
+    // Creazione oggetto processo
+    processi.concentrazione[processId] = {
+        id: processId,
+        macchina: selectedMachine,
+        tipoProdotto: tipoProdotto,
+        tipoAgrume: tipoAgrume,
+        certificazione: certificazione,
+        lineaTrasformazione: lineaTrasformazione,
+        tenorePolpa: tenorePolpa,
+        quantita: quantita,
+        brixIniziale: brixIniziale,
+        brixTarget: brixTarget,
+        note: note,
+        stato: "In corso",
+        avanzamento: 0,
+        dataInizio: now.toISOString(),
+        dataAggiornamento: now.toISOString()
+    };
+    
+    // Aggiorna stato macchina
+    $(`[data-machine="${selectedMachine}"]`).find(".badge-status")
+        .removeClass("bg-success")
+        .addClass("bg-danger")
+        .text("In uso");
+    
+    // Aggiorna statistiche
+    stats.concentrato += quantita;
+    stats.processiAttivi++;
+    updateStats();
+    
+    // Aggiorna tabella
+    updateConcentrazioneTable();
+    
+    // Reset form e selezione
+    $("#concentrazione-form")[0].reset();
+    $("[id^='conc-altro-'][id$='-container']").hide();
+    $("#concentratori-content .machine-card").removeClass("selected");
+    selectedMachine = null;
+    
+    alert("Processo di concentrazione avviato con successo!");
+});/ Avvio processo di concentrazione
             $("#concentrazione-form").submit(function(e) {
                 e.preventDefault();
                 
