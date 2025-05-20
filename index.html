@@ -205,20 +205,51 @@
                         <form id="concentrazione-form">
                             <div class="row mb-3">
                                 <div class="col-md-6">
+                                    <label for="conc-serbatoio" class="form-label required-field">Serbatoio Destinazione</label>
+                                    <select class="form-select" id="conc-serbatoio" required>
+                                        <option value="" selected disabled>Seleziona...</option>
+                                        <optgroup label="SERB AZZ">
+                                            <option value="1Azz">1 Azz</option>
+                                            <option value="2Azz">2 Azz</option>
+                                            <option value="3Azz">3 Azz</option>
+                                            <option value="4Azz">4 Azz</option>
+                                            <option value="5Azz">5 Azz</option>
+                                            <option value="6Azz">6 Azz</option>
+                                            <option value="7Azz">7 Azz</option>
+                                            <option value="8Azz">8 Azz</option>
+                                            <option value="9Azz">9 Azz</option>
+                                            <option value="10Azz">10 Azz</option>
+                                        </optgroup>
+                                        <optgroup label="SERB 11000">
+                                            <option value="S21">S21</option>
+                                            <option value="S22">S22</option>
+                                            <option value="S23">S23</option>
+                                            <option value="S24">S24</option>
+                                            <option value="S25">S25</option>
+                                            <option value="S26">S26</option>
+                                            <option value="S27">S27</option>
+                                            <option value="S28">S28</option>
+                                            <option value="S29">S29</option>
+                                            <option value="S30">S30</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
                                     <label for="conc-tipo-prodotto" class="form-label required-field">Tipo Prodotto</label>
                                     <select class="form-select" id="conc-tipo-prodotto" required>
                                         <option value="" selected disabled>Seleziona...</option>
-                                        <option value="Succo di Arancia">Succo di Arancia</option>
-                                        <option value="Succo di Limone">Succo di Limone</option>
-                                        <option value="Succo di Mandarino">Succo di Mandarino</option>
-                                        <option value="Succo di Pompelmo">Succo di Pompelmo</option>
-                                        <option value="Succo Misto Agrumi">Succo Misto Agrumi</option>
+                                        <option value="Succo">Succo</option>
+                                        <option value="Torchiato">Torchiato</option>
+                                        <option value="Estratto">Estratto</option>
                                         <option value="Altro">Altro</option>
                                     </select>
                                     <div id="conc-altro-prodotto-container" style="display: none;" class="mt-2">
                                         <input type="text" class="form-control" id="conc-altro-prodotto" placeholder="Specifica altro prodotto">
                                     </div>
                                 </div>
+                            </div>
+                            
+                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="conc-tipo-agrume" class="form-label required-field">Tipo Agrume</label>
                                     <select class="form-select" id="conc-tipo-agrume" required>
@@ -234,9 +265,6 @@
                                         <input type="text" class="form-control" id="conc-altro-agrume" placeholder="Specifica altro agrume">
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="conc-certificazione" class="form-label required-field">Certificazione</label>
                                     <select class="form-select" id="conc-certificazione" required>
@@ -251,6 +279,9 @@
                                         <input type="text" class="form-control" id="conc-altra-certificazione" placeholder="Specifica altra certificazione">
                                     </div>
                                 </div>
+                            </div>
+                            
+                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="conc-linea-trasformazione" class="form-label required-field">Linea di Trasformazione</label>
                                     <select class="form-select" id="conc-linea-trasformazione" required>
@@ -265,9 +296,6 @@
                                         <input type="text" class="form-control" id="conc-altra-linea" placeholder="Specifica altra linea">
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="conc-tenore-polpa" class="form-label required-field">Tenore di Polpa</label>
                                     <select class="form-select" id="conc-tenore-polpa" required>
@@ -281,10 +309,6 @@
                                     <div id="conc-altro-tenore-container" style="display: none;" class="mt-2">
                                         <input type="text" class="form-control" id="conc-altro-tenore" placeholder="Specifica altro tenore">
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="conc-quantita" class="form-label required-field">Quantità (L)</label>
-                                    <input type="number" class="form-control" id="conc-quantita" required min="1">
                                 </div>
                             </div>
                             
@@ -301,8 +325,8 @@
                                     <input type="number" class="form-control" id="conc-brix-target" required step="0.1" min="0">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="conc-serbatoio" class="form-label required-field">Serbatoio Destinazione</label>
-                                    <input type="text" class="form-control" id="conc-serbatoio" required placeholder="Codice serbatoio">
+                                    <label for="conc-quantita" class="form-label required-field">Quantità concentrato prodotta (L)</label>
+                                    <input type="number" class="form-control" id="conc-quantita" required min="1">
                                 </div>
                             </div>
                             
@@ -330,12 +354,12 @@
                                         <tr>
                                             <th>ID Processo</th>
                                             <th>Cella</th>
+                                            <th>Serbatoio</th>
                                             <th>Prodotto</th>
                                             <th>Agrume</th>
                                             <th>Certificazione</th>
                                             <th>Quantità</th>
                                             <th>Brix Target</th>
-                                            <th>Serbatoio</th>
                                             <th>Stato</th>
                                             <th>Azioni</th>
                                         </tr>
@@ -424,20 +448,51 @@
                         <form id="distillazione-form">
                             <div class="row mb-3">
                                 <div class="col-md-6">
+                                    <label for="dist-serbatoio" class="form-label required-field">Serbatoio Destinazione</label>
+                                    <select class="form-select" id="dist-serbatoio" required>
+                                        <option value="" selected disabled>Seleziona...</option>
+                                        <optgroup label="SERB AZZ">
+                                            <option value="1Azz">1 Azz</option>
+                                            <option value="2Azz">2 Azz</option>
+                                            <option value="3Azz">3 Azz</option>
+                                            <option value="4Azz">4 Azz</option>
+                                            <option value="5Azz">5 Azz</option>
+                                            <option value="6Azz">6 Azz</option>
+                                            <option value="7Azz">7 Azz</option>
+                                            <option value="8Azz">8 Azz</option>
+                                            <option value="9Azz">9 Azz</option>
+                                            <option value="10Azz">10 Azz</option>
+                                        </optgroup>
+                                        <optgroup label="SERB 11000">
+                                            <option value="S21">S21</option>
+                                            <option value="S22">S22</option>
+                                            <option value="S23">S23</option>
+                                            <option value="S24">S24</option>
+                                            <option value="S25">S25</option>
+                                            <option value="S26">S26</option>
+                                            <option value="S27">S27</option>
+                                            <option value="S28">S28</option>
+                                            <option value="S29">S29</option>
+                                            <option value="S30">S30</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
                                     <label for="dist-tipo-prodotto" class="form-label required-field">Tipo Prodotto</label>
                                     <select class="form-select" id="dist-tipo-prodotto" required>
                                         <option value="" selected disabled>Seleziona...</option>
-                                        <option value="Essenza di Arancia">Essenza di Arancia</option>
-                                        <option value="Essenza di Limone">Essenza di Limone</option>
-                                        <option value="Essenza di Bergamotto">Essenza di Bergamotto</option>
-                                        <option value="Essenza di Mandarino">Essenza di Mandarino</option>
-                                        <option value="Olii Essenziali Misti">Olii Essenziali Misti</option>
+                                        <option value="Succo">Succo</option>
+                                        <option value="Torchiato">Torchiato</option>
+                                        <option value="Estratto">Estratto</option>
                                         <option value="Altro">Altro</option>
                                     </select>
                                     <div id="dist-altro-prodotto-container" style="display: none;" class="mt-2">
                                         <input type="text" class="form-control" id="dist-altro-prodotto" placeholder="Specifica altro prodotto">
                                     </div>
                                 </div>
+                            </div>
+                            
+                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="dist-tipo-agrume" class="form-label required-field">Tipo Agrume</label>
                                     <select class="form-select" id="dist-tipo-agrume" required>
@@ -453,9 +508,6 @@
                                         <input type="text" class="form-control" id="dist-altro-agrume" placeholder="Specifica altro agrume">
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="dist-certificazione" class="form-label required-field">Certificazione</label>
                                     <select class="form-select" id="dist-certificazione" required>
@@ -470,6 +522,9 @@
                                         <input type="text" class="form-control" id="dist-altra-certificazione" placeholder="Specifica altra certificazione">
                                     </div>
                                 </div>
+                            </div>
+                            
+                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="dist-linea-trasformazione" class="form-label required-field">Linea di Trasformazione</label>
                                     <select class="form-select" id="dist-linea-trasformazione" required>
@@ -484,9 +539,6 @@
                                         <input type="text" class="form-control" id="dist-altra-linea" placeholder="Specifica altra linea">
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="dist-tenore-polpa" class="form-label required-field">Tenore di Polpa</label>
                                     <select class="form-select" id="dist-tenore-polpa" required>
@@ -499,22 +551,21 @@
                                     </select>
                                     <div id="dist-altro-tenore-container" style="display: none;" class="mt-2">
                                         <input type="text" class="form-control" id="dist-altro-tenore" placeholder="Specifica altro tenore">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="dist-quantita" class="form-label required-field">Quantità (L)</label>
-                                    <input type="number" class="form-control" id="dist-quantita" required min="1">
+                                        </div>
                                 </div>
                             </div>
                             
                             <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="dist-serbatoio" class="form-label required-field">Serbatoio Destinazione</label>
-                                    <input type="text" class="form-control" id="dist-serbatoio" required placeholder="Codice serbatoio">
-                                </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label for="dist-note" class="form-label">Note</label>
                                     <textarea class="form-control" id="dist-note" rows="2"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="dist-quantita" class="form-label required-field">Quantità concentrato prodotta (L)</label>
+                                    <input type="number" class="form-control" id="dist-quantita" required min="1">
                                 </div>
                             </div>
                             
@@ -542,11 +593,11 @@
                                         <tr>
                                             <th>ID Processo</th>
                                             <th>Distillatore</th>
+                                            <th>Serbatoio</th>
                                             <th>Prodotto</th>
                                             <th>Agrume</th>
                                             <th>Certificazione</th>
                                             <th>Quantità</th>
-                                            <th>Serbatoio</th>
                                             <th>Stato</th>
                                             <th>Azioni</th>
                                         </tr>
@@ -605,20 +656,51 @@
                         <form id="pastorizzazione-form">
                             <div class="row mb-3">
                                 <div class="col-md-6">
+                                    <label for="past-serbatoio" class="form-label required-field">Serbatoio Destinazione</label>
+                                    <select class="form-select" id="past-serbatoio" required>
+                                        <option value="" selected disabled>Seleziona...</option>
+                                        <optgroup label="SERB AZZ">
+                                            <option value="1Azz">1 Azz</option>
+                                            <option value="2Azz">2 Azz</option>
+                                            <option value="3Azz">3 Azz</option>
+                                            <option value="4Azz">4 Azz</option>
+                                            <option value="5Azz">5 Azz</option>
+                                            <option value="6Azz">6 Azz</option>
+                                            <option value="7Azz">7 Azz</option>
+                                            <option value="8Azz">8 Azz</option>
+                                            <option value="9Azz">9 Azz</option>
+                                            <option value="10Azz">10 Azz</option>
+                                        </optgroup>
+                                        <optgroup label="SERB 11000">
+                                            <option value="S21">S21</option>
+                                            <option value="S22">S22</option>
+                                            <option value="S23">S23</option>
+                                            <option value="S24">S24</option>
+                                            <option value="S25">S25</option>
+                                            <option value="S26">S26</option>
+                                            <option value="S27">S27</option>
+                                            <option value="S28">S28</option>
+                                            <option value="S29">S29</option>
+                                            <option value="S30">S30</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
                                     <label for="past-tipo-prodotto" class="form-label required-field">Tipo Prodotto</label>
                                     <select class="form-select" id="past-tipo-prodotto" required>
                                         <option value="" selected disabled>Seleziona...</option>
-                                        <option value="Succo Fresco di Arancia">Succo Fresco di Arancia</option>
-                                        <option value="Succo Fresco di Limone">Succo Fresco di Limone</option>
-                                        <option value="Succo Fresco di Mandarino">Succo Fresco di Mandarino</option>
-                                        <option value="Succo Fresco di Pompelmo">Succo Fresco di Pompelmo</option>
-                                        <option value="Succo Fresco Misto">Succo Fresco Misto</option>
+                                        <option value="Succo">Succo</option>
+                                        <option value="Torchiato">Torchiato</option>
+                                        <option value="Estratto">Estratto</option>
                                         <option value="Altro">Altro</option>
                                     </select>
                                     <div id="past-altro-prodotto-container" style="display: none;" class="mt-2">
                                         <input type="text" class="form-control" id="past-altro-prodotto" placeholder="Specifica altro prodotto">
                                     </div>
                                 </div>
+                            </div>
+                            
+                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="past-tipo-agrume" class="form-label required-field">Tipo Agrume</label>
                                     <select class="form-select" id="past-tipo-agrume" required>
@@ -634,9 +716,6 @@
                                         <input type="text" class="form-control" id="past-altro-agrume" placeholder="Specifica altro agrume">
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="past-certificazione" class="form-label required-field">Certificazione</label>
                                     <select class="form-select" id="past-certificazione" required>
@@ -651,6 +730,9 @@
                                         <input type="text" class="form-control" id="past-altra-certificazione" placeholder="Specifica altra certificazione">
                                     </div>
                                 </div>
+                            </div>
+                            
+                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="past-linea-trasformazione" class="form-label required-field">Linea di Trasformazione</label>
                                     <select class="form-select" id="past-linea-trasformazione" required>
@@ -665,9 +747,6 @@
                                         <input type="text" class="form-control" id="past-altra-linea" placeholder="Specifica altra linea">
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="past-tenore-polpa" class="form-label required-field">Tenore di Polpa</label>
                                     <select class="form-select" id="past-tenore-polpa" required>
@@ -682,27 +761,19 @@
                                         <input type="text" class="form-control" id="past-altro-tenore" placeholder="Specifica altro tenore">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="past-quantita" class="form-label required-field">Quantità (L)</label>
-                                    <input type="number" class="form-control" id="past-quantita" required min="1">
-                                </div>
-                            </div>
-                            
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="past-serbatoio" class="form-label required-field">Serbatoio Destinazione</label>
-                                    <input type="text" class="form-control" id="past-serbatoio" required placeholder="Codice serbatoio">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="past-temperatura" class="form-label required-field">Temperatura (°C)</label>
-                                    <input type="number" class="form-control" id="past-temperatura" required step="0.1" min="0">
-                                </div>
                             </div>
                             
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label for="past-note" class="form-label">Note</label>
                                     <textarea class="form-control" id="past-note" rows="2"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="past-quantita" class="form-label required-field">Quantità concentrato prodotta (L)</label>
+                                    <input type="number" class="form-control" id="past-quantita" required min="1">
                                 </div>
                             </div>
                             
@@ -730,19 +801,18 @@
                                         <tr>
                                             <th>ID Processo</th>
                                             <th>Pastorizzatore</th>
+                                            <th>Serbatoio</th>
                                             <th>Prodotto</th>
                                             <th>Agrume</th>
                                             <th>Certificazione</th>
                                             <th>Quantità</th>
-                                            <th>Temperatura</th>
-                                            <th>Serbatoio</th>
                                             <th>Stato</th>
                                             <th>Azioni</th>
                                         </tr>
                                     </thead>
                                     <tbody id="pastorizzazione-processi">
                                         <tr>
-                                            <td colspan="10" class="text-center">Nessun processo attivo</td>
+                                            <td colspan="9" class="text-center">Nessun processo attivo</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -766,15 +836,14 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <p><strong>Macchina:</strong> <span id="modal-macchina"></span></p>
+                            <p><strong>Serbatoio:</strong> <span id="modal-serbatoio"></span></p>
                             <p><strong>Prodotto:</strong> <span id="modal-prodotto"></span></p>
                             <p><strong>Agrume:</strong> <span id="modal-agrume"></span></p>
-                            <p><strong>Certificazione:</strong> <span id="modal-certificazione"></span></p>
                         </div>
                         <div class="col-md-6">
+                            <p><strong>Certificazione:</strong> <span id="modal-certificazione"></span></p>
                             <p><strong>Quantità:</strong> <span id="modal-quantita"></span></p>
                             <p><strong>Linea di Trasformazione:</strong> <span id="modal-linea"></span></p>
-                            <p><strong>Tenore di Polpa:</strong> <span id="modal-polpa"></span></p>
-                            <p><strong>Serbatoio:</strong> <span id="modal-serbatoio"></span></p>
                             <p><strong>Data Inizio:</strong> <span id="modal-data-inizio"></span></p>
                         </div>
                     </div>
@@ -1046,6 +1115,12 @@
                 }
                 
                 // Raccolta dati
+                const serbatoio = $("#conc-serbatoio").val();
+                if (!serbatoio) {
+                    alert("Seleziona un serbatoio di destinazione!");
+                    return;
+                }
+                
                 let tipoProdotto = $("#conc-tipo-prodotto").val();
                 if (tipoProdotto === "Altro") {
                     tipoProdotto = $("#conc-altro-prodotto").val();
@@ -1092,14 +1167,13 @@
                 }
                 
                 const quantita = parseInt($("#conc-quantita").val());
-                const serbatoio = $("#conc-serbatoio").val();
                 const brixTarget = parseFloat($("#conc-brix-target").val());
                 const note = $("#conc-note").val();
                 
                 // Validazione 
                 if (!tipoProdotto || !tipoAgrume || !certificazione || 
                     !lineaTrasformazione || !tenorePolpa || isNaN(quantita) || 
-                    !serbatoio || isNaN(brixTarget)) {
+                    isNaN(brixTarget)) {
                     alert("Compila tutti i campi obbligatori con valori validi!");
                     return;
                 }
@@ -1119,13 +1193,13 @@
                 processi.concentrazione[processId] = {
                     id: processId,
                     macchina: selectedMachine,
+                    serbatoio: serbatoio,
                     tipoProdotto: tipoProdotto,
                     tipoAgrume: tipoAgrume,
                     certificazione: certificazione,
                     lineaTrasformazione: lineaTrasformazione,
                     tenorePolpa: tenorePolpa,
                     quantita: quantita,
-                    serbatoio: serbatoio,
                     brixTarget: brixTarget,
                     note: note,
                     stato: "In corso",
@@ -1134,6 +1208,8 @@
                     dataAggiornamento: now.toISOString()
                 };
                 
+                // Aggiorna stato macchina
+                $(`[data-machine="${selectedMachine}"]
                 // Aggiorna stato macchina
                 $(`[data-machine="${selectedMachine}"]`).find(".badge-status")
                     .removeClass("bg-success")
@@ -1171,6 +1247,12 @@
                 }
                 
                 // Raccolta dati
+                const serbatoio = $("#dist-serbatoio").val();
+                if (!serbatoio) {
+                    alert("Seleziona un serbatoio di destinazione!");
+                    return;
+                }
+                
                 let tipoProdotto = $("#dist-tipo-prodotto").val();
                 if (tipoProdotto === "Altro") {
                     tipoProdotto = $("#dist-altro-prodotto").val();
@@ -1217,22 +1299,17 @@
                 }
                 
                 const quantita = parseInt($("#dist-quantita").val());
-                const serbatoio = $("#dist-serbatoio").val();
                 const note = $("#dist-note").val();
                 
                 // Validazione 
                 if (!tipoProdotto || !tipoAgrume || !certificazione || 
-                    !lineaTrasformazione || !tenorePolpa || isNaN(quantita) || 
-                    !serbatoio) {
+                    !lineaTrasformazione || !tenorePolpa || isNaN(quantita)) {
                     alert("Compila tutti i campi obbligatori con valori validi!");
                     return;
                 }
                 
                 // Generazione ID processo
                 const now = new Date();
-                const processId = "DIST-" + now.getFullYear() + 
-                               padZero(now.getMonth() + 1) + 
-                               padZero
                 const processId = "DIST-" + now.getFullYear() + 
                                padZero(now.getMonth() + 1) + 
                                padZero(now.getDate()) + "-" + 
@@ -1246,13 +1323,13 @@
                 processi.distillazione[processId] = {
                     id: processId,
                     macchina: selectedMachine,
+                    serbatoio: serbatoio,
                     tipoProdotto: tipoProdotto,
                     tipoAgrume: tipoAgrume,
                     certificazione: certificazione,
                     lineaTrasformazione: lineaTrasformazione,
                     tenorePolpa: tenorePolpa,
                     quantita: quantita,
-                    serbatoio: serbatoio,
                     note: note,
                     stato: "In corso",
                     avanzamento: 0,
@@ -1297,6 +1374,12 @@
                 }
                 
                 // Raccolta dati
+                const serbatoio = $("#past-serbatoio").val();
+                if (!serbatoio) {
+                    alert("Seleziona un serbatoio di destinazione!");
+                    return;
+                }
+                
                 let tipoProdotto = $("#past-tipo-prodotto").val();
                 if (tipoProdotto === "Altro") {
                     tipoProdotto = $("#past-altro-prodotto").val();
@@ -1343,14 +1426,11 @@
                 }
                 
                 const quantita = parseInt($("#past-quantita").val());
-                const temperatura = parseFloat($("#past-temperatura").val());
-                const serbatoio = $("#past-serbatoio").val();
                 const note = $("#past-note").val();
                 
                 // Validazione 
                 if (!tipoProdotto || !tipoAgrume || !certificazione || 
-                    !lineaTrasformazione || !tenorePolpa || isNaN(quantita) || 
-                    isNaN(temperatura) || !serbatoio) {
+                    !lineaTrasformazione || !tenorePolpa || isNaN(quantita)) {
                     alert("Compila tutti i campi obbligatori con valori validi!");
                     return;
                 }
@@ -1370,14 +1450,13 @@
                 processi.pastorizzazione[processId] = {
                     id: processId,
                     macchina: selectedMachine,
+                    serbatoio: serbatoio,
                     tipoProdotto: tipoProdotto,
                     tipoAgrume: tipoAgrume,
                     certificazione: certificazione,
                     lineaTrasformazione: lineaTrasformazione,
                     tenorePolpa: tenorePolpa,
                     quantita: quantita,
-                    temperatura: temperatura,
-                    serbatoio: serbatoio,
                     note: note,
                     stato: "In corso",
                     avanzamento: 0,
@@ -1439,13 +1518,12 @@
                 // Popola il modal con i dati del processo
                 $("#processo-id").text(processo.id);
                 $("#modal-macchina").text(processo.macchina);
+                $("#modal-serbatoio").text(processo.serbatoio);
                 $("#modal-prodotto").text(processo.tipoProdotto);
                 $("#modal-agrume").text(processo.tipoAgrume);
                 $("#modal-certificazione").text(processo.certificazione);
                 $("#modal-quantita").text(processo.quantita + " L");
                 $("#modal-linea").text(processo.lineaTrasformazione);
-                $("#modal-polpa").text(processo.tenorePolpa);
-                $("#modal-serbatoio").text(processo.serbatoio);
                 $("#modal-data-inizio").text(new Date(processo.dataInizio).toLocaleString());
                 $("#modal-note").text(processo.note || "Nessuna nota");
                 
@@ -1582,12 +1660,12 @@
                         <tr>
                             <td>${processo.id}</td>
                             <td>${processo.macchina}</td>
+                            <td>${processo.serbatoio}</td>
                             <td>${processo.tipoProdotto}</td>
                             <td>${processo.tipoAgrume}</td>
                             <td>${processo.certificazione}</td>
                             <td>${processo.quantita} L</td>
                             <td>${processo.brixTarget}</td>
-                            <td>${processo.serbatoio}</td>
                             <td class="${statoClass}">${processo.stato} (${processo.avanzamento}%)</td>
                             <td>
                                 <button class="btn btn-sm btn-info view-process" data-processid="${processo.id}" data-processtype="concentrazione">
@@ -1638,11 +1716,11 @@
                         <tr>
                             <td>${processo.id}</td>
                             <td>${processo.macchina}</td>
+                            <td>${processo.serbatoio}</td>
                             <td>${processo.tipoProdotto}</td>
                             <td>${processo.tipoAgrume}</td>
                             <td>${processo.certificazione}</td>
                             <td>${processo.quantita} L</td>
-                            <td>${processo.serbatoio}</td>
                             <td class="${statoClass}">${processo.stato} (${processo.avanzamento}%)</td>
                             <td>
                                 <button class="btn btn-sm btn-info view-process" data-processid="${processo.id}" data-processtype="distillazione">
@@ -1693,12 +1771,11 @@
                         <tr>
                             <td>${processo.id}</td>
                             <td>${processo.macchina}</td>
+                            <td>${processo.serbatoio}</td>
                             <td>${processo.tipoProdotto}</td>
                             <td>${processo.tipoAgrume}</td>
                             <td>${processo.certificazione}</td>
                             <td>${processo.quantita} L</td>
-                            <td>${processo.temperatura} °C</td>
-                            <td>${processo.serbatoio}</td>
                             <td class="${statoClass}">${processo.stato} (${processo.avanzamento}%)</td>
                             <td>
                                 <button class="btn btn-sm btn-info view-process" data-processid="${processo.id}" data-processtype="pastorizzazione">
@@ -1712,7 +1789,7 @@
                 if (!hasProcesses) {
                     tableBody.append(`
                         <tr>
-                            <td colspan="10" class="text-center">Nessun processo attivo</td>
+                            <td colspan="9" class="text-center">Nessun processo attivo</td>
                         </tr>
                     `);
                 }
