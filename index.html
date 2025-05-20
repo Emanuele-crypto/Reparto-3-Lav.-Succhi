@@ -183,7 +183,7 @@
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
                                     <div class="machine-status">Capacità: 5000 L/h</div>
                                     <div class="text-end mt-2">
-                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="APV1">Seleziona</button>
+                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="APV1" data-type="concentratore">Seleziona</button>
                                     </div>
                                 </div>
                             </div>
@@ -193,7 +193,7 @@
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
                                     <div class="machine-status">Capacità: 6000 L/h</div>
                                     <div class="text-end mt-2">
-                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="APV2">Seleziona</button>
+                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="APV2" data-type="concentratore">Seleziona</button>
                                     </div>
                                 </div>
                             </div>
@@ -208,9 +208,11 @@
                                     <label for="conc-tipo-prodotto" class="form-label required-field">Tipo Prodotto</label>
                                     <select class="form-select" id="conc-tipo-prodotto" required>
                                         <option value="" selected disabled>Seleziona...</option>
-                                        <option value="Succo">Succo</option>
-                                        <option value="Torchiato">Torchiato</option>
-                                        <option value="Estratto">Estratto</option>
+                                        <option value="Succo di Arancia">Succo di Arancia</option>
+                                        <option value="Succo di Limone">Succo di Limone</option>
+                                        <option value="Succo di Mandarino">Succo di Mandarino</option>
+                                        <option value="Succo di Pompelmo">Succo di Pompelmo</option>
+                                        <option value="Succo Misto Agrumi">Succo Misto Agrumi</option>
                                         <option value="Altro">Altro</option>
                                     </select>
                                     <div id="conc-altro-prodotto-container" style="display: none;" class="mt-2">
@@ -370,7 +372,7 @@
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
                                     <div class="machine-status">Capacità: 2500 L/h</div>
                                     <div class="text-end mt-2">
-                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Santoro">Seleziona</button>
+                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Santoro" data-type="distillatore">Seleziona</button>
                                     </div>
                                 </div>
                             </div>
@@ -380,7 +382,7 @@
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
                                     <div class="machine-status">Capacità: 3000 L/h</div>
                                     <div class="text-end mt-2">
-                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Padovan">Seleziona</button>
+                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Padovan" data-type="distillatore">Seleziona</button>
                                     </div>
                                 </div>
                             </div>
@@ -390,7 +392,7 @@
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
                                     <div class="machine-status">Capacità: 2000 L/h</div>
                                     <div class="text-end mt-2">
-                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Pilato1">Seleziona</button>
+                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Pilato1" data-type="distillatore">Seleziona</button>
                                     </div>
                                 </div>
                             </div>
@@ -400,7 +402,7 @@
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
                                     <div class="machine-status">Capacità: 2000 L/h</div>
                                     <div class="text-end mt-2">
-                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Pilato2">Seleziona</button>
+                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Pilato2" data-type="distillatore">Seleziona</button>
                                     </div>
                                 </div>
                             </div>
@@ -410,7 +412,7 @@
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
                                     <div class="machine-status">Capacità: 1500 L/h</div>
                                     <div class="text-end mt-2">
-                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Joe">Seleziona</button>
+                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Joe" data-type="distillatore">Seleziona</button>
                                     </div>
                                 </div>
                             </div>
@@ -425,9 +427,11 @@
                                     <label for="dist-tipo-prodotto" class="form-label required-field">Tipo Prodotto</label>
                                     <select class="form-select" id="dist-tipo-prodotto" required>
                                         <option value="" selected disabled>Seleziona...</option>
-                                        <option value="Succo">Succo</option>
-                                        <option value="Torchiato">Torchiato</option>
-                                        <option value="Estratto">Estratto</option>
+                                        <option value="Essenza di Arancia">Essenza di Arancia</option>
+                                        <option value="Essenza di Limone">Essenza di Limone</option>
+                                        <option value="Essenza di Bergamotto">Essenza di Bergamotto</option>
+                                        <option value="Essenza di Mandarino">Essenza di Mandarino</option>
+                                        <option value="Olii Essenziali Misti">Olii Essenziali Misti</option>
                                         <option value="Altro">Altro</option>
                                     </select>
                                     <div id="dist-altro-prodotto-container" style="display: none;" class="mt-2">
@@ -552,7 +556,8 @@
                                             <th>Temperatura</th>
                                             <th>Pressione</th>
                                             <th>Stato</th>
-                                            <th>Azioni</th>
+                                            <th>
+<th>Azioni</th>
                                         </tr>
                                     </thead>
                                     <tbody id="distillazione-processi">
@@ -578,7 +583,7 @@
                 </div>
                 
                 <div class="row mb-4">
-                    <div class="<div class="col-md-6">
+                    <div class="col-md-6">
                         <h5 class="mb-3">Seleziona Cella</h5>
                         <div class="row">
                             <div class="col-md-6">
@@ -587,7 +592,7 @@
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
                                     <div class="machine-status">Capacità: 8000 L/h</div>
                                     <div class="text-end mt-2">
-                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="PastArancia">Seleziona</button>
+                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="PastArancia" data-type="pastorizzatore">Seleziona</button>
                                     </div>
                                 </div>
                             </div>
@@ -597,7 +602,7 @@
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
                                     <div class="machine-status">Capacità: 10000 L/h</div>
                                     <div class="text-end mt-2">
-                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="PastProfea">Seleziona</button>
+                                        <button class="btn btn-sm btn-outline-primary select-machine" data-machine="PastProfea" data-type="pastorizzatore">Seleziona</button>
                                     </div>
                                 </div>
                             </div>
@@ -612,9 +617,11 @@
                                     <label for="past-tipo-prodotto" class="form-label required-field">Tipo Prodotto</label>
                                     <select class="form-select" id="past-tipo-prodotto" required>
                                         <option value="" selected disabled>Seleziona...</option>
-                                        <option value="Succo">Succo</option>
-                                        <option value="Torchiato">Torchiato</option>
-                                        <option value="Estratto">Estratto</option>
+                                        <option value="Succo Fresco di Arancia">Succo Fresco di Arancia</option>
+                                        <option value="Succo Fresco di Limone">Succo Fresco di Limone</option>
+                                        <option value="Succo Fresco di Mandarino">Succo Fresco di Mandarino</option>
+                                        <option value="Succo Fresco di Pompelmo">Succo Fresco di Pompelmo</option>
+                                        <option value="Succo Fresco Misto">Succo Fresco Misto</option>
                                         <option value="Altro">Altro</option>
                                     </select>
                                     <div id="past-altro-prodotto-container" style="display: none;" class="mt-2">
@@ -829,6 +836,7 @@
         $(document).ready(function() {
             // Dati globali
             let selectedMachine = null;
+            let selectedMachineType = null;
             let currentProcessId = null;
             let processi = {
                 concentrazione: {},
@@ -847,6 +855,7 @@
             // Gestione selezione macchina
             $(".select-machine").click(function() {
                 const machineId = $(this).data("machine");
+                const machineType = $(this).data("type");
                 
                 // Deseleziona tutte le macchine nella stessa sezione
                 $(this).closest(".row").find(".machine-card").removeClass("selected");
@@ -856,6 +865,9 @@
                 
                 // Memorizza la macchina selezionata
                 selectedMachine = machineId;
+                selectedMachineType = machineType;
+                
+                console.log("Macchina selezionata:", selectedMachine, "Tipo:", selectedMachineType);
             });
             
             // Gestione form concentrazione
@@ -911,6 +923,7 @@
                     $("[id^='conc-altro-'][id$='-container']").hide();
                     $("#concentratori-content .machine-card").removeClass("selected");
                     selectedMachine = null;
+                    selectedMachineType = null;
                 }
             });
             
@@ -967,6 +980,7 @@
                     $("[id^='dist-altro-'][id$='-container']").hide();
                     $("#distillatori-content .machine-card").removeClass("selected");
                     selectedMachine = null;
+                    selectedMachineType = null;
                 }
             });
             
@@ -1023,133 +1037,18 @@
                     $("[id^='past-altro-'][id$='-container']").hide();
                     $("#pastorizzatori-content .machine-card").removeClass("selected");
                     selectedMachine = null;
+                    selectedMachineType = null;
                 }
             });
             
             // Avvio processo di concentrazione
-$("#concentrazione-form").submit(function(e) {
-    e.preventDefault();
-    
-    // Verifica che sia stata selezionata una macchina
-    if (!selectedMachine) {
-        alert("Seleziona una cella di concentrazione!");
-        return;
-    }
-    
-    // Raccolta dati
-    let tipoProdotto = $("#conc-tipo-prodotto").val();
-    if (tipoProdotto === "Altro") {
-        tipoProdotto = $("#conc-altro-prodotto").val();
-        if (!tipoProdotto) {
-            alert("Specifica il tipo di prodotto!");
-            return;
-        }
-    }
-    
-    let tipoAgrume = $("#conc-tipo-agrume").val();
-    if (tipoAgrume === "Altro") {
-        tipoAgrume = $("#conc-altro-agrume").val();
-        if (!tipoAgrume) {
-            alert("Specifica il tipo di agrume!");
-            return;
-        }
-    }
-    
-    let certificazione = $("#conc-certificazione").val();
-    if (certificazione === "ALTRO") {
-        certificazione = $("#conc-altra-certificazione").val();
-        if (!certificazione) {
-            alert("Specifica la certificazione!");
-            return;
-        }
-    }
-    
-    let lineaTrasformazione = $("#conc-linea-trasformazione").val();
-    if (lineaTrasformazione === "ALTRA") {
-        lineaTrasformazione = $("#conc-altra-linea").val();
-        if (!lineaTrasformazione) {
-            alert("Specifica la linea di trasformazione!");
-            return;
-        }
-    }
-    
-    let tenorePolpa = $("#conc-tenore-polpa").val();
-    if (tenorePolpa === "Altro") {
-        tenorePolpa = $("#conc-altro-tenore").val();
-        if (!tenorePolpa) {
-            alert("Specifica il tenore di polpa!");
-            return;
-        }
-    }
-    
-    const quantita = parseInt($("#conc-quantita").val());
-    const brixIniziale = parseFloat($("#conc-brix-iniziale").val());
-    const brixTarget = parseFloat($("#conc-brix-target").val());
-    const note = $("#conc-note").val();
-    
-    // Validazione 
-    if (!tipoProdotto || !tipoAgrume || !certificazione || 
-        !lineaTrasformazione || !tenorePolpa || isNaN(quantita) || 
-        isNaN(brixIniziale) || isNaN(brixTarget)) {
-        alert("Compila tutti i campi obbligatori con valori validi!");
-        return;
-    }
-    
-    // Generazione ID processo
-    const now = new Date();
-    const processId = "CONC-" + now.getFullYear() + 
-                   padZero(now.getMonth() + 1) + 
-                   padZero(now.getDate()) + "-" + 
-                   padZero(now.getHours()) + 
-                   padZero(now.getMinutes()) +
-                   padZero(now.getSeconds());
-    
-    // Creazione oggetto processo
-    processi.concentrazione[processId] = {
-        id: processId,
-        macchina: selectedMachine,
-        tipoProdotto: tipoProdotto,
-        tipoAgrume: tipoAgrume,
-        certificazione: certificazione,
-        lineaTrasformazione: lineaTrasformazione,
-        tenorePolpa: tenorePolpa,
-        quantita: quantita,
-        brixIniziale: brixIniziale,
-        brixTarget: brixTarget,
-        note: note,
-        stato: "In corso",
-        avanzamento: 0,
-        dataInizio: now.toISOString(),
-        dataAggiornamento: now.toISOString()
-    };
-    
-    // Aggiorna stato macchina
-    $(`[data-machine="${selectedMachine}"]`).find(".badge-status")
-        .removeClass("bg-success")
-        .addClass("bg-danger")
-        .text("In uso");
-    
-    // Aggiorna statistiche
-    stats.concentrato += quantita;
-    stats.processiAttivi++;
-    updateStats();
-    
-    // Aggiorna tabella
-    updateConcentrazioneTable();
-    
-    // Reset form e selezione
-    $("#concentrazione-form")[0].reset();
-    $("[id^='conc-altro-'][id$='-container']").hide();
-    $("#concentratori-content .machine-card").removeClass("selected");
-    selectedMachine = null;
-    
-    alert("Processo di concentrazione avviato con successo!");
-});/ Avvio processo di concentrazione
             $("#concentrazione-form").submit(function(e) {
                 e.preventDefault();
                 
+                console.log("Form concentrazione inviato");
+                
                 // Verifica che sia stata selezionata una macchina
-                if (!selectedMachine) {
+                if (!selectedMachine || selectedMachineType !== "concentratore") {
                     alert("Seleziona una cella di concentrazione!");
                     return;
                 }
@@ -1158,26 +1057,46 @@ $("#concentrazione-form").submit(function(e) {
                 let tipoProdotto = $("#conc-tipo-prodotto").val();
                 if (tipoProdotto === "Altro") {
                     tipoProdotto = $("#conc-altro-prodotto").val();
+                    if (!tipoProdotto) {
+                        alert("Specifica il tipo di prodotto!");
+                        return;
+                    }
                 }
                 
                 let tipoAgrume = $("#conc-tipo-agrume").val();
                 if (tipoAgrume === "Altro") {
                     tipoAgrume = $("#conc-altro-agrume").val();
+                    if (!tipoAgrume) {
+                        alert("Specifica il tipo di agrume!");
+                        return;
+                    }
                 }
                 
                 let certificazione = $("#conc-certificazione").val();
                 if (certificazione === "ALTRO") {
                     certificazione = $("#conc-altra-certificazione").val();
+                    if (!certificazione) {
+                        alert("Specifica la certificazione!");
+                        return;
+                    }
                 }
                 
                 let lineaTrasformazione = $("#conc-linea-trasformazione").val();
                 if (lineaTrasformazione === "ALTRA") {
                     lineaTrasformazione = $("#conc-altra-linea").val();
+                    if (!lineaTrasformazione) {
+                        alert("Specifica la linea di trasformazione!");
+                        return;
+                    }
                 }
                 
                 let tenorePolpa = $("#conc-tenore-polpa").val();
                 if (tenorePolpa === "Altro") {
                     tenorePolpa = $("#conc-altro-tenore").val();
+                    if (!tenorePolpa) {
+                        alert("Specifica il tenore di polpa!");
+                        return;
+                    }
                 }
                 
                 const quantita = parseInt($("#conc-quantita").val());
@@ -1187,9 +1106,9 @@ $("#concentrazione-form").submit(function(e) {
                 
                 // Validazione 
                 if (!tipoProdotto || !tipoAgrume || !certificazione || 
-                    !lineaTrasformazione || !tenorePolpa || !quantita || 
-                    !brixIniziale || !brixTarget) {
-                    alert("Compila tutti i campi obbligatori!");
+                    !lineaTrasformazione || !tenorePolpa || isNaN(quantita) || 
+                    isNaN(brixIniziale) || isNaN(brixTarget)) {
+                    alert("Compila tutti i campi obbligatori con valori validi!");
                     return;
                 }
                 
@@ -1201,6 +1120,8 @@ $("#concentrazione-form").submit(function(e) {
                                padZero(now.getHours()) + 
                                padZero(now.getMinutes()) +
                                padZero(now.getSeconds());
+                
+                console.log("Creazione processo:", processId);
                 
                 // Creazione oggetto processo
                 processi.concentrazione[processId] = {
@@ -1240,6 +1161,7 @@ $("#concentrazione-form").submit(function(e) {
                 $("[id^='conc-altro-'][id$='-container']").hide();
                 $("#concentratori-content .machine-card").removeClass("selected");
                 selectedMachine = null;
+                selectedMachineType = null;
                 
                 alert("Processo di concentrazione avviato con successo!");
             });
@@ -1248,8 +1170,10 @@ $("#concentrazione-form").submit(function(e) {
             $("#distillazione-form").submit(function(e) {
                 e.preventDefault();
                 
+                console.log("Form distillazione inviato");
+                
                 // Verifica che sia stata selezionata una macchina
-                if (!selectedMachine) {
+                if (!selectedMachine || selectedMachineType !== "distillatore") {
                     alert("Seleziona un distillatore!");
                     return;
                 }
@@ -1258,26 +1182,46 @@ $("#concentrazione-form").submit(function(e) {
                 let tipoProdotto = $("#dist-tipo-prodotto").val();
                 if (tipoProdotto === "Altro") {
                     tipoProdotto = $("#dist-altro-prodotto").val();
+                    if (!tipoProdotto) {
+                        alert("Specifica il tipo di prodotto!");
+                        return;
+                    }
                 }
                 
                 let tipoAgrume = $("#dist-tipo-agrume").val();
                 if (tipoAgrume === "Altro") {
                     tipoAgrume = $("#dist-altro-agrume").val();
+                    if (!tipoAgrume) {
+                        alert("Specifica il tipo di agrume!");
+                        return;
+                    }
                 }
                 
                 let certificazione = $("#dist-certificazione").val();
                 if (certificazione === "ALTRO") {
                     certificazione = $("#dist-altra-certificazione").val();
+                    if (!certificazione) {
+                        alert("Specifica la certificazione!");
+                        return;
+                    }
                 }
                 
                 let lineaTrasformazione = $("#dist-linea-trasformazione").val();
                 if (lineaTrasformazione === "ALTRA") {
                     lineaTrasformazione = $("#dist-altra-linea").val();
+                    if (!lineaTrasformazione) {
+                        alert("Specifica la linea di trasformazione!");
+                        return;
+                    }
                 }
                 
                 let tenorePolpa = $("#dist-tenore-polpa").val();
                 if (tenorePolpa === "Altro") {
                     tenorePolpa = $("#dist-altro-tenore").val();
+                    if (!tenorePolpa) {
+                        alert("Specifica il tenore di polpa!");
+                        return;
+                    }
                 }
                 
                 const quantita = parseInt($("#dist-quantita").val());
@@ -1286,10 +1230,11 @@ $("#concentrazione-form").submit(function(e) {
                 const note = $("#dist-note").val();
                 
                 // Validazione 
+              // Validazione
                 if (!tipoProdotto || !tipoAgrume || !certificazione || 
-                    !lineaTrasformazione || !tenorePolpa || !quantita || 
-                    !temperatura || !pressione) {
-                    alert("Compila tutti i campi obbligatori!");
+                    !lineaTrasformazione || !tenorePolpa || isNaN(quantita) || 
+                    isNaN(temperatura) || isNaN(pressione)) {
+                    alert("Compila tutti i campi obbligatori con valori validi!");
                     return;
                 }
                 
@@ -1301,6 +1246,8 @@ $("#concentrazione-form").submit(function(e) {
                                padZero(now.getHours()) + 
                                padZero(now.getMinutes()) +
                                padZero(now.getSeconds());
+                
+                console.log("Creazione processo:", processId);
                 
                 // Creazione oggetto processo
                 processi.distillazione[processId] = {
@@ -1340,6 +1287,7 @@ $("#concentrazione-form").submit(function(e) {
                 $("[id^='dist-altro-'][id$='-container']").hide();
                 $("#distillatori-content .machine-card").removeClass("selected");
                 selectedMachine = null;
+                selectedMachineType = null;
                 
                 alert("Processo di distillazione avviato con successo!");
             });
@@ -1348,8 +1296,10 @@ $("#concentrazione-form").submit(function(e) {
             $("#pastorizzazione-form").submit(function(e) {
                 e.preventDefault();
                 
+                console.log("Form pastorizzazione inviato");
+                
                 // Verifica che sia stata selezionata una macchina
-                if (!selectedMachine) {
+                if (!selectedMachine || selectedMachineType !== "pastorizzatore") {
                     alert("Seleziona un pastorizzatore!");
                     return;
                 }
@@ -1358,26 +1308,46 @@ $("#concentrazione-form").submit(function(e) {
                 let tipoProdotto = $("#past-tipo-prodotto").val();
                 if (tipoProdotto === "Altro") {
                     tipoProdotto = $("#past-altro-prodotto").val();
+                    if (!tipoProdotto) {
+                        alert("Specifica il tipo di prodotto!");
+                        return;
+                    }
                 }
                 
                 let tipoAgrume = $("#past-tipo-agrume").val();
                 if (tipoAgrume === "Altro") {
                     tipoAgrume = $("#past-altro-agrume").val();
+                    if (!tipoAgrume) {
+                        alert("Specifica il tipo di agrume!");
+                        return;
+                    }
                 }
                 
                 let certificazione = $("#past-certificazione").val();
                 if (certificazione === "ALTRO") {
                     certificazione = $("#past-altra-certificazione").val();
+                    if (!certificazione) {
+                        alert("Specifica la certificazione!");
+                        return;
+                    }
                 }
                 
                 let lineaTrasformazione = $("#past-linea-trasformazione").val();
                 if (lineaTrasformazione === "ALTRA") {
-                    lineaTrasformazione = $("#past-altra-linealineaTrasformazione = $("#past-altra-linea").val();
+                    lineaTrasformazione = $("#past-altra-linea").val();
+                    if (!lineaTrasformazione) {
+                        alert("Specifica la linea di trasformazione!");
+                        return;
+                    }
                 }
                 
                 let tenorePolpa = $("#past-tenore-polpa").val();
                 if (tenorePolpa === "Altro") {
                     tenorePolpa = $("#past-altro-tenore").val();
+                    if (!tenorePolpa) {
+                        alert("Specifica il tenore di polpa!");
+                        return;
+                    }
                 }
                 
                 const quantita = parseInt($("#past-quantita").val());
@@ -1387,9 +1357,9 @@ $("#concentrazione-form").submit(function(e) {
                 
                 // Validazione 
                 if (!tipoProdotto || !tipoAgrume || !certificazione || 
-                    !lineaTrasformazione || !tenorePolpa || !quantita || 
-                    !temperatura || !tempo) {
-                    alert("Compila tutti i campi obbligatori!");
+                    !lineaTrasformazione || !tenorePolpa || isNaN(quantita) || 
+                    isNaN(temperatura) || isNaN(tempo)) {
+                    alert("Compila tutti i campi obbligatori con valori validi!");
                     return;
                 }
                 
@@ -1401,6 +1371,8 @@ $("#concentrazione-form").submit(function(e) {
                                padZero(now.getHours()) + 
                                padZero(now.getMinutes()) +
                                padZero(now.getSeconds());
+                
+                console.log("Creazione processo:", processId);
                 
                 // Creazione oggetto processo
                 processi.pastorizzazione[processId] = {
@@ -1440,6 +1412,7 @@ $("#concentrazione-form").submit(function(e) {
                 $("[id^='past-altro-'][id$='-container']").hide();
                 $("#pastorizzatori-content .machine-card").removeClass("selected");
                 selectedMachine = null;
+                selectedMachineType = null;
                 
                 alert("Processo di pastorizzazione avviato con successo!");
             });
@@ -1765,6 +1738,8 @@ $("#concentrazione-form").submit(function(e) {
             function padZero(num) {
                 return num < 10 ? "0" + num : num;
             }
+            
+            console.log("Script inizializzato");
         });
     </script>
 </body>
