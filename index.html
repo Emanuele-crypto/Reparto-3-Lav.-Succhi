@@ -12,7 +12,7 @@
             background-color: #f8f9fa;
         }
         .header {
-            background-color: #e67e22;
+            background-color: #198754;
             color: white;
             padding: 15px 0;
             margin-bottom: 30px;
@@ -20,108 +20,77 @@
         .card {
             margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
         }
         .card-header {
-            background-color: #fef5e7;
+            background-color: #e7f5ee;
             font-weight: bold;
-            color: #e67e22;
         }
         .stats-card {
             text-align: center;
             padding: 15px;
-            transition: all 0.3s;
-        }
-        .stats-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
         .stats-value {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #e67e22;
+            color: #198754;
         }
         .machine-card {
             height: 100%;
             transition: all 0.3s;
-            border-left: 4px solid #e67e22;
         }
         .machine-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
         .btn-custom {
-            background-color: #e67e22;
+            background-color: #198754;
             color: white;
         }
         .btn-custom:hover {
-            background-color: #d35400;
+            background-color: #146c43;
             color: white;
         }
         .machine-header {
-            background-color: #fef5e7;
+            background-color: #d1e7dd;
             text-align: center;
             font-weight: bold;
-            color: #e67e22;
         }
         .required-field::after {
             content: " *";
             color: red;
         }
         .nav-tabs .nav-link.active {
-            background-color: #fef5e7;
-            border-color: #e67e22 #e67e22 #fef5e7;
-            color: #e67e22;
+            background-color: #e7f5ee;
+            border-color: #198754 #198754 #e7f5ee;
+            color: #198754;
             font-weight: bold;
         }
         .nav-tabs .nav-link {
             color: #495057;
         }
-        .progress-bar {
-            background-color: #e67e22;
-        }
-        .dept-button {
-            margin-right: 10px;
-            border: 2px solid white;
-        }
-        .sub-header {
-            background-color: #fef5e7;
-            color: #e67e22;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+        .status-free {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            padding: 5px 10px;
+            border-radius: 4px;
             font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
-        .machine-status {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-        }
-        .status-idle {
-            background-color: #f39c12;
-        }
-        .status-working {
-            background-color: #27ae60;
+        .status-busy {
+            background-color: #f8d7da;
+            color: #842029;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
         }
         .status-maintenance {
-            background-color: #e74c3c;
+            background-color: #fff3cd;
+            color: #664d03;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
         }
-        .dashboard-section {
-            margin-bottom: 30px;
-        }
-        .table-hover tbody tr:hover {
-            background-color: #fef5e7;
-        }
-        .table th {
-            background-color: #fef5e7;
-            color: #e67e22;
+        .process-progress {
+            height: 10px;
         }
     </style>
 </head>
@@ -130,15 +99,17 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h1><i class="bi bi-droplet-half"></i> Reparto 3 - Lavorazione Succhi</h1>
+                    <h1><i class="bi bi-droplet-fill"></i> Reparto 3 - Lavorazione Succhi</h1>
                 </div>
                 <div class="col-md-6 text-end">
-                    <button class="btn btn-light dept-button" id="btn-reparto-1">
-                        <i class="bi bi-box-seam"></i> Reparto 1 - Ricezione e Scarico Frutta
-                    </button>
-                    <button class="btn btn-light dept-button" id="btn-reparto-2">
-                        <i class="bi bi-gear"></i> Reparto 2 - Trasformazione
-                    </button>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-light" id="btn-reparto-1">
+                            <i class="bi bi-arrow-left-circle"></i> Reparto 1: Ricezione e scarico frutta
+                        </button>
+                        <button class="btn btn-light" id="btn-reparto-2">
+                            <i class="bi bi-arrow-left-circle"></i> Reparto 2: Trasformazione
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -149,273 +120,243 @@
         <div class="row mb-4">
             <div class="col-md-3">
                 <div class="card stats-card">
-                    <div class="stats-value" id="total-lotti">15</div>
+                    <div class="stats-value" id="lotti-in-lavorazione">0</div>
                     <div>Lotti in Lavorazione</div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card stats-card">
-                    <div class="stats-value" id="concentrazione">42 °Brix</div>
-                    <div>Concentrazione Media</div>
+                    <div class="stats-value" id="concentrazione-totale">0 L</div>
+                    <div>Concentrazione Totale</div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card stats-card">
-                    <div class="stats-value" id="produzione-oraria">580 L/h</div>
-                    <div>Produzione Oraria</div>
+                    <div class="stats-value" id="distillazione-totale">0 L</div>
+                    <div>Distillazione Totale</div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card stats-card">
-                    <div class="stats-value" id="macchine-attive">5/9</div>
-                    <div>Macchine Attive</div>
+                    <div class="stats-value" id="pastorizzazione-totale">0 L</div>
+                    <div>Pastorizzazione Totale</div>
                 </div>
             </div>
         </div>
 
-        <!-- Concentratori -->
-        <div class="dashboard-section">
-            <div class="sub-header">
-                <span><i class="bi bi-funnel"></i> Concentratori</span>
-                <button class="btn btn-sm btn-custom" id="btn-nuovo-concentratore" data-bs-toggle="modal" data-bs-target="#concentratoreModal">
-                    <i class="bi bi-plus-circle"></i> Nuovo Processo
-                </button>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="card machine-card">
-                        <div class="card-header machine-header">APV1</div>
-                        <div class="machine-status status-working"></div>
-                        <div class="card-body">
-                            <p><strong>Stato:</strong> <span class="badge bg-success">In Lavorazione</span></p>
-                            <p><strong>Prodotto:</strong> Succo</p>
-                            <p><strong>Tipo Agrume:</strong> Arance Rosse</p>
-                            <p><strong>Certificazione:</strong> BIO EU</p>
-                            <p><strong>Tenore di Polpa:</strong> Semiclear</p>
-                            <div class="progress mt-2 mb-2">
-                                <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%</div>
-                            </div>
-                            <div class="text-end mt-3">
-                                <button class="btn btn-sm btn-outline-secondary me-2 btn-machine-details" data-bs-toggle="modal" data-bs-target="#lavorazioniModal" data-machine="APV1" data-type="concentratore">
-                                    <i class="bi bi-eye"></i> Dettagli
-                                </button>
-                                <button class="btn btn-sm btn-custom btn-start-process" data-machine="APV1" data-type="concentratore">
-                                    <i class="bi bi-play-fill"></i> Gestisci
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card machine-card">
-                        <div class="card-header machine-header">APV2</div>
-                        <div class="machine-status status-idle"></div>
-                        <div class="card-body">
-                            <p><strong>Stato:</strong> <span class="badge bg-warning">In Attesa</span></p>
-                            <p><strong>Prodotto:</strong> -</p>
-                            <p><strong>Tipo Agrume:</strong> -</p>
-                            <p><strong>Certificazione:</strong> -</p>
-                            <p><strong>Tenore di Polpa:</strong> -</p>
-                            <div class="progress mt-2 mb-2">
-                                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
-                            </div>
-                            <div class="text-end mt-3">
-                                <button class="btn btn-sm btn-outline-secondary me-2 btn-machine-details" data-bs-toggle="modal" data-bs-target="#lavorazioniModal" data-machine="APV2" data-type="concentratore">
-                                    <i class="bi bi-eye"></i> Dettagli
-                                </button>
-                                <button class="btn btn-sm btn-custom btn-start-process" data-bs-toggle="modal" data-bs-target="#concentratoreModal" data-machine="APV2" data-type="concentratore">
-                                    <i class="bi bi-play-fill"></i> Avvia
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Sezioni di lavorazione -->
+        <ul class="nav nav-tabs mb-4" id="lavorazione-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="concentratori-tab" data-bs-toggle="tab" data-bs-target="#concentratori-content" type="button" role="tab">Concentratori</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="distillatori-tab" data-bs-toggle="tab" data-bs-target="#distillatori-content" type="button" role="tab">Distillatori</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pastorizzatori-tab" data-bs-toggle="tab" data-bs-target="#pastorizzatori-content" type="button" role="tab">Pastorizzatori</button>
+            </li>
+        </ul>
 
-        <!-- Distillatori -->
-        <div class="dashboard-section">
-            <div class="sub-header">
-                <span><i class="bi bi-thermometer-half"></i> Distillatori</span>
-                <button class="btn btn-sm btn-custom" id="btn-nuovo-distillatore" data-bs-toggle="modal" data-bs-target="#distillatoreModal">
-                    <i class="bi bi-plus-circle"></i> Nuovo Processo
-                </button>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card machine-card">
-                        <div class="card-header machine-header">Santoro</div>
-                        <div class="machine-status status-working"></div>
-                        <div class="card-body">
-                            <p><strong>Stato:</strong> <span class="badge bg-success">In Lavorazione</span></p>
-                            <p><strong>Prodotto:</strong> Torchiato</p>
-                            <p><strong>Tipo Agrume:</strong> Limoni</p>
-                            <p><strong>Certificazione:</strong> CONVENZIONALE</p>
-                            <div class="progress mt-2 mb-2">
-                                <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">85%</div>
-                            </div>
-                            <div class="text-end mt-3">
-                                <button class="btn btn-sm btn-outline-secondary me-2 btn-machine-details" data-bs-toggle="modal" data-bs-target="#lavorazioniModal" data-machine="Santoro" data-type="distillatore">
-                                    <i class="bi bi-eye"></i> Dettagli
-                                </button>
-                                <button class="btn btn-sm btn-custom btn-start-process" data-machine="Santoro" data-type="distillatore">
-                                    <i class="bi bi-play-fill"></i> Gestisci
-                                </button>
-                            </div>
-                        </div>
+        <div class="tab-content">
+            <!-- CONCENTRATORI -->
+            <div class="tab-pane fade show active" id="concentratori-content" role="tabpanel">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="bi bi-funnel-fill"></i> Concentratori - Stato Macchine
                     </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card machine-card">
-                        <div class="card-header machine-header">Padovan</div>
-                        <div class="machine-status status-idle"></div>
-                        <div class="card-body">
-                            <p><strong>Stato:</strong> <span class="badge bg-warning">In Attesa</span></p>
-                            <p><strong>Prodotto:</strong> -</p>
-                            <p><strong>Tipo Agrume:</strong> -</p>
-                            <p><strong>Certificazione:</strong> -</p>
-                            <div class="progress mt-2 mb-2">
-                                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card machine-card">
+                                    <div class="card-header machine-header">APV1</div>
+                                    <div class="card-body">
+                                        <p><strong>Stato:</strong> <span class="status-free">Disponibile</span></p>
+                                        <p><strong>Prodotto:</strong> -</p>
+                                        <p><strong>Tipo Agrume:</strong> -</p>
+                                        <p><strong>Certificazione:</strong> -</p>
+                                        <p><strong>Brix Input:</strong> -</p>
+                                        <p><strong>Brix Target:</strong> -</p>
+                                        <div class="progress mb-2 process-progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-primary w-100 btn-avvia-processo" data-bs-toggle="modal" data-bs-target="#concentrazioneModal" data-machine="APV1" data-type="concentratore">
+                                            <i class="bi bi-play-circle"></i> Avvia Processo
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-end mt-3">
-                                <button class="btn btn-sm btn-outline-secondary me-2 btn-machine-details" data-bs-toggle="modal" data-bs-target="#lavorazioniModal" data-machine="Padovan" data-type="distillatore">
-                                    <i class="bi bi-eye"></i> Dettagli
-                                </button>
-                                <button class="btn btn-sm btn-custom btn-start-process" data-bs-toggle="modal" data-bs-target="#distillatoreModal" data-machine="Padovan" data-type="distillatore">
-                                    <i class="bi bi-play-fill"></i> Avvia
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card machine-card">
-                        <div class="card-header machine-header">Pilato 1</div>
-                        <div class="machine-status status-working"></div>
-                        <div class="card-body">
-                            <p><strong>Stato:</strong> <span class="badge bg-success">In Lavorazione</span></p>
-                            <p><strong>Prodotto:</strong> Succo</p>
-                            <p><strong>Tipo Agrume:</strong> Mandarini</p>
-                            <p><strong>Certificazione:</strong> BIO EU</p>
-                            <div class="progress mt-2 mb-2">
-                                <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">45%</div>
-                            </div>
-                            <div class="text-end mt-3">
-                                <button class="btn btn-sm btn-outline-secondary me-2 btn-machine-details" data-bs-toggle="modal" data-bs-target="#lavorazioniModal" data-machine="Pilato1" data-type="distillatore">
-                                    <i class="bi bi-eye"></i> Dettagli
-                                </button>
-                                <button class="btn btn-sm btn-custom btn-start-process" data-machine="Pilato1" data-type="distillatore">
-                                    <i class="bi bi-play-fill"></i> Gestisci
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card machine-card">
-                        <div class="card-header machine-header">Pilato 2</div>
-                        <div class="machine-status status-maintenance"></div>
-                        <div class="card-body">
-                            <p><strong>Stato:</strong> <span class="badge bg-danger">In Manutenzione</span></p>
-                            <p><strong>Prodotto:</strong> -</p>
-                            <p><strong>Tipo Agrume:</strong> -</p>
-                            <p><strong>Certificazione:</strong> -</p>
-                            <div class="progress mt-2 mb-2">
-                                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
-                            </div>
-                            <div class="text-end mt-3">
-                                <button class="btn btn-sm btn-outline-secondary me-2 btn-machine-details" data-bs-toggle="modal" data-bs-target="#lavorazioniModal" data-machine="Pilato2" data-type="distillatore">
-                                    <i class="bi bi-eye"></i> Dettagli
-                                </button>
-                                <button class="btn btn-sm btn-secondary btn-start-process" disabled>
-                                    <i class="bi bi-tools"></i> In Manutenzione
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card machine-card">
-                        <div class="card-header machine-header">Joe</div>
-                        <div class="machine-status status-idle"></div>
-                        <div class="card-body">
-                            <p><strong>Stato:</strong> <span class="badge bg-warning">In Attesa</span></p>
-                            <p><strong>Prodotto:</strong> -</p>
-                            <p><strong>Tipo Agrume:</strong> -</p>
-                            <p><strong>Certificazione:</strong> -</p>
-                            <div class="progress mt-2 mb-2">
-                                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
-                            </div>
-                            <div class="text-end mt-3">
-                                <button class="btn btn-sm btn-outline-secondary me-2 btn-machine-details" data-bs-toggle="modal" data-bs-target="#lavorazioniModal" data-machine="Joe" data-type="distillatore">
-                                    <i class="bi bi-eye"></i> Dettagli
-                                </button>
-                                <button class="btn btn-sm btn-custom btn-start-process" data-bs-toggle="modal" data-bs-target="#distillatoreModal" data-machine="Joe" data-type="distillatore">
-                                    <i class="bi bi-play-fill"></i> Avvia
-                                </button>
+                            <div class="col-md-6 mb-4">
+                                <div class="card machine-card">
+                                    <div class="card-header machine-header">APV2</div>
+                                    <div class="card-body">
+                                        <p><strong>Stato:</strong> <span class="status-free">Disponibile</span></p>
+                                        <p><strong>Prodotto:</strong> -</p>
+                                        <p><strong>Tipo Agrume:</strong> -</p>
+                                        <p><strong>Certificazione:</strong> -</p>
+                                        <p><strong>Brix Input:</strong> -</p>
+                                        <p><strong>Brix Target:</strong> -</p>
+                                        <div class="progress mb-2 process-progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-primary w-100 btn-avvia-processo" data-bs-toggle="modal" data-bs-target="#concentrazioneModal" data-machine="APV2" data-type="concentratore">
+                                            <i class="bi bi-play-circle"></i> Avvia Processo
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Pastorizzatori -->
-        <div class="dashboard-section">
-            <div class="sub-header">
-                <span><i class="bi bi-fire"></i> Pastorizzatori</span>
-                <button class="btn btn-sm btn-custom" id="btn-nuovo-pastorizzatore" data-bs-toggle="modal" data-bs-target="#pastorizzatoreModal">
-                    <i class="bi bi-plus-circle"></i> Nuovo Processo
-                </button>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="card machine-card">
-                        <div class="card-header machine-header">Pastorizzatore Arancia</div>
-                        <div class="machine-status status-working"></div>
-                        <div class="card-body">
-                            <p><strong>Stato:</strong> <span class="badge bg-success">In Lavorazione</span></p>
-                            <p><strong>Prodotto:</strong> Succo</p>
-                            <p><strong>Tipo Agrume:</strong> Arance</p>
-                            <p><strong>Certificazione:</strong> BIO DEMETER</p>
-                            <p><strong>Tenore di Polpa:</strong> Standard</p>
-                            <div class="progress mt-2 mb-2">
-                                <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+            <!-- DISTILLATORI -->
+            <div class="tab-pane fade" id="distillatori-content" role="tabpanel">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="bi bi-droplet"></i> Distillatori - Stato Macchine
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="card machine-card">
+                                    <div class="card-header machine-header">Santoro</div>
+                                    <div class="card-body">
+                                        <p><strong>Stato:</strong> <span class="status-free">Disponibile</span></p>
+                                        <p><strong>Prodotto:</strong> -</p>
+                                        <p><strong>Tipo Agrume:</strong> -</p>
+                                        <p><strong>Certificazione:</strong> -</p>
+                                        <p><strong>Temperatura:</strong> -</p>
+                                        <div class="progress mb-2 process-progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-primary w-100 btn-avvia-processo" data-bs-toggle="modal" data-bs-target="#distillazioneModal" data-machine="Santoro" data-type="distillatore">
+                                            <i class="bi bi-play-circle"></i> Avvia Processo
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-end mt-3">
-                                <button class="btn btn-sm btn-outline-secondary me-2 btn-machine-details" data-bs-toggle="modal" data-bs-target="#lavorazioniModal" data-machine="PastArancia" data-type="pastorizzatore">
-                                    <i class="bi bi-eye"></i> Dettagli
-                                </button>
-                                <button class="btn btn-sm btn-custom btn-start-process" data-machine="PastArancia" data-type="pastorizzatore">
-                                    <i class="bi bi-play-fill"></i> Gestisci
-                                </button>
+                            <div class="col-md-4 mb-4">
+                                <div class="card machine-card">
+                                    <div class="card-header machine-header">Padovan</div>
+                                    <div class="card-body">
+                                        <p><strong>Stato:</strong> <span class="status-free">Disponibile</span></p>
+                                        <p><strong>Prodotto:</strong> -</p>
+                                        <p><strong>Tipo Agrume:</strong> -</p>
+                                        <p><strong>Certificazione:</strong> -</p>
+                                        <p><strong>Temperatura:</strong> -</p>
+                                        <div class="progress mb-2 process-progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-primary w-100 btn-avvia-processo" data-bs-toggle="modal" data-bs-target="#distillazioneModal" data-machine="Padovan" data-type="distillatore">
+                                            <i class="bi bi-play-circle"></i> Avvia Processo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card machine-card">
+                                    <div class="card-header machine-header">Pilato 1</div>
+                                    <div class="card-body">
+                                        <p><strong>Stato:</strong> <span class="status-free">Disponibile</span></p>
+                                        <p><strong>Prodotto:</strong> -</p>
+                                        <p><strong>Tipo Agrume:</strong> -</p>
+                                        <p><strong>Certificazione:</strong> -</p>
+                                        <p><strong>Temperatura:</strong> -</p>
+                                        <div class="progress mb-2 process-progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-primary w-100 btn-avvia-processo" data-bs-toggle="modal" data-bs-target="#distillazioneModal" data-machine="Pilato 1" data-type="distillatore">
+                                            <i class="bi bi-play-circle"></i> Avvia Processo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card machine-card">
+                                    <div class="card-header machine-header">Pilato 2</div>
+                                    <div class="card-body">
+                                        <p><strong>Stato:</strong> <span class="status-free">Disponibile</span></p>
+                                        <p><strong>Prodotto:</strong> -</p>
+                                        <p><strong>Tipo Agrume:</strong> -</p>
+                                        <p><strong>Certificazione:</strong> -</p>
+                                        <p><strong>Temperatura:</strong> -</p>
+                                        <div class="progress mb-2 process-progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-primary w-100 btn-avvia-processo" data-bs-toggle="modal" data-bs-target="#distillazioneModal" data-machine="Pilato 2" data-type="distillatore">
+                                            <i class="bi bi-play-circle"></i> Avvia Processo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card machine-card">
+                                    <div class="card-header machine-header">Joe</div>
+                                    <div class="card-body">
+                                        <p><strong>Stato:</strong> <span class="status-free">Disponibile</span></p>
+                                        <p><strong>Prodotto:</strong> -</p>
+                                        <p><strong>Tipo Agrume:</strong> -</p>
+                                        <p><strong>Certificazione:</strong> -</p>
+                                        <p><strong>Temperatura:</strong> -</p>
+                                        <div class="progress mb-2 process-progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-primary w-100 btn-avvia-processo" data-bs-toggle="modal" data-bs-target="#distillazioneModal" data-machine="Joe" data-type="distillatore">
+                                            <i class="bi bi-play-circle"></i> Avvia Processo
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card machine-card">
-                        <div class="card-header machine-header">Pastorizzatore Profea</div>
-                        <div class="machine-status status-working"></div>
-                        <div class="card-body">
-                            <p><strong>Stato:</strong> <span class="badge bg-success">In Lavorazione</span></p>
-                            <p><strong>Prodotto:</strong> Estratto</p>
-                            <p><strong>Tipo Agrume:</strong> Pompelmi</p>
-                            <p><strong>Certificazione:</strong> CONVENZIONALE</p>
-                            <p><strong>Tenore di Polpa:</strong> <1%</p>
-                            <div class="progress mt-2 mb-2">
-                                <div class="progress-bar" role="progressbar" style="width: 28%" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100">28%</div>
+            </div>
+
+            <!-- PASTORIZZATORI -->
+            <div class="tab-pane fade" id="pastorizzatori-content" role="tabpanel">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="bi bi-thermometer-half"></i> Pastorizzatori - Stato Macchine
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card machine-card">
+                                    <div class="card-header machine-header">Pastorizzatore Arancia</div>
+                                    <div class="card-body">
+                                        <p><strong>Stato:</strong> <span class="status-free">Disponibile</span></p>
+                                        <p><strong>Prodotto:</strong> -</p>
+                                        <p><strong>Tipo Agrume:</strong> -</p>
+                                        <p><strong>Certificazione:</strong> -</p>
+                                        <p><strong>Temperatura:</strong> -</p>
+                                        <p><strong>Tempo Pastorizzazione:</strong> -</p>
+                                        <div class="progress mb-2 process-progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-primary w-100 btn-avvia-processo" data-bs-toggle="modal" data-bs-target="#pastorizzazioneModal" data-machine="Pastorizzatore Arancia" data-type="pastorizzatore">
+                                            <i class="bi bi-play-circle"></i> Avvia Processo
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-end mt-3">
-                                <button class="btn btn-sm btn-outline-secondary me-2 btn-machine-details" data-bs-toggle="modal" data-bs-target="#lavorazioniModal" data-machine="PastProfea" data-type="pastorizzatore">
-                                    <i class="bi bi-eye"></i> Dettagli
-                                </button>
-                                <button class="btn btn-sm btn-custom btn-start-process" data-machine="PastProfea" data-type="pastorizzatore">
-                                    <i class="bi bi-play-fill"></i> Gestisci
-                                </button>
+                            <div class="col-md-6 mb-4">
+                                <div class="card machine-card">
+                                    <div class="card-header machine-header">Pastorizzatore Profea</div>
+                                    <div class="card-body">
+                                        <p><strong>Stato:</strong> <span class="status-free">Disponibile</span></p>
+                                        <p><strong>Prodotto:</strong> -</p>
+                                        <p><strong>Tipo Agrume:</strong> -</p>
+                                        <p><strong>Certificazione:</strong> -</p>
+                                        <p><strong>Temperatura:</strong> -</p>
+                                        <p><strong>Tempo Pastorizzazione:</strong> -</p>
+                                        <div class="progress mb-2 process-progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-primary w-100 btn-avvia-processo" data-bs-toggle="modal" data-bs-target="#pastorizzazioneModal" data-machine="Pastorizzatore Profea" data-type="pastorizzatore">
+                                            <i class="bi bi-play-circle"></i> Avvia Processo
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -424,40 +365,29 @@
         </div>
     </div>
 
-    <!-- Modal Processo Concentratore -->
-    <div class="modal fade" id="concentratoreModal" tabindex="-1" aria-hidden="true">
+    <!-- Modal Concentrazione -->
+    <div class="modal fade" id="concentrazioneModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-light">
-                    <h5 class="modal-title"><i class="bi bi-funnel"></i> Nuovo Processo Concentratore</h5>
+                    <h5 class="modal-title"><i class="bi bi-funnel-fill"></i> Processo di Concentrazione - <span id="concentratore-id"></span></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="concentratore-form">
+                    <form id="concentrazione-form">
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="concentratore-select" class="form-label required-field">Seleziona Concentratore</label>
-                                <select class="form-select" id="concentratore-select" required>
-                                    <option value="" selected disabled>Seleziona...</option>
-                                    <option value="APV1">APV1</option>
-                                    <option value="APV2">APV2</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="concentratore-prodotto" class="form-label required-field">Prodotto da Concentrare</label>
-                                <select class="form-select" id="concentratore-prodotto" required>
+                                <label for="concentrazione-prodotto" class="form-label required-field">Prodotto da Concentrare</label>
+                                <select class="form-select" id="concentrazione-prodotto" required>
                                     <option value="" selected disabled>Seleziona...</option>
                                     <option value="Succo">Succo</option>
                                     <option value="Torchiato">Torchiato</option>
                                     <option value="Estratto">Estratto</option>
                                 </select>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="concentratore-agrume" class="form-label required-field">Tipo di Agrume</label>
-                                <select class="form-select" id="concentratore-agrume" required>
+                                <label for="concentrazione-tipo-agrume" class="form-label required-field">Tipo di Agrume</label>
+                                <select class="form-select" id="concentrazione-tipo-agrume" required>
                                     <option value="" selected disabled>Seleziona...</option>
                                     <option value="Arance">Arance</option>
                                     <option value="Arance Rosse">Arance Rosse</option>
@@ -466,13 +396,16 @@
                                     <option value="Pompelmi">Pompelmi</option>
                                     <option value="Altro">Altro</option>
                                 </select>
-                                <div id="altro-agrume-concentratore-container" style="display: none;" class="mt-2">
-                                    <input type="text" class="form-control" id="altro-agrume-concentratore" placeholder="Specifica altro agrume">
+                                <div id="altro-agrume-concentrazione-container" style="display: none;" class="mt-2">
+                                    <input type="text" class="form-control" id="altro-agrume-concentrazione" placeholder="Specifica altro agrume">
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="concentratore-certificazione" class="form-label required-field">Certificazione</label>
-                                <select class="form-select" id="concentratore-certificazione" required>
+                                <label for="concentrazione-certificazione" class="form-label required-field">Certificazione</label>
+                                <select class="form-select" id="concentrazione-certificazione" required>
                                     <option value="" selected disabled>Seleziona...</option>
                                     <option value="BIO EU">BIO EU</option>
                                     <option value="BIO DEMETER">BIO DEMETER</option>
@@ -480,16 +413,13 @@
                                     <option value="IGP">IGP</option>
                                     <option value="ALTRO">ALTRO</option>
                                 </select>
-                                <div id="altra-certificazione-concentratore-container" style="display: none;" class="mt-2">
-                                    <input type="text" class="form-control" id="altra-certificazione-concentratore" placeholder="Specifica altra certificazione">
+                                <div id="altra-certificazione-concentrazione-container" style="display: none;" class="mt-2">
+                                    <input type="text" class="form-control" id="altra-certificazione-concentrazione" placeholder="Specifica altra certificazione">
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="concentratore-linea" class="form-label required-field">Linea di Trasformazione</label>
-                                <select class="form-select" id="concentratore-linea" required>
+                                <label for="concentrazione-linea" class="form-label required-field">Linea di Trasformazione</label>
+                                <select class="form-select" id="concentrazione-linea" required>
                                     <option value="" selected disabled>Seleziona...</option>
                                     <option value="BOE">BOE</option>
                                     <option value="GOE INT">GOE INT</option>
@@ -497,91 +427,83 @@
                                     <option value="400">400</option>
                                     <option value="ALTRA">ALTRA</option>
                                 </select>
-                                <div id="altra-linea-concentratore-container" style="display: none;" class="mt-2">
-                                    <input type="text" class="form-control" id="altra-linea-concentratore" placeholder="Specifica altra linea">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="concentratore-polpa" class="form-label required-field">Tenore di Polpa</label>
-                                <select class="form-select" id="concentratore-polpa" required>
-                                    <option value="" selected disabled>Seleziona...</option>
-                                    <option value="Limpido">Limpido</option>
-                                    <option value="Semiclear">Semiclear</option>
-                                    <option value="<1%"><1%</option>
-                                    <option value="Standard">Standard</option>
-                                    <option value="Altro">Altro</option>
-                                </select>
-                                <div id="altra-polpa-concentratore-container" style="display: none;" class="mt-2">
-                                    <input type="text" class="form-control" id="altra-polpa-concentratore" placeholder="Specifica altro tenore">
+                                <div id="altra-linea-concentrazione-container" style="display: none;" class="mt-2">
+                                    <input type="text" class="form-control" id="altra-linea-concentrazione" placeholder="Specifica altra linea">
                                 </div>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="concentratore-quantita" class="form-label required-field">Quantità (L)</label>
-                                <input type="number" class="form-control" id="concentratore-quantita" required min="1">
+                                <label for="concentrazione-tenore-polpa" class="form-label required-field">Tenore di Polpa</label>
+                                <select class="form-select" id="concentrazione-tenore-polpa" required>
+                                    <option value="" selected disabled>Seleziona...</option>
+                                    <option value="Limpido">Limpido</option>
+                                    <option value="Semiclear">Semiclear</option>
+                                    <option value="> 1%">> 1%</option>
+                                    <option value="Standard">Standard</option>
+                                    <option value="Altro">Altro</option>
+                                </select>
+                                <div id="altro-tenore-polpa-concentrazione-container" style="display: none;" class="mt-2">
+                                    <input type="text" class="form-control" id="altro-tenore-polpa-concentrazione" placeholder="Specifica altro tenore di polpa">
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="concentratore-brix" class="form-label required-field">Concentrazione Target (°Brix)</label>
-                                <input type="number" class="form-control" id="concentratore-brix" required min="1" max="70">
+                                <label for="concentrazione-quantita" class="form-label required-field">Quantità (L)</label>
+                                <input type="number" class="form-control" id="concentrazione-quantita" required min="1">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="concentrazione-brix-iniziale" class="form-label required-field">Brix Iniziale</label>
+                                <input type="number" class="form-control" id="concentrazione-brix-iniziale" required min="1" max="100" step="0.1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="concentrazione-brix-target" class="form-label required-field">Brix Target</label>
+                                <input type="number" class="form-control" id="concentrazione-brix-target" required min="1" max="100" step="0.1">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-12">
-                                <label for="concentratore-note" class="form-label">Note</label>
-                                <textarea class="form-control" id="concentratore-note" rows="3"></textarea>
+                                <label for="concentrazione-note" class="form-label">Note</label>
+                                <textarea class="form-control" id="concentrazione-note" rows="3"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                    <button type="button" class="btn btn-custom" id="btn-save-concentratore">Avvia Processo</button>
+                    <button type="button" class="btn btn-custom" id="btn-start-concentrazione">Avvia Concentrazione</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Processo Distillatore -->
-    <div class="modal fade" id="distillatoreModal" tabindex="-1<!-- Modal Processo Distillatore -->
-    <div class="modal fade" id="distillatoreModal" tabindex="-1" aria-hidden="true">
+    <!-- Modal Distillazione -->
+    <div class="modal fade" id="distillazioneModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-light">
-                    <h5 class="modal-title"><i class="bi bi-thermometer-half"></i> Nuovo Processo Distillatore</h5>
+                    <h5 class="modal-title"><i class="bi bi-droplet"></i> Processo di Distillazione - <span id="distillatore-id"></span></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="distillatore-form">
+                    <form id="distillazione-form">
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="distillatore-select" class="form-label required-field">Seleziona Distillatore</label>
-                                <select class="form-select" id="distillatore-select" required>
-                                    <option value="" selected disabled>Seleziona...</option>
-                                    <option value="Santoro">Santoro</option>
-                                    <option value="Padovan">Padovan</option>
-                                    <option value="Pilato1">Pilato 1</option>
-                                    <option value="Pilato2">Pilato 2</option>
-                                    <option value="Joe">Joe</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="distillatore-prodotto" class="form-label required-field">Prodotto da Distillare</label>
-                                <select class="form-select" id="distillatore-prodotto" required>
+                                <label for="distillazione-prodotto" class="form-label required-field">Prodotto da Distillare</label>
+                                <select class="form-select" id="distillazione-prodotto" required>
                                     <option value="" selected disabled>Seleziona...</option>
                                     <option value="Succo">Succo</option>
                                     <option value="Torchiato">Torchiato</option>
                                     <option value="Estratto">Estratto</option>
                                 </select>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="distillatore-agrume" class="form-label required-field">Tipo di Agrume</label>
-                                <select class="form-select" id="distillatore-agrume" required>
+                                <label for="distillazione-tipo-agrume" class="form-label required-field">Tipo di Agrume</label>
+                                <select class="form-select" id="distillazione-tipo-agrume" required>
                                     <option value="" selected disabled>Seleziona...</option>
                                     <option value="Arance">Arance</option>
                                     <option value="Arance Rosse">Arance Rosse</option>
@@ -590,30 +512,29 @@
                                     <option value="Pompelmi">Pompelmi</option>
                                     <option value="Altro">Altro</option>
                                 </select>
-                                <div id="altro-agrume-distillatore-container" style="display: none;" class="mt-2">
-                                    <input type="text" class="form-control" id="altro-agrume-distillatore" placeholder="Specifica altro agrume">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="distillatore-certificazione" class="form-label required-field">Certificazione</label>
-                                <select class="form-select" id="distillatore-certificazione" required>
-                                    <option value="" selected disabled>Seleziona...</option>
-                                    <option value="BIO EU">BIO EU</option>
-                                    <option value="BIO DEMETER">BIO DEMETER</option>
-                                    <option value="CONVENZIONALE">CONVENZIONALE</option>
-                                    <option value="IGP">IGP</option>
-                                    <option value="ALTRO">ALTRO</option>
-                                </select>
-                                <div id="altra-certificazione-distillatore-container" style="display: none;" class="mt-2">
-                                    <input type="text" class="form-control" id="altra-certificazione-distillatore" placeholder="Specifica altra certificazione">
+                                <div id="altro-agrume-distillazione-container" style="display: none;" class="mt-2">
+                                    <input type="text" class="form-control" id="altro-agrume-distillazione" placeholder="Specifica altro agrume">
                                 </div>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="distillatore-linea" class="form-label required-field">Linea di Trasformazione</label>
-                                <select class="form-select" id="distillatore-linea" required>
+                                <label for="distillazione-certificazione" class="form-label required-field">Certificazione</label>
+                                <select class="form-select" id="distillazione-certificazione" required>
+                                    <option value="" selected disabled>Seleziona...</option>
+                                    <option value="BIO EU">BIO EU</option><option value="BIO DEMETER">BIO DEMETER</option>
+                                    <option value="CONVENZIONALE">CONVENZIONALE</option>
+                                    <option value="IGP">IGP</option>
+                                    <option value="ALTRO">ALTRO</option>
+                                </select>
+                                <div id="altra-certificazione-distillazione-container" style="display: none;" class="mt-2">
+                                    <input type="text" class="form-control" id="altra-certificazione-distillazione" placeholder="Specifica altra certificazione">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="distillazione-linea" class="form-label required-field">Linea di Trasformazione</label>
+                                <select class="form-select" id="distillazione-linea" required>
                                     <option value="" selected disabled>Seleziona...</option>
                                     <option value="BOE">BOE</option>
                                     <option value="GOE INT">GOE INT</option>
@@ -621,87 +542,83 @@
                                     <option value="400">400</option>
                                     <option value="ALTRA">ALTRA</option>
                                 </select>
-                                <div id="altra-linea-distillatore-container" style="display: none;" class="mt-2">
-                                    <input type="text" class="form-control" id="altra-linea-distillatore" placeholder="Specifica altra linea">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="distillatore-polpa" class="form-label required-field">Tenore di Polpa</label>
-                                <select class="form-select" id="distillatore-polpa" required>
-                                    <option value="" selected disabled>Seleziona...</option>
-                                    <option value="Limpido">Limpido</option>
-                                    <option value="Semiclear">Semiclear</option>
-                                    <option value="<1%"><1%</option>
-                                    <option value="Standard">Standard</option>
-                                    <option value="Altro">Altro</option>
-                                </select>
-                                <div id="altra-polpa-distillatore-container" style="display: none;" class="mt-2">
-                                    <input type="text" class="form-control" id="altra-polpa-distillatore" placeholder="Specifica altro tenore">
+                                <div id="altra-linea-distillazione-container" style="display: none;" class="mt-2">
+                                    <input type="text" class="form-control" id="altra-linea-distillazione" placeholder="Specifica altra linea">
                                 </div>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="distillatore-quantita" class="form-label required-field">Quantità (L)</label>
-                                <input type="number" class="form-control" id="distillatore-quantita" required min="1">
+                                <label for="distillazione-tenore-polpa" class="form-label required-field">Tenore di Polpa</label>
+                                <select class="form-select" id="distillazione-tenore-polpa" required>
+                                    <option value="" selected disabled>Seleziona...</option>
+                                    <option value="Limpido">Limpido</option>
+                                    <option value="Semiclear">Semiclear</option>
+                                    <option value="> 1%">> 1%</option>
+                                    <option value="Standard">Standard</option>
+                                    <option value="Altro">Altro</option>
+                                </select>
+                                <div id="altro-tenore-polpa-distillazione-container" style="display: none;" class="mt-2">
+                                    <input type="text" class="form-control" id="altro-tenore-polpa-distillazione" placeholder="Specifica altro tenore di polpa">
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="distillatore-temperatura" class="form-label required-field">Temperatura Target (°C)</label>
-                                <input type="number" class="form-control" id="distillatore-temperatura" required min="50" max="150">
+                                <label for="distillazione-quantita" class="form-label required-field">Quantità (L)</label>
+                                <input type="number" class="form-control" id="distillazione-quantita" required min="1">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="distillazione-temperatura" class="form-label required-field">Temperatura (°C)</label>
+                                <input type="number" class="form-control" id="distillazione-temperatura" required min="1" max="200" step="0.1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="distillazione-tempo" class="form-label required-field">Tempo di Processo (min)</label>
+                                <input type="number" class="form-control" id="distillazione-tempo" required min="1" max="1440">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-12">
-                                <label for="distillatore-note" class="form-label">Note</label>
-                                <textarea class="form-control" id="distillatore-note" rows="3"></textarea>
+                                <label for="distillazione-note" class="form-label">Note</label>
+                                <textarea class="form-control" id="distillazione-note" rows="3"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                    <button type="button" class="btn btn-custom" id="btn-save-distillatore">Avvia Processo</button>
+                    <button type="button" class="btn btn-custom" id="btn-start-distillazione">Avvia Distillazione</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Processo Pastorizzatore -->
-    <div class="modal fade" id="pastorizzatoreModal" tabindex="-1" aria-hidden="true">
+    <!-- Modal Pastorizzazione -->
+    <div class="modal fade" id="pastorizzazioneModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-light">
-                    <h5 class="modal-title"><i class="bi bi-fire"></i> Nuovo Processo Pastorizzatore</h5>
+                    <h5 class="modal-title"><i class="bi bi-thermometer-half"></i> Processo di Pastorizzazione - <span id="pastorizzatore-id"></span></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="pastorizzatore-form">
+                    <form id="pastorizzazione-form">
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="pastorizzatore-select" class="form-label required-field">Seleziona Pastorizzatore</label>
-                                <select class="form-select" id="pastorizzatore-select" required>
-                                    <option value="" selected disabled>Seleziona...</option>
-                                    <option value="PastArancia">Pastorizzatore Arancia</option>
-                                    <option value="PastProfea">Pastorizzatore Profea</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="pastorizzatore-prodotto" class="form-label required-field">Prodotto da Pastorizzare</label>
-                                <select class="form-select" id="pastorizzatore-prodotto" required>
+                                <label for="pastorizzazione-prodotto" class="form-label required-field">Prodotto da Pastorizzare</label>
+                                <select class="form-select" id="pastorizzazione-prodotto" required>
                                     <option value="" selected disabled>Seleziona...</option>
                                     <option value="Succo">Succo</option>
                                     <option value="Torchiato">Torchiato</option>
                                     <option value="Estratto">Estratto</option>
                                 </select>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="pastorizzatore-agrume" class="form-label required-field">Tipo di Agrume</label>
-                                <select class="form-select" id="pastorizzatore-agrume" required>
+                                <label for="pastorizzazione-tipo-agrume" class="form-label required-field">Tipo di Agrume</label>
+                                <select class="form-select" id="pastorizzazione-tipo-agrume" required>
                                     <option value="" selected disabled>Seleziona...</option>
                                     <option value="Arance">Arance</option>
                                     <option value="Arance Rosse">Arance Rosse</option>
@@ -710,13 +627,16 @@
                                     <option value="Pompelmi">Pompelmi</option>
                                     <option value="Altro">Altro</option>
                                 </select>
-                                <div id="altro-agrume-pastorizzatore-container" style="display: none;" class="mt-2">
-                                    <input type="text" class="form-control" id="altro-agrume-pastorizzatore" placeholder="Specifica altro agrume">
+                                <div id="altro-agrume-pastorizzazione-container" style="display: none;" class="mt-2">
+                                    <input type="text" class="form-control" id="altro-agrume-pastorizzazione" placeholder="Specifica altro agrume">
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="pastorizzatore-certificazione" class="form-label required-field">Certificazione</label>
-                                <select class="form-select" id="pastorizzatore-certificazione" required>
+                                <label for="pastorizzazione-certificazione" class="form-label required-field">Certificazione</label>
+                                <select class="form-select" id="pastorizzazione-certificazione" required>
                                     <option value="" selected disabled>Seleziona...</option>
                                     <option value="BIO EU">BIO EU</option>
                                     <option value="BIO DEMETER">BIO DEMETER</option>
@@ -724,16 +644,13 @@
                                     <option value="IGP">IGP</option>
                                     <option value="ALTRO">ALTRO</option>
                                 </select>
-                                <div id="altra-certificazione-pastorizzatore-container" style="display: none;" class="mt-2">
-                                    <input type="text" class="form-control" id="altra-certificazione-pastorizzatore" placeholder="Specifica altra certificazione">
+                                <div id="altra-certificazione-pastorizzazione-container" style="display: none;" class="mt-2">
+                                    <input type="text" class="form-control" id="altra-certificazione-pastorizzazione" placeholder="Specifica altra certificazione">
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="pastorizzatore-linea" class="form-label required-field">Linea di Trasformazione</label>
-                                <select class="form-select" id="pastorizzatore-linea" required>
+                                <label for="pastorizzazione-linea" class="form-label required-field">Linea di Trasformazione</label>
+                                <select class="form-select" id="pastorizzazione-linea" required>
                                     <option value="" selected disabled>Seleziona...</option>
                                     <option value="BOE">BOE</option>
                                     <option value="GOE INT">GOE INT</option>
@@ -741,745 +658,55 @@
                                     <option value="400">400</option>
                                     <option value="ALTRA">ALTRA</option>
                                 </select>
-                                <div id="altra-linea-pastorizzatore-container" style="display: none;" class="mt-2">
-                                    <input type="text" class="form-control" id="altra-linea-pastorizzatore" placeholder="Specifica altra linea">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="pastorizzatore-polpa" class="form-label required-field">Tenore di Polpa</label>
-                                <select class="form-select" id="pastorizzatore-polpa" required>
-                                    <option value="" selected disabled>Seleziona...</option>
-                                    <option value="Limpido">Limpido</option>
-                                    <option value="Semiclear">Semiclear</option>
-                                    <option value="<1%"><1%</option>
-                                    <option value="Standard">Standard</option>
-                                    <option value="Altro">Altro</option>
-                                </select>
-                                <div id="altra-polpa-pastorizzatore-container" style="display: none;" class="mt-2">
-                                    <input type="text" class="form-control" id="altra-polpa-pastorizzatore" placeholder="Specifica altro tenore">
+                                <div id="altra-linea-pastorizzazione-container" style="display: none;" class="mt-2">
+                                    <input type="text" class="form-control" id="altra-linea-pastorizzazione" placeholder="Specifica altra linea">
                                 </div>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="pastorizzatore-quantita" class="form-label required-field">Quantità (L)</label>
-                                <input type="number" class="form-control" id="pastorizzatore-quantita" required min="1">
+                                <label for="pastorizzazione-tenore-polpa" class="form-label required-field">Tenore di Polpa</label>
+                                <select class="form-select" id="pastorizzazione-tenore-polpa" required>
+                                    <option value="" selected disabled>Seleziona...</option>
+                                    <option value="Limpido">Limpido</option>
+                                    <option value="Semiclear">Semiclear</option>
+                                    <option value="> 1%">> 1%</option>
+                                    <option value="Standard">Standard</option>
+                                    <option value="Altro">Altro</option>
+                                </select>
+                                <div id="altro-tenore-polpa-pastorizzazione-container" style="display: none;" class="mt-2">
+                                    <input type="text" class="form-control" id="altro-tenore-polpa-pastorizzazione" placeholder="Specifica altro tenore di polpa">
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="pastorizzatore-temperatura" class="form-label required-field">Temperatura Target (°C)</label>
-                                <input type="number" class="form-control" id="pastorizzatore-temperatura" required min="70" max="120">
+                                <label for="pastorizzazione-quantita" class="form-label required-field">Quantità (L)</label>
+                                <input type="number" class="form-control" id="pastorizzazione-quantita" required min="1">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="pastorizzazione-temperatura" class="form-label required-field">Temperatura (°C)</label>
+                                <input type="number" class="form-control" id="pastorizzazione-temperatura" required min="1" max="200" step="0.1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="pastorizzazione-tempo" class="form-label required-field">Tempo di Pastorizzazione (min)</label>
+                                <input type="number" class="form-control" id="pastorizzazione-tempo" required min="1" max="1440">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-12">
-                                <label for="pastorizzatore-note" class="form-label">Note</label>
-                                <textarea class="form-control" id="pastorizzatore-note" rows="3"></textarea>
+                                <label for="pastorizzazione-note" class="form-label">Note</label>
+                                <textarea class="form-control" id="pastorizzazione-note" rows="3"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                    <button type="button" class="btn btn-custom" id="btn-save-pastorizzatore">Avvia Processo</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Lavorazioni -->
-    <div class="modal fade" id="lavorazioniModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header bg-light">
-                    <h5 class="modal-title"><i class="bi bi-list-check"></i> Elenco Lavorazioni <span id="machine-name"></span></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="lavorazioni-concentratore-apv1" style="display: none;">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID Lotto</th>
-                                    <th>Data</th>
-                                    <th>Prodotto</th>
-                                    <th>Tipo Agrume</th>
-                                    <th>Certificazione</th>
-                                    <th>Tenore Polpa</th>
-                                    <th>Quantità (L)</th>
-                                    <th>°Brix</th>
-                                    <th>Stato</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>CONC-20250519-001</td>
-                                    <td>19/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Arance Rosse</td>
-                                    <td>BIO EU</td>
-                                    <td>Semiclear</td>
-                                    <td>2500</td>
-                                    <td>42°</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>CONC-20250517-003</td>
-                                    <td>17/05/2025</td>
-                                    <td>Torchiato</td>
-                                    <td>Limoni</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td>Standard</td>
-                                    <td>1800</td>
-                                    <td>38°</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>CONC-20250515-002</td>
-                                    <td>15/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Mandarini</td>
-                                    <td>BIO DEMETER</td>
-                                    <td>Limpido</td>
-                                    <td>2200</td>
-                                    <td>45°</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>CONC-20250512-008</td>
-                                    <td>12/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Arance</td>
-                                    <td>IGP</td>
-                                    <td><1%</td>
-                                    <td>1950</td>
-                                    <td>40°</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>CONC-20250520-005</td>
-                                    <td>20/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Arance Rosse</td>
-                                    <td>BIO EU</td>
-                                    <td>Semiclear</td>
-                                    <td>3200</td>
-                                    <td>42°</td>
-                                    <td><span class="badge bg-warning">In Lavorazione (65%)</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div id="lavorazioni-concentratore-apv2" style="display: none;">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID Lotto</th>
-                                    <th>Data</th>
-                                    <th>Prodotto</th>
-                                    <th>Tipo Agrume</th>
-                                    <th>Certificazione</th>
-                                    <th>Tenore Polpa</th>
-                                    <th>Quantità (L)</th>
-                                    <th>°Brix</th>
-                                    <th>Stato</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>CONC-20250518-004</td>
-                                    <td>18/05/2025</td>
-                                    <td>Estratto</td>
-                                    <td>Pompelmi</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td>Limpido</td>
-                                    <td>1700</td>
-                                    <td>50°</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>CONC-20250516-007</td>
-                                    <td>16/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Arance Rosse</td>
-                                    <td>BIO EU</td>
-                                    <td>Standard</td>
-                                    <td>2800</td>
-                                    <td>42°</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>CONC-20250514-009</td>
-                                    <td>14/05/2025</td>
-                                    <td>Torchiato</td>
-                                    <td>Limoni</td>
-                                    <td>BIO DEMETER</td>
-                                    <td>Semiclear</td>
-                                    <td>1600</td>
-                                    <td>38°</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>CONC-20250513-010</td>
-                                    <td>13/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Mandarini</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td><1%</td>
-                                    <td>2100</td>
-                                    <td>45°</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>CONC-20250511-011</td>
-                                    <td>11/05/2025</td>
-                                    <td>Estratto</td>
-                                    <td>Arance</td>
-                                    <td>IGP</td>
-                                    <td>Limpido</td>
-                                    <td>1900</td>
-                                    <td>48°</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div id="lavorazioni-distillatore-santoro" style="display: none;">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID Lotto</th>
-                                    <th>Data</th>
-                                    <th>Prodotto</th>
-                                    <th>Tipo Agrume</th>
-                                    <th>Certificazione</th>
-                                    <th>Tenore Polpa</th>
-                                    <th>Quantità (L)</th>
-                                    <th>Temperatura (°C)</th>
-                                    <th>Stato</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>DIST-20250519-001</td>
-                                    <td>19/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Arance</td>
-                                    <td>BIO EU</td>
-                                    <td>Standard</td>
-                                    <td>1800</td>
-                                    <td>85</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250517-004</td>
-                                    <td>17/05/2025</td>
-                                    <td>Torchiato</td>
-                                    <td>Mandarini</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td>Semiclear</td>
-                                    <td>1500</td>
-                                    <td>90</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250515-007</td>
-                                    <td>15/05/2025</td>
-                                    <td>Estratto</td>
-                                    <td>Pompelmi</td>
-                                    <td>BIO DEMETER</td>
-                                    <td><1%</td>
-                                    <td>1300</td>
-                                    <td>82</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250513-009</td>
-                                    <td>13/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Arance Rosse</td>
-                                    <td>IGP</td>
-                                    <td>Limpido</td>
-                                    <td>1650</td>
-                                    <td>88</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250520-011</td>
-                                    <td>20/05/2025</td>
-                                    <td>Torchiato</td>
-                                    <td>Limoni</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td>Standard</td>
-                                    <td>1700</td>
-                                    <td>92</td>
-                                    <td><span class="badge bg-warning">In Lavorazione (85%)</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Altri elenchi di lavorazioni per ogni macchina -->
-                    <div id="lavorazioni-distillatore-pilato1" style="display: none;">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID Lotto</th>
-                                    <th>Data</th>
-                                    <th>Prodotto</th>
-                                    <th>Tipo Agrume</th>
-                                    <th>Certificazione</th>
-                                    <th>Tenore Polpa</th>
-                                    <th>Quantità (L)</th>
-                                    <th>Temperatura (°C)</th>
-                                    <th>Stato</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>DIST-20250519-002</td>
-                                    <td>19/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Arance</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td>Standard</td>
-                                    <td>1500</td>
-                                    <td>88</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250517-005</td>
-                                    <td>17/05/2025</td>
-                                    <td>Estratto</td>
-                                    <td>Pompelmi</td>
-                                    <td>BIO EU</td>
-                                    <td>Limpido</td>
-                                    <td>1200</td>
-                                    <td>85</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250515-008</td>
-                                    <td>15/05/2025</td>
-                                    <td>Torchiato</td>
-                                    <td>Limoni</td>
-                                    <td>IGP</td>
-                                    <td>Semiclear</td>
-                                    <td>1400</td>
-                                    <td>90</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250513-010</td>
-                                    <td>13/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Mandarini</td>
-                                    <td>BIO DEMETER</td>
-                                    <td><1%</td>
-                                    <td>1350</td>
-                                    <td>82</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250520-012</td>
-                                    <td>20/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Mandarini</td>
-                                    <td>BIO EU</td>
-                                    <td>Standard</td>
-                                    <td>1600</td>
-                                    <td>86</td>
-                                    <td><span class="badge bg-warning">In Lavorazione (45%)</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div id="lavorazioni-pastorizzatore-pastarancia" style="display: none;">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID Lotto</th>
-                                    <th>Data</th>
-                                    <th>Prodotto</th>
-                                    <th>Tipo Agrume</th>
-                                    <th>Certificazione</th>
-                                    <th>Tenore Polpa</th>
-                                    <th>Quantità (L)</th>
-                                    <th>Temperatura (°C)</th>
-                                    <th>Stato</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>PAST-20250519-001</td>
-                                    <td>19/05/2025</td><tr>
-                                    <td>PAST-20250519-001</td>
-                                    <td>19/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Arance</td>
-                                    <td>BIO EU</td>
-                                    <td>Standard</td>
-                                    <td>2500</td>
-                                    <td>92</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>PAST-20250517-003</td>
-                                    <td>17/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Arance Rosse</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td>Semiclear</td>
-                                    <td>2800</td>
-                                    <td>90</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>PAST-20250515-005</td>
-                                    <td>15/05/2025</td>
-                                    <td>Torchiato</td>
-                                    <td>Arance</td>
-                                    <td>IGP</td>
-                                    <td><1%</td>
-                                    <td>1950</td>
-                                    <td>88</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>PAST-20250513-007</td>
-                                    <td>13/05/2025</td>
-                                    <td>Estratto</td>
-                                    <td>Arance</td>
-                                    <td>BIO DEMETER</td>
-                                    <td>Limpido</td>
-                                    <td>2100</td>
-                                    <td>95</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>PAST-20250520-009</td>
-                                    <td>20/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Arance</td>
-                                    <td>BIO DEMETER</td>
-                                    <td>Standard</td>
-                                    <td>3200</td>
-                                    <td>92</td>
-                                    <td><span class="badge bg-warning">In Lavorazione (75%)</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div id="lavorazioni-pastorizzatore-pastprofea" style="display: none;">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID Lotto</th>
-                                    <th>Data</th>
-                                    <th>Prodotto</th>
-                                    <th>Tipo Agrume</th>
-                                    <th>Certificazione</th>
-                                    <th>Tenore Polpa</th>
-                                    <th>Quantità (L)</th>
-                                    <th>Temperatura (°C)</th>
-                                    <th>Stato</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>PAST-20250519-002</td>
-                                    <td>19/05/2025</td>
-                                    <td>Estratto</td>
-                                    <td>Pompelmi</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td><1%</td>
-                                    <td>1800</td>
-                                    <td>92</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>PAST-20250517-004</td>
-                                    <td>17/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Limoni</td>
-                                    <td>BIO EU</td>
-                                    <td>Limpido</td>
-                                    <td>2200</td>
-                                    <td>88</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>PAST-20250515-006</td>
-                                    <td>15/05/2025</td>
-                                    <td>Torchiato</td>
-                                    <td>Mandarini</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td>Standard</td>
-                                    <td>1650</td>
-                                    <td>90</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>PAST-20250513-008</td>
-                                    <td>13/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Pompelmi</td>
-                                    <td>IGP</td>
-                                    <td>Semiclear</td>
-                                    <td>1900</td>
-                                    <td>94</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>PAST-20250520-010</td>
-                                    <td>20/05/2025</td>
-                                    <td>Estratto</td>
-                                    <td>Pompelmi</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td><1%</td>
-                                    <td>2100</td>
-                                    <td>93</td>
-                                    <td><span class="badge bg-warning">In Lavorazione (28%)</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div id="lavorazioni-distillatore-padovan" style="display: none;">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID Lotto</th>
-                                    <th>Data</th>
-                                    <th>Prodotto</th>
-                                    <th>Tipo Agrume</th>
-                                    <th>Certificazione</th>
-                                    <th>Tenore Polpa</th>
-                                    <th>Quantità (L)</th>
-                                    <th>Temperatura (°C)</th>
-                                    <th>Stato</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>DIST-20250518-003</td>
-                                    <td>18/05/2025</td>
-                                    <td>Torchiato</td>
-                                    <td>Limoni</td>
-                                    <td>BIO EU</td>
-                                    <td>Standard</td>
-                                    <td>1600</td>
-                                    <td>90</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250516-006</td>
-                                    <td>16/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Arance Rosse</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td>Semiclear</td>
-                                    <td>1800</td>
-                                    <td>85</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250514-009</td>
-                                    <td>14/05/2025</td>
-                                    <td>Estratto</td>
-                                    <td>Pompelmi</td>
-                                    <td>IGP</td>
-                                    <td>Limpido</td>
-                                    <td>1400</td>
-                                    <td>82</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250512-012</td>
-                                    <td>12/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Mandarini</td>
-                                    <td>BIO DEMETER</td>
-                                    <td><1%</td>
-                                    <td>1700</td>
-                                    <td>88</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250510-015</td>
-                                    <td>10/05/2025</td>
-                                    <td>Torchiato</td>
-                                    <td>Arance</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td>Standard</td>
-                                    <td>1550</td>
-                                    <td>86</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div id="lavorazioni-distillatore-pilato2" style="display: none;">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID Lotto</th>
-                                    <th>Data</th>
-                                    <th>Prodotto</th>
-                                    <th>Tipo Agrume</th>
-                                    <th>Certificazione</th>
-                                    <th>Tenore Polpa</th>
-                                    <th>Quantità (L)</th>
-                                    <th>Temperatura (°C)</th>
-                                    <th>Stato</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>DIST-20250518-004</td>
-                                    <td>18/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Arance</td>
-                                    <td>IGP</td>
-                                    <td><1%</td>
-                                    <td>1700</td>
-                                    <td>86</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250516-007</td>
-                                    <td>16/05/2025</td>
-                                    <td>Torchiato</td>
-                                    <td>Limoni</td>
-                                    <td>BIO EU</td>
-                                    <td>Standard</td>
-                                    <td>1550</td>
-                                    <td>90</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250514-010</td>
-                                    <td>14/05/2025</td>
-                                    <td>Estratto</td>
-                                    <td>Mandarini</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td>Semiclear</td>
-                                    <td>1300</td>
-                                    <td>85</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250512-013</td>
-                                    <td>12/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Pompelmi</td>
-                                    <td>BIO DEMETER</td>
-                                    <td>Limpido</td>
-                                    <td>1600</td>
-                                    <td>82</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250510-016</td>
-                                    <td>10/05/2025</td>
-                                    <td>Torchiato</td>
-                                    <td>Arance Rosse</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td><1%</td>
-                                    <td>1450</td>
-                                    <td>88</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div id="lavorazioni-distillatore-joe" style="display: none;">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID Lotto</th>
-                                    <th>Data</th>
-                                    <th>Prodotto</th>
-                                    <th>Tipo Agrume</th>
-                                    <th>Certificazione</th>
-                                    <th>Tenore Polpa</th>
-                                    <th>Quantità (L)</th>
-                                    <th>Temperatura (°C)</th>
-                                    <th>Stato</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>DIST-20250518-005</td>
-                                    <td>18/05/2025</td>
-                                    <td>Estratto</td>
-                                    <td>Pompelmi</td>
-                                    <td>BIO EU</td>
-                                    <td>Limpido</td>
-                                    <td>1500</td>
-                                    <td>82</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250516-008</td>
-                                    <td>16/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Arance</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td>Standard</td>
-                                    <td>1900</td>
-                                    <td>86</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250514-011</td>
-                                    <td>14/05/2025</td>
-                                    <td>Torchiato</td>
-                                    <td>Limoni</td>
-                                    <td>IGP</td>
-                                    <td>Semiclear</td>
-                                    <td>1600</td>
-                                    <td>90</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250512-014</td>
-                                    <td>12/05/2025</td>
-                                    <td>Succo</td>
-                                    <td>Mandarini</td>
-                                    <td>BIO DEMETER</td>
-                                    <td><1%</td>
-                                    <td>1750</td>
-                                    <td>85</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>DIST-20250510-017</td>
-                                    <td>10/05/2025</td>
-                                    <td>Estratto</td>
-                                    <td>Arance Rosse</td>
-                                    <td>CONVENZIONALE</td>
-                                    <td>Limpido</td>
-                                    <td>1400</td>
-                                    <td>82</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                    <button type="button" class="btn btn-custom" id="btn-export-lavorazioni">
-                        <i class="bi bi-file-earmark-excel"></i> Esporta
-                    </button>
+                    <button type="button" class="btn btn-custom" id="btn-start-pastorizzazione">Avvia Pastorizzazione</button>
                 </div>
             </div>
         </div>
@@ -1490,171 +717,548 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Gestione cambio reparto
+            // Dati di stato
+            let lottiCount = 0;
+            let concentrazioneTotale = 0;
+            let distillazioneTotale = 0;
+            let pastorizzazioneTotale = 0;
+            
+            // Stato macchine
+            const machines = {
+                // Concentratori
+                "APV1": { tipo: "concentratore", stato: "Disponibile", dati: {} },
+                "APV2": { tipo: "concentratore", stato: "Disponibile", dati: {} },
+                
+                // Distillatori
+                "Santoro": { tipo: "distillatore", stato: "Disponibile", dati: {} },
+                "Padovan": { tipo: "distillatore", stato: "Disponibile", dati: {} },
+                "Pilato 1": { tipo: "distillatore", stato: "Disponibile", dati: {} },
+                "Pilato 2": { tipo: "distillatore", stato: "Disponibile", dati: {} },
+                "Joe": { tipo: "distillatore", stato: "Disponibile", dati: {} },
+                
+                // Pastorizzatori
+                "Pastorizzatore Arancia": { tipo: "pastorizzatore", stato: "Disponibile", dati: {} },
+                "Pastorizzatore Profea": { tipo: "pastorizzatore", stato: "Disponibile", dati: {} }
+            };
+            
+            // Inizializzazione statistiche
+            updateStats();
+            
+            // Eventi per i campi "Altro"
+            
+            // Concentrazione
+            $("#concentrazione-tipo-agrume").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altro-agrume-concentrazione-container").show();
+                } else {
+                    $("#altro-agrume-concentrazione-container").hide();
+                    $("#altro-agrume-concentrazione").val("");
+                }
+            });
+            
+            $("#concentrazione-certificazione").change(function() {
+                if ($(this).val() === "ALTRO") {
+                    $("#altra-certificazione-concentrazione-container").show();
+                } else {
+                    $("#altra-certificazione-concentrazione-container").hide();
+                    $("#altra-certificazione-concentrazione").val("");
+                }
+            });
+            
+            $("#concentrazione-linea").change(function() {
+                if ($(this).val() === "ALTRA") {
+                    $("#altra-linea-concentrazione-container").show();
+                } else {
+                    $("#altra-linea-concentrazione-container").hide();
+                    $("#altra-linea-concentrazione").val("");
+                }
+            });
+            
+            $("#concentrazione-tenore-polpa").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altro-tenore-polpa-concentrazione-container").show();
+                } else {
+                    $("#altro-tenore-polpa-concentrazione-container").hide();
+                    $("#altro-tenore-polpa-concentrazione").val("");
+                }
+            });
+            
+            // Distillazione
+            $("#distillazione-tipo-agrume").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altro-agrume-distillazione-container").show();
+                } else {
+                    $("#altro-agrume-distillazione-container").hide();
+                    $("#altro-agrume-distillazione").val("");
+                }
+            });
+            
+            $("#distillazione-certificazione").change(function() {
+                if ($(this).val() === "ALTRO") {
+                    $("#altra-certificazione-distillazione-container").show();
+                } else {
+                    $("#altra-certificazione-distillazione-container").hide();
+                    $("#altra-certificazione-distillazione").val("");
+                }
+            });
+            
+            $("#distillazione-linea").change(function() {
+                if ($(this).val() === "ALTRA") {
+                    $("#altra-linea-distillazione-container").show();
+                } else {
+                    $("#altra-linea-distillazione-container").hide();
+                    $("#altra-linea-distillazione").val("");
+                }
+            });
+            
+            $("#distillazione-tenore-polpa").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altro-tenore-polpa-distillazione-container").show();
+                } else {
+                    $("#altro-tenore-polpa-distillazione-container").hide();
+                    $("#altro-tenore-polpa-distillazione").val("");
+                }
+            });
+            
+            // Pastorizzazione
+            $("#pastorizzazione-tipo-agrume").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altro-agrume-pastorizzazione-container").show();
+                } else {
+                    $("#altro-agrume-pastorizzazione-container").hide();
+                    $("#altro-agrume-pastorizzazione").val("");
+                }
+            });
+            
+            $("#pastorizzazione-certificazione").change(function() {
+                if ($(this).val() === "ALTRO") {
+                    $("#altra-certificazione-pastorizzazione-container").show();
+                } else {
+                    $("#altra-certificazione-pastorizzazione-container").hide();
+                    $("#altra-certificazione-pastorizzazione").val("");
+                }
+            });
+            
+            $("#pastorizzazione-linea").change(function() {
+                if ($(this).val() === "ALTRA") {
+                    $("#altra-linea-pastorizzazione-container").show();
+                } else {
+                    $("#altra-linea-pastorizzazione-container").hide();
+                    $("#altra-linea-pastorizzazione").val("");
+                }
+            });
+            
+            $("#pastorizzazione-tenore-polpa").change(function() {
+                if ($(this).val() === "Altro") {
+                    $("#altro-tenore-polpa-pastorizzazione-container").show();
+                } else {
+                    $("#altro-tenore-polpa-pastorizzazione-container").hide();
+                    $("#altro-tenore-polpa-pastorizzazione").val("");
+                }
+            });
+            
+            // Apertura modal con selezione macchina
+            $(".btn-avvia-processo").click(function() {
+                const machineName = $(this).data("machine");
+                const machineType = $(this).data("type");
+                
+                if (machineType === "concentratore") {
+                    $("#concentratore-id").text(machineName);
+                    resetForm("concentrazione");
+                } else if (machineType === "distillatore") {
+                    $("#distillatore-id").text(machineName);
+                    resetForm("distillazione");
+                } else if (machineType === "pastorizzatore") {
+                    $("#pastorizzatore-id").text(machineName);
+                    resetForm("pastorizzazione");
+                }
+            });
+            
+            // Avvio processo di concentrazione
+            $("#btn-start-concentrazione").click(function() {
+                const machineName = $("#concentratore-id").text();
+                
+                // Validazione dei campi
+                if (!validateForm("concentrazione")) {
+                    return;
+                }
+                
+                // Raccolta dati
+                let prodotto = $("#concentrazione-prodotto").val();
+                
+                let tipoAgrume = $("#concentrazione-tipo-agrume").val();
+                if (tipoAgrume === "Altro") {
+                    tipoAgrume = $("#altro-agrume-concentrazione").val();
+                }
+                
+                let certificazione = $("#concentrazione-certificazione").val();
+                if (certificazione === "ALTRO") {
+                    certificazione = $("#altra-certificazione-concentrazione").val();
+                }
+                
+                let linea = $("#concentrazione-linea").val();
+                if (linea === "ALTRA") {
+                    linea = $("#altra-linea-concentrazione").val();
+                }
+                
+                let tenorePolpa = $("#concentrazione-tenore-polpa").val();
+                if (tenorePolpa === "Altro") {
+                    tenorePolpa = $("#altro-tenore-polpa-concentrazione").val();
+                }
+                
+                let quantita = parseInt($("#concentrazione-quantita").val());
+                let brixIniziale = parseFloat($("#concentrazione-brix-iniziale").val());
+                let brixTarget = parseFloat($("#concentrazione-brix-target").val());
+                let note = $("#concentrazione-note").val();
+                
+                // Aggiornamento dati macchina
+                machines[machineName] = {
+                    tipo: "concentratore",
+                    stato: "Occupato",
+                    dati: {
+                        prodotto: prodotto,
+                        tipoAgrume: tipoAgrume,
+                        certificazione: certificazione,
+                        linea: linea,
+                        tenorePolpa: tenorePolpa,
+                        quantita: quantita,
+                        brixIniziale: brixIniziale,
+                        brixTarget: brixTarget,
+                        note: note,
+                        progresso: 0,
+                        tempoInizio: new Date().getTime()
+                    }
+                };
+                
+                // Aggiornamento UI
+                updateMachineUI(machineName);
+                
+                // Incremento contatori
+                lottiCount++;
+                concentrazioneTotale += quantita;
+                updateStats();
+                
+                // Chiusura modal
+                var modal = bootstrap.Modal.getInstance(document.getElementById('concentrazioneModal'));
+                modal.hide();
+                
+                // Avvio simulazione processo
+                startProcess(machineName, Math.floor(Math.random() * 120) + 60); // Tempo tra 60 e 180 minuti
+                
+                alert("Processo di concentrazione avviato!");
+            });
+            
+            // Avvio processo di distillazione
+            $("#btn-start-distillazione").click(function() {
+                const machineName = $("#distillatore-id").text();
+                
+                // Validazione dei campi
+                if (!validateForm("distillazione")) {
+                    return;
+                }
+                
+                // Raccolta dati
+                let prodotto = $("#distillazione-prodotto").val();
+                
+                let tipoAgrume = $("#distillazione-tipo-agrume").val();
+                if (tipoAgrume === "Altro") {
+                    tipoAgrume = $("#altro-agrume-distillazione").val();
+                }
+                
+                let certificazione = $("#distillazione-certificazione").val();
+                if (certificazione === "ALTRO") {
+                    certificazione = $("#altra-certificazione-distillazione").val();
+                }
+                
+                let linea = $("#distillazione-linea").val();
+                if (linea === "ALTRA") {
+                    linea = $("#altra-linea-distillazione").val();
+                }
+                
+                let tenorePolpa = $("#distillazione-tenore-polpa").val();
+                if (tenorePolpa === "Altro") {
+                    tenorePolpa = $("#altro-tenore-polpa-distillazione").val();
+                }
+                
+                let quantita = parseInt($("#distillazione-quantita").val());
+                let temperatura = parseFloat($("#distillazione-temperatura").val());
+                let tempo = parseInt($("#distillazione-tempo").val());
+                let note = $("#distillazione-note").val();
+                
+                // Aggiornamento dati macchina
+                machines[machineName] = {
+                    tipo: "distillatore",
+                    stato: "Occupato",
+                    dati: {
+                        prodotto: prodotto,
+                        tipoAgrume: tipoAgrume,
+                        certificazione: certificazione,
+                        linea: linea,
+                        tenorePolpa: tenorePolpa,
+                        quantita: quantita,
+                        temperatura: temperatura,
+                        tempo: tempo,
+                        note: note,
+                        progresso: 0,
+                        tempoInizio: new Date().getTime()
+                    }
+                };
+                
+                // Aggiornamento UI
+                updateMachineUI(machineName);
+                
+                // Incremento contatori
+                lottiCount++;
+                distillazioneTotale += quantita;
+                updateStats();
+                
+                // Chiusura modal
+                var modal = bootstrap.Modal.getInstance(document.getElementById('distillazioneModal'));
+                modal.hide();
+                
+                // Avvio simulazione processo
+                startProcess(machineName, tempo);
+                
+                alert("Processo di distillazione avviato!");
+            });
+            
+            // Avvio processo di pastorizzazione
+            $("#btn-start-pastorizzazione").click(function() {
+                const machineName = $("#pastorizzatore-id").text();
+                
+                // Validazione dei campi
+                if (!validateForm("pastorizzazione")) {
+                    return;
+                }
+                
+                // Raccolta dati
+                let prodotto = $("#pastorizzazione-prodotto").val();
+                
+                let tipoAgrume = $("#pastorizzazione-tipo-agrume").val();
+                if (tipoAgrume === "Altro") {
+                    tipoAgrume = $("#altro-agrume-pastorizzazione").val();
+                }
+                
+                let certificazione = $("#pastorizzazione-certificazione").val();
+                if (certificazione === "ALTRO") {
+                    certificazione = $("#altra-certificazione-pastorizzazione").val();
+                }
+                
+                let linea = $("#pastorizzazione-linea").val();
+                if (linea === "ALTRA") {
+                    linea = $("#altra-linea-pastorizzazione").val();
+                }
+                
+                let tenorePolpa = $("#pastorizzazione-tenore-polpa").val();
+                if (tenorePolpa === "Altro") {
+                    tenorePolpa = $("#altro-tenore-polpa-pastorizzazione").val();
+                }
+                
+                let quantita = parseInt($("#pastorizzazione-quantita").val());
+                let temperatura = parseFloat($("#pastorizzazione-temperatura").val());
+                let tempo = parseInt($("#pastorizzazione-tempo").val());
+                let note = $("#pastorizzazione-note").val();
+                
+                // Aggiornamento dati macchina
+                machines[machineName] = {
+                    tipo: "pastorizzatore",
+                    stato: "Occupato",
+                    dati: {
+                        prodotto: prodotto,
+                        tipoAgrume: tipoAgrume,
+                        certificazione: certificazione,
+                        linea: linea,
+                        tenorePolpa: tenorePolpa,
+                        quantita: quantita,
+                        temperatura: temperatura,
+                        tempo: tempo,
+                        note: note,
+                        progresso: 0,
+                        tempoInizio: new Date().getTime()
+                    }
+                };
+                
+                // Aggiornamento UI
+                updateMachineUI(machineName);
+                
+                // Incremento contatori
+                lottiCount++;
+                pastorizzazioneTotale += quantita;
+                updateStats();
+                
+                // Chiusura modal
+                var modal = bootstrap.Modal.getInstance(document.getElementById('pastorizzazioneModal'));
+                modal.hide();
+                
+                // Avvio simulazione processo
+                startProcess(machineName, tempo);
+                
+                alert("Processo di pastorizzazione avviato!");
+            });
+            
+            // Pulsanti di collegamento ad altri reparti
             $("#btn-reparto-1").click(function() {
-                if (confirm("Passare al Reparto 1 - Ricezione e Scarico Frutta? Le modifiche non salvate andranno perse.")) {
+                if (confirm("Passare al Reparto 1: Ricezione e scarico frutta? Le modifiche non salvate andranno perse.")) {
                     alert("Collegamento al Reparto 1 simulato.");
                 }
             });
-
+            
             $("#btn-reparto-2").click(function() {
-                if (confirm("Passare al Reparto 2 - Trasformazione? Le modifiche non salvate andranno perse.")) {
+                if (confirm("Passare al Reparto 2: Trasformazione? Le modifiche non salvate andranno perse.")) {
                     alert("Collegamento al Reparto 2 simulato.");
                 }
             });
-
-            // Gestione visualizzazione elenco lavorazioni
-            $(".btn-machine-details").click(function() {
-                const machine = $(this).data("machine");
-                const type = $(this).data("type");
-                
-                // Nascondi tutti gli elenchi
-                $("[id^='lavorazioni-']").hide();
-                
-                // Visualizza l'elenco corrispondente alla macchina selezionata
-                $("#lavorazioni-" + type + "-" + machine.toLowerCase()).show();
-                
-                // Imposta il titolo del modal
-                let machineTitle = "";
-                switch(machine) {
-                    case "APV1":
-                    case "APV2":
-                        machineTitle = "Concentratore " + machine;
-                        break;
-                    case "Santoro":
-                    case "Padovan":
-                    case "Pilato1":
-                    case "Pilato2":
-                    case "Joe":
-                        machineTitle = "Distillatore " + machine.replace("Pilato1", "Pilato 1").replace("Pilato2", "Pilato 2");
-                        break;
-                    case "PastArancia":
-                        machineTitle = "Pastorizzatore Arancia";
-                        break;
-                    case "PastProfea":
-                        machineTitle = "Pastorizzatore Profea";
-                        break;
-                }
-                $("#machine-name").text(machineTitle);
-            });
-
-            // Gestione altro agrume
-            $("#concentratore-agrume, #distillatore-agrume, #pastorizzatore-agrume").change(function() {
-                const id = $(this).attr("id");
-                const containerType = id.split("-")[0];
-                
-                if ($(this).val() === "Altro") {
-                    $("#altro-agrume-" + containerType + "-container").show();
-                } else {
-                    $("#altro-agrume-" + containerType + "-container").hide();
-                    $("#altro-agrume-" + containerType).val("");
-                }
-            });
-
-            // Gestione altra certificazione
-            $("#concentratore-certificazione, #distillatore-certificazione, #pastorizzatore-certificazione").change(function() {
-                const id = $(this).attr("id");
-                const containerType = id.split("-")[0];
-                
-                if ($(this).val() === "ALTRO") {
-                    $("#altra-certificazione-" + containerType + "-container").show();
-                } else {
-                    $("#altra-certificazione-" + containerType + "-container").hide();
-                    $("#altra-certificazione-" + containerType).val("");
-                }
-            });
-
-            // Gestione altra linea
-            $("#concentratore-linea, #distillatore-linea, #pastorizzatore-linea").change(function() {
-                const id = $(this).attr("id");
-                const containerType = id.split("-")[0];
-                
-                if ($(this).val() === "ALTRA") {
-                    $("#altra-linea-" + containerType + "-container").show();
-                } else {
-                    $("#altra-linea-" + containerType + "-container").hide();
-                    $("#altra-linea-" + containerType).val("");
-                }
-            });
-
-            // Gestione altra polpa
-            $("#concentratore-polpa, #distillatore-polpa, #pastorizzatore-polpa").change(function() {
-                const id = $(this).attr("id");
-                const containerType = id.split("-")[0];
-                
-                if ($(this).val() === "Altro") {
-                    $("#altra-polpa-" + containerType + "-container").show();
-                } else {
-                    $("#altra-polpa-" + containerType + "-container").hide();
-                    $("#altra-polpa-" + containerType).val("");
-                }
-            });
-
-            // Azioni pulsanti salvataggio
-            $("#btn-save-concentratore").click(function() {
-                if (validateForm("#concentratore-form")) {
-                    alert("Processo di concentrazione avviato con successo.");
-                    $("#concentratoreModal").modal("hide");
-                }
-            });
-
-            $("#btn-save-distillatore").click(function() {
-                if (validateForm("#distillatore-form")) {
-                    alert("Processo di distillazione avviato con successo.");
-                    $("#distillatoreModal").modal("hide");
-                }
-            });
-
-            $("#btn-save-pastorizzatore").click(function() {
-                if (validateForm("#pastorizzatore-form")) {
-                    alert("Processo di pastorizzazione avviato con successo.");
-                    $("#pastorizzatoreModal").modal("hide");
-                }
-            });
-
-            // Funzione di validazione form
-            function validateForm(formId) {
+            
+            // FUNZIONI DI SUPPORTO
+            
+            // Aggiornamento statistiche
+            function updateStats() {
+                $("#lotti-in-lavorazione").text(lottiCount);
+                $("#concentrazione-totale").text(concentrazioneTotale + " L");
+                $("#distillazione-totale").text(distillazioneTotale + " L");
+                $("#pastorizzazione-totale").text(pastorizzazioneTotale + " L");
+            }
+            
+            // Reset form
+            function resetForm(formType) {
+                $(`#${formType}-form`)[0].reset();
+                $(`[id^='altro-'][id$='-${formType}-container']`).hide();
+                $(`[id^='altra-'][id$='-${formType}-container']`).hide();
+            }
+            
+            // Validazione form
+            function validateForm(formType) {
+                const requiredFields = $(`#${formType}-form`).find("[required]");
                 let isValid = true;
                 
-                $(formId + " [required]").each(function() {
+                requiredFields.each(function() {
                     if (!$(this).val()) {
-                        alert("Compilare tutti i campi obbligatori");
                         isValid = false;
-                        return false;
+                        $(this).addClass("is-invalid");
+                    } else {
+                        $(this).removeClass("is-invalid");
                     }
                 });
                 
-                // Validazione campi personalizzati
-                if (formId === "#concentratore-form") {
-                    if ($("#concentratore-agrume").val() === "Altro" && !$("#altro-agrume-concentratore").val()) {
-                        alert("Specificare l'altro tipo di agrume");
-                        isValid = false;
-                    }
-                    
-                    if ($("#concentratore-certificazione").val() === "ALTRO" && !$("#altra-certificazione-concentratore").val()) {
-                        alert("Specificare l'altra certificazione");
-                        isValid = false;
-                    }
-                    
-                    if ($("#concentratore-linea").val() === "ALTRA" && !$("#altra-linea-concentratore").val()) {
-                        alert("Specificare l'altra linea di trasformazione");
-                        isValid = false;
-                    }
-                    
-                    if ($("#concentratore-polpa").val() === "Altro" && !$("#altra-polpa-concentratore").val()) {
-                        alert("Specificare l'altro tenore di polpa");
-                        isValid = false;
-                    }
+                // Verifica campi "Altro"
+                if ($(`#${formType}-tipo-agrume`).val() === "Altro" && !$(`#altro-agrume-${formType}`).val()) {
+                    isValid = false;
+                    $(`#altro-agrume-${formType}`).addClass("is-invalid");
+                }
+                
+                if ($(`#${formType}-certificazione`).val() === "ALTRO" && !$(`#altra-certificazione-${formType}`).val()) {
+                    isValid = false;
+                    $(`#altra-certificazione-${formType}`).addClass("is-invalid");
+                }
+                
+                if ($(`#${formType}-linea`).val() === "ALTRA" && !$(`#altra-linea-${formType}`).val()) {
+                    isValid = false;
+                    $(`#altra-linea-${formType}`).addClass("is-invalid");
+                }
+                
+                if ($(`#${formType}-tenore-polpa`).val() === "Altro" && !$(`#altro-tenore-polpa-${formType}`).val()) {
+                    isValid = false;
+                    $(`#altro-tenore-polpa-${formType}`).addClass("is-invalid");
+                }
+                
+                if (!isValid) {
+                    alert("Compila tutti i campi obbligatori!");
                 }
                 
                 return isValid;
             }
-
-            // Simulazione esportazione
-            $("#btn-export-lavorazioni").click(function() {
-                alert("Esportazione dati in Excel simulata.");
-            });
-        });
-    </script>
+            
+            // Aggiornamento UI macchina
+            function updateMachineUI(machineName) {
+                const machine = machines[machineName];
+                const machineCard = $(`.card-header:contains(${machineName})`).closest(".card");
+                
+                if (machine.stato === "Occupato") {
+                    machineCard.find("strong:contains('Stato:')").next().removeClass("status-free").addClass("status-busy").text("Occupato");
+                    machineCard.find("strong:contains('Prodotto:')").parent().text(`Prodotto: ${machine.dati.prodotto}`);
+                    machineCard.find("strong:contains('Tipo Agrume:')").parent().text(`Tipo Agrume: ${machine.machineCard.find("strong:contains('Tipo Agrume:')").parent().text(`Tipo Agrume: ${machine.dati.tipoAgrume}`);
+                   machineCard.find("strong:contains('Certificazione:')").parent().text(`Certificazione: ${machine.dati.certificazione}`);
+                   
+                   if (machine.tipo === "concentratore") {
+                       machineCard.find("strong:contains('Brix Input:')").parent().text(`Brix Input: ${machine.dati.brixIniziale}`);
+                       machineCard.find("strong:contains('Brix Target:')").parent().text(`Brix Target: ${machine.dati.brixTarget}`);
+                   } else {
+                       machineCard.find("strong:contains('Temperatura:')").parent().text(`Temperatura: ${machine.dati.temperatura}°C`);
+                       if (machine.tipo === "pastorizzatore") {
+                           machineCard.find("strong:contains('Tempo Pastorizzazione:')").parent().text(`Tempo Pastorizzazione: ${machine.dati.tempo} min`);
+                       }
+                   }
+                   
+                   // Disabilita il pulsante "Avvia Processo"
+                   machineCard.find(".btn-avvia-processo").prop("disabled", true);
+                   
+                   // Imposta la barra di progresso
+                   machineCard.find(".progress-bar").css("width", `${machine.dati.progresso}%`).attr("aria-valuenow", machine.dati.progresso);
+               } else {
+                   machineCard.find("strong:contains('Stato:')").next().removeClass("status-busy").addClass("status-free").text("Disponibile");
+                   machineCard.find("strong:contains('Prodotto:')").parent().text("Prodotto: -");
+                   machineCard.find("strong:contains('Tipo Agrume:')").parent().text("Tipo Agrume: -");
+                   machineCard.find("strong:contains('Certificazione:')").parent().text("Certificazione: -");
+                   
+                   if (machine.tipo === "concentratore") {
+                       machineCard.find("strong:contains('Brix Input:')").parent().text("Brix Input: -");
+                       machineCard.find("strong:contains('Brix Target:')").parent().text("Brix Target: -");
+                   } else {
+                       machineCard.find("strong:contains('Temperatura:')").parent().text("Temperatura: -");
+                       if (machine.tipo === "pastorizzatore") {
+                           machineCard.find("strong:contains('Tempo Pastorizzazione:')").parent().text("Tempo Pastorizzazione: -");
+                       }
+                   }
+                   
+                   // Abilita il pulsante "Avvia Processo"
+                   machineCard.find(".btn-avvia-processo").prop("disabled", false);
+                   
+                   // Resetta la barra di progresso
+                   machineCard.find(".progress-bar").css("width", "0%").attr("aria-valuenow", 0);
+               }
+           }
+           
+           // Avvio simulazione processo
+           function startProcess(machineName, durationMinutes) {
+               // Converti minuti in millisecondi per la simulazione
+               const totalDuration = durationMinutes * 60 * 1000;
+               const updateInterval = 5000; // Aggiorna ogni 5 secondi
+               const steps = totalDuration / updateInterval;
+               let currentStep = 0;
+               
+               // Funzione di aggiornamento
+               const updateProcess = function() {
+                   currentStep++;
+                   
+                   // Calcolo progresso
+                   const progress = Math.min(Math.round((currentStep / steps) * 100), 100);
+                   
+                   // Aggiornamento stato macchina
+                   machines[machineName].dati.progresso = progress;
+                   
+                   // Aggiornamento UI
+                   updateMachineUI(machineName);
+                   
+                   // Se il processo è completato
+                   if (progress >= 100) {
+                       // Aggiornamento stato macchina
+                       machines[machineName].stato = "Disponibile";
+                       machines[machineName].dati = {};
+                       
+                       // Notifica completamento
+                       alert(`Processo completato su ${machineName}!`);
+                       
+                       // Aggiornamento UI
+                       updateMachineUI(machineName);
+                       
+                       clearInterval(intervalId);
+                   }
+               };
+               
+               // Avvio intervallo di aggiornamento
+               const intervalId = setInterval(updateProcess, updateInterval);
+           }
+       });
+   </script>
 </body>
 </html>
