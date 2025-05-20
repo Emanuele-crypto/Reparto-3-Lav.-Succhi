@@ -181,7 +181,7 @@
                                 <div class="machine-card" data-machine="APV1">
                                     <div class="machine-title">APV1</div>
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
-                                    <div class="machine-status">Capacità: 5000 L/h</div>
+                                    <div class="machine-status">Capacità: 4800 L/h</div>
                                     <div class="text-end mt-2">
                                         <button class="btn btn-sm btn-outline-primary select-machine" data-machine="APV1" data-type="concentratore">Seleziona</button>
                                     </div>
@@ -191,7 +191,7 @@
                                 <div class="machine-card" data-machine="APV2">
                                     <div class="machine-title">APV2</div>
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
-                                    <div class="machine-status">Capacità: 6000 L/h</div>
+                                    <div class="machine-status">Capacità: 4200 L/h</div>
                                     <div class="text-end mt-2">
                                         <button class="btn btn-sm btn-outline-primary select-machine" data-machine="APV2" data-type="concentratore">Seleziona</button>
                                     </div>
@@ -300,6 +300,10 @@
                                     <label for="conc-brix-target" class="form-label required-field">Brix Target</label>
                                     <input type="number" class="form-control" id="conc-brix-target" required step="0.1" min="0">
                                 </div>
+                                <div class="col-md-6">
+                                    <label for="conc-serbatoio" class="form-label required-field">Serbatoio Destinazione</label>
+                                    <input type="text" class="form-control" id="conc-serbatoio" required placeholder="Codice serbatoio">
+                                </div>
                             </div>
                             
                             <div class="text-end mt-4">
@@ -331,13 +335,14 @@
                                             <th>Certificazione</th>
                                             <th>Quantità</th>
                                             <th>Brix Target</th>
+                                            <th>Serbatoio</th>
                                             <th>Stato</th>
                                             <th>Azioni</th>
                                         </tr>
                                     </thead>
                                     <tbody id="concentrazione-processi">
                                         <tr>
-                                            <td colspan="9" class="text-center">Nessun processo attivo</td>
+                                            <td colspan="10" class="text-center">Nessun processo attivo</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -365,7 +370,7 @@
                                 <div class="machine-card" data-machine="Santoro">
                                     <div class="machine-title">Santoro</div>
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
-                                    <div class="machine-status">Capacità: 2500 L/h</div>
+                                    <div class="machine-status">Capacità: 4200 L/h</div>
                                     <div class="text-end mt-2">
                                         <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Santoro" data-type="distillatore">Seleziona</button>
                                     </div>
@@ -375,7 +380,7 @@
                                 <div class="machine-card" data-machine="Padovan">
                                     <div class="machine-title">Padovan</div>
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
-                                    <div class="machine-status">Capacità: 3000 L/h</div>
+                                    <div class="machine-status">Capacità: 5000 L/h</div>
                                     <div class="text-end mt-2">
                                         <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Padovan" data-type="distillatore">Seleziona</button>
                                     </div>
@@ -385,7 +390,7 @@
                                 <div class="machine-card" data-machine="Pilato1">
                                     <div class="machine-title">Pilato 1</div>
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
-                                    <div class="machine-status">Capacità: 2000 L/h</div>
+                                    <div class="machine-status">Capacità: 1000 L/h</div>
                                     <div class="text-end mt-2">
                                         <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Pilato1" data-type="distillatore">Seleziona</button>
                                     </div>
@@ -395,7 +400,7 @@
                                 <div class="machine-card" data-machine="Pilato2">
                                     <div class="machine-title">Pilato 2</div>
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
-                                    <div class="machine-status">Capacità: 2000 L/h</div>
+                                    <div class="machine-status">Capacità: 1000 L/h</div>
                                     <div class="text-end mt-2">
                                         <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Pilato2" data-type="distillatore">Seleziona</button>
                                     </div>
@@ -405,7 +410,7 @@
                                 <div class="machine-card" data-machine="Joe">
                                     <div class="machine-title">Joe</div>
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
-                                    <div class="machine-status">Capacità: 1500 L/h</div>
+                                    <div class="machine-status">Capacità: 2300 L/h</div>
                                     <div class="text-end mt-2">
                                         <button class="btn btn-sm btn-outline-primary select-machine" data-machine="Joe" data-type="distillatore">Seleziona</button>
                                     </div>
@@ -503,9 +508,13 @@
                             </div>
                             
                             <div class="row mb-3">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <label for="dist-serbatoio" class="form-label required-field">Serbatoio Destinazione</label>
+                                    <input type="text" class="form-control" id="dist-serbatoio" required placeholder="Codice serbatoio">
+                                </div>
+                                <div class="col-md-6">
                                     <label for="dist-note" class="form-label">Note</label>
-                                    <textarea class="form-control" id="dist-note" rows="3"></textarea>
+                                    <textarea class="form-control" id="dist-note" rows="2"></textarea>
                                 </div>
                             </div>
                             
@@ -537,13 +546,14 @@
                                             <th>Agrume</th>
                                             <th>Certificazione</th>
                                             <th>Quantità</th>
+                                            <th>Serbatoio</th>
                                             <th>Stato</th>
                                             <th>Azioni</th>
                                         </tr>
                                     </thead>
                                     <tbody id="distillazione-processi">
                                         <tr>
-                                            <td colspan="8" class="text-center">Nessun processo attivo</td>
+                                            <td colspan="9" class="text-center">Nessun processo attivo</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -566,12 +576,12 @@
                 <div class="row mb-4">
                     <div class="col-md-6">
                         <h5 class="mb-3">Seleziona Cella</h5>
-                        <div<div class="row">
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="machine-card" data-machine="PastArancia">
                                     <div class="machine-title">Pastorizzatore Arancia</div>
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
-                                    <div class="machine-status">Capacità: 8000 L/h</div>
+                                    <div class="machine-status">Capacità: 3000 L/h</div>
                                     <div class="text-end mt-2">
                                         <button class="btn btn-sm btn-outline-primary select-machine" data-machine="PastArancia" data-type="pastorizzatore">Seleziona</button>
                                     </div>
@@ -581,7 +591,7 @@
                                 <div class="machine-card" data-machine="PastProfea">
                                     <div class="machine-title">Pastorizzatore Profea</div>
                                     <div class="machine-status">Stato: <span class="badge bg-success badge-status">Disponibile</span></div>
-                                    <div class="machine-status">Capacità: 10000 L/h</div>
+                                    <div class="machine-status">Capacità: 4000 L/h</div>
                                     <div class="text-end mt-2">
                                         <button class="btn btn-sm btn-outline-primary select-machine" data-machine="PastProfea" data-type="pastorizzatore">Seleziona</button>
                                     </div>
@@ -679,16 +689,20 @@
                             </div>
                             
                             <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <label for="past-note" class="form-label">Note</label>
-                                    <textarea class="form-control" id="past-note" rows="3"></textarea>
+                                <div class="col-md-6">
+                                    <label for="past-serbatoio" class="form-label required-field">Serbatoio Destinazione</label>
+                                    <input type="text" class="form-control" id="past-serbatoio" required placeholder="Codice serbatoio">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="past-temperatura" class="form-label required-field">Temperatura (°C)</label>
+                                    <input type="number" class="form-control" id="past-temperatura" required step="0.1" min="0">
                                 </div>
                             </div>
                             
                             <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="past-tempo" class="form-label required-field">Tempo (min)</label>
-                                    <input type="number" class="form-control" id="past-tempo" required step="0.1" min="0">
+                                <div class="col-md-12">
+                                    <label for="past-note" class="form-label">Note</label>
+                                    <textarea class="form-control" id="past-note" rows="2"></textarea>
                                 </div>
                             </div>
                             
@@ -720,14 +734,15 @@
                                             <th>Agrume</th>
                                             <th>Certificazione</th>
                                             <th>Quantità</th>
-                                            <th>Tempo</th>
+                                            <th>Temperatura</th>
+                                            <th>Serbatoio</th>
                                             <th>Stato</th>
                                             <th>Azioni</th>
                                         </tr>
                                     </thead>
                                     <tbody id="pastorizzazione-processi">
                                         <tr>
-                                            <td colspan="9" class="text-center">Nessun processo attivo</td>
+                                            <td colspan="10" class="text-center">Nessun processo attivo</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -759,6 +774,7 @@
                             <p><strong>Quantità:</strong> <span id="modal-quantita"></span></p>
                             <p><strong>Linea di Trasformazione:</strong> <span id="modal-linea"></span></p>
                             <p><strong>Tenore di Polpa:</strong> <span id="modal-polpa"></span></p>
+                            <p><strong>Serbatoio:</strong> <span id="modal-serbatoio"></span></p>
                             <p><strong>Data Inizio:</strong> <span id="modal-data-inizio"></span></p>
                         </div>
                     </div>
@@ -1076,13 +1092,14 @@
                 }
                 
                 const quantita = parseInt($("#conc-quantita").val());
+                const serbatoio = $("#conc-serbatoio").val();
                 const brixTarget = parseFloat($("#conc-brix-target").val());
                 const note = $("#conc-note").val();
                 
                 // Validazione 
                 if (!tipoProdotto || !tipoAgrume || !certificazione || 
                     !lineaTrasformazione || !tenorePolpa || isNaN(quantita) || 
-                    isNaN(brixTarget)) {
+                    !serbatoio || isNaN(brixTarget)) {
                     alert("Compila tutti i campi obbligatori con valori validi!");
                     return;
                 }
@@ -1108,6 +1125,7 @@
                     lineaTrasformazione: lineaTrasformazione,
                     tenorePolpa: tenorePolpa,
                     quantita: quantita,
+                    serbatoio: serbatoio,
                     brixTarget: brixTarget,
                     note: note,
                     stato: "In corso",
@@ -1199,17 +1217,22 @@
                 }
                 
                 const quantita = parseInt($("#dist-quantita").val());
+                const serbatoio = $("#dist-serbatoio").val();
                 const note = $("#dist-note").val();
                 
                 // Validazione 
                 if (!tipoProdotto || !tipoAgrume || !certificazione || 
-                    !lineaTrasformazione || !tenorePolpa || isNaN(quantita)) {
+                    !lineaTrasformazione || !tenorePolpa || isNaN(quantita) || 
+                    !serbatoio) {
                     alert("Compila tutti i campi obbligatori con valori validi!");
                     return;
                 }
                 
                 // Generazione ID processo
                 const now = new Date();
+                const processId = "DIST-" + now.getFullYear() + 
+                               padZero(now.getMonth() + 1) + 
+                               padZero
                 const processId = "DIST-" + now.getFullYear() + 
                                padZero(now.getMonth() + 1) + 
                                padZero(now.getDate()) + "-" + 
@@ -1229,6 +1252,7 @@
                     lineaTrasformazione: lineaTrasformazione,
                     tenorePolpa: tenorePolpa,
                     quantita: quantita,
+                    serbatoio: serbatoio,
                     note: note,
                     stato: "In corso",
                     avanzamento: 0,
@@ -1242,7 +1266,7 @@
                     .addClass("bg-danger")
                     .text("In uso");
                 
-                // Aggiorna// Aggiorna statistiche
+                // Aggiorna statistiche
                 stats.distillato += quantita;
                 stats.processiAttivi++;
                 updateStats();
@@ -1319,13 +1343,14 @@
                 }
                 
                 const quantita = parseInt($("#past-quantita").val());
-                const tempo = parseFloat($("#past-tempo").val());
+                const temperatura = parseFloat($("#past-temperatura").val());
+                const serbatoio = $("#past-serbatoio").val();
                 const note = $("#past-note").val();
                 
                 // Validazione 
                 if (!tipoProdotto || !tipoAgrume || !certificazione || 
                     !lineaTrasformazione || !tenorePolpa || isNaN(quantita) || 
-                    isNaN(tempo)) {
+                    isNaN(temperatura) || !serbatoio) {
                     alert("Compila tutti i campi obbligatori con valori validi!");
                     return;
                 }
@@ -1351,7 +1376,8 @@
                     lineaTrasformazione: lineaTrasformazione,
                     tenorePolpa: tenorePolpa,
                     quantita: quantita,
-                    tempo: tempo,
+                    temperatura: temperatura,
+                    serbatoio: serbatoio,
                     note: note,
                     stato: "In corso",
                     avanzamento: 0,
@@ -1419,6 +1445,7 @@
                 $("#modal-quantita").text(processo.quantita + " L");
                 $("#modal-linea").text(processo.lineaTrasformazione);
                 $("#modal-polpa").text(processo.tenorePolpa);
+                $("#modal-serbatoio").text(processo.serbatoio);
                 $("#modal-data-inizio").text(new Date(processo.dataInizio).toLocaleString());
                 $("#modal-note").text(processo.note || "Nessuna nota");
                 
@@ -1560,6 +1587,7 @@
                             <td>${processo.certificazione}</td>
                             <td>${processo.quantita} L</td>
                             <td>${processo.brixTarget}</td>
+                            <td>${processo.serbatoio}</td>
                             <td class="${statoClass}">${processo.stato} (${processo.avanzamento}%)</td>
                             <td>
                                 <button class="btn btn-sm btn-info view-process" data-processid="${processo.id}" data-processtype="concentrazione">
@@ -1573,7 +1601,7 @@
                 if (!hasProcesses) {
                     tableBody.append(`
                         <tr>
-                            <td colspan="9" class="text-center">Nessun processo attivo</td>
+                            <td colspan="10" class="text-center">Nessun processo attivo</td>
                         </tr>
                     `);
                 }
@@ -1614,6 +1642,7 @@
                             <td>${processo.tipoAgrume}</td>
                             <td>${processo.certificazione}</td>
                             <td>${processo.quantita} L</td>
+                            <td>${processo.serbatoio}</td>
                             <td class="${statoClass}">${processo.stato} (${processo.avanzamento}%)</td>
                             <td>
                                 <button class="btn btn-sm btn-info view-process" data-processid="${processo.id}" data-processtype="distillazione">
@@ -1627,7 +1656,7 @@
                 if (!hasProcesses) {
                     tableBody.append(`
                         <tr>
-                            <td colspan="8" class="text-center">Nessun processo attivo</td>
+                            <td colspan="9" class="text-center">Nessun processo attivo</td>
                         </tr>
                     `);
                 }
@@ -1668,7 +1697,8 @@
                             <td>${processo.tipoAgrume}</td>
                             <td>${processo.certificazione}</td>
                             <td>${processo.quantita} L</td>
-                            <td>${processo.tempo} min</td>
+                            <td>${processo.temperatura} °C</td>
+                            <td>${processo.serbatoio}</td>
                             <td class="${statoClass}">${processo.stato} (${processo.avanzamento}%)</td>
                             <td>
                                 <button class="btn btn-sm btn-info view-process" data-processid="${processo.id}" data-processtype="pastorizzazione">
@@ -1682,7 +1712,7 @@
                 if (!hasProcesses) {
                     tableBody.append(`
                         <tr>
-                            <td colspan="9" class="text-center">Nessun processo attivo</td>
+                            <td colspan="10" class="text-center">Nessun processo attivo</td>
                         </tr>
                     `);
                 }
