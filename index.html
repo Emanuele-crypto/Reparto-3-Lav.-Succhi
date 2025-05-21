@@ -325,10 +325,6 @@
                             
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="conc-brix-iniziale" class="form-label required-field">Brix Iniziale</label>
-                                    <input type="number" class="form-control" id="conc-brix-iniziale" required step="0.1" min="0">
-                                </div>
-                                <div class="col-md-6">
                                     <label for="conc-brix-target" class="form-label required-field">Brix Target</label>
                                     <input type="number" class="form-control" id="conc-brix-target" required step="0.1" min="0">
                                 </div>
@@ -363,7 +359,6 @@
                                             <th>Agrume</th>
                                             <th>Certificazione</th>
                                             <th>Quantità</th>
-                                            <th>Brix Iniziale</th>
                                             <th>Brix Target</th>
                                             <th>Stato</th>
                                             <th>Azioni</th>
@@ -371,7 +366,7 @@
                                     </thead>
                                     <tbody id="concentrazione-processi">
                                         <tr>
-                                            <td colspan="11" class="text-center">Nessun processo attivo</td>
+                                            <td colspan="10" class="text-center">Nessun processo attivo</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -549,8 +544,7 @@
                                     <select class="form-select" id="dist-tenore-polpa" required>
                                         <option value="" selected disabled>Seleziona...</option>
                                         <option value="Limpido">Limpido</option>
-                                        <option value="Semiclear">
-                                            <option value="Semiclear">Semiclear</option>
+                                        <option value="Semiclear">Semiclear</option>
                                         <option value="> 1%">> 1%</option>
                                         <option value="Standard">Standard</option>
                                         <option value="Altro">Altro</option>
@@ -934,7 +928,7 @@
                 console.log("Pulsante selezionato per macchina:", machineId, "tipo:", machineType);
                 
                 // Deseleziona tutte le macchine nella stessa sezione
-                $(`#${machineType}ri-content .machine-card`).removeClass("selected");
+                $(`.machine-card`).removeClass("selected");
                 
                 // Seleziona questa macchina
                 $(`#machine-${machineId}`).addClass("selected");
@@ -1182,18 +1176,13 @@
                 }
                 
                 const quantita = parseInt($("#conc-quantita").val());
-                const brixIniziale = parseFloat($("#conc-brix-iniziale").val());
                 const brixTarget = parseFloat($("#conc-brix-target").val());
                 const note = $("#conc-note").val();
                 
-                // Validazione 
+                                             // Validazione 
                 if (!tipoProdotto || !tipoAgrume || !certificazione || 
                     !lineaTrasformazione || !tenorePolpa || isNaN(quantita) || 
-                    isNaN(brixIniziale) || isNaN(brixTarget)) {
-                    alert("Compila tutti
-                          if (!tipoProdotto || !tipoAgrume || !certificazione || 
-                    !lineaTrasformazione || !tenorePolpa || isNaN(quantita) || 
-                    isNaN(brixIniziale) || isNaN(brixTarget)) {
+                    isNaN(brixTarget)) {
                     alert("Compila tutti i campi obbligatori con valori validi!");
                     return;
                 }
@@ -1220,7 +1209,6 @@
                     lineaTrasformazione: lineaTrasformazione,
                     tenorePolpa: tenorePolpa,
                     quantita: quantita,
-                    brixIniziale: brixIniziale,
                     brixTarget: brixTarget,
                     note: note,
                     stato: "In corso",
@@ -1618,7 +1606,9 @@
                 }
                 
                 // Chiudi il modal
-                bootstrap.Modal.getInstance(document.getElementById('processoModal')).hide();
+                const modalEl = document.getElementById('processoModal');
+                const modal = bootstrap.Modal.getInstance(modalEl);
+                modal.hide();
                 
                 // Aggiorna le tabelle e le statistiche
                 if (type === "concentrazione") {
@@ -1689,7 +1679,6 @@
                             <td>${processo.tipoAgrume}</td>
                             <td>${processo.certificazione}</td>
                             <td>${processo.quantita} L</td>
-                            <td>${processo.brixIniziale}</td>
                             <td>${processo.brixTarget}</td>
                             <td class="${statoClass}">${processo.stato} (${processo.avanzamento}%)</td>
                             <td>
@@ -1704,7 +1693,7 @@
                 if (!hasProcesses) {
                     tableBody.append(`
                         <tr>
-                            <td colspan="11" class="text-center">Nessun processo attivo</td>
+                            <td colspan="10" class="text-center">Nessun processo attivo</td>
                         </tr>
                     `);
                 }
